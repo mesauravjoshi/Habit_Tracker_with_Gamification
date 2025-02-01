@@ -1,0 +1,22 @@
+.Slider {
+    grid-row: 1 / 3; /* Make it span from navbar to hero */
+    border: 1px solid #60b360;
+    border-radius: 8px;
+    background-color: #222227;
+    grid-row-start: 1;
+    grid-row-end: 3;
+    padding: 8px 2px;
+}
+
+.logo{
+    padding: 1em;
+}
+.Slider-list {
+    /* border: 1px solid wheat; */
+    list-style-type: none;
+    font-size: 1.2em;
+}
+li{
+    padding-left: 1em;
+    margin-bottom: 2em;
+}

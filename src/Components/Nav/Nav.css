@@ -1,0 +1,17 @@
+.nav{
+    grid-column: 2 / 3;
+    display: flex;
+    height: 4em;
+    justify-content: space-between;
+    padding: 10px 18px;
+}
+
+button{
+    font-size: 1.2em;
+    padding: 8px 10px;
+    border-radius: 5px;
+    border: 1px solid #f19c20;
+    background-color: transparent;
+    color: #f19c20;
+    cursor: pointer;
+}

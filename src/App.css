@@ -1,0 +1,13 @@
+.track-app {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+}
+
+h1 {
+    font-size: 3.5em;
+}
+
+h3 {
+    font-size: 2em;
+}
