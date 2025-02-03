@@ -9,7 +9,6 @@ function Nav() {
       </div>
       <div>
           <button> Login </button>    
-          <button> Log out</button>    
       </div>      
       
     </div>

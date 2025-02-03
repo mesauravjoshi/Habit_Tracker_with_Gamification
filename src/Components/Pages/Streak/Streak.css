@@ -1,0 +1,38 @@
+.Streak {
+    display: flex;
+    flex-direction: column;
+}
+
+.Streak h1 {
+    font-size: 26px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+.Habit-Card {
+    display: grid;
+    grid-row-gap: 14px;
+    grid-template-columns: 1fr 1fr;
+    justify-content: space-between;
+    padding: 10px 17px;
+    margin: 10px 35px;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s;
+    border: 0.5px solid rgba(255, 65, 108, 0.8); /* Ultra-thin border */
+
+    /* cursor: pointer; */
+    color: #db386f;
+}
+
+
+.Habit-Card:hover {
+    transform: scale(1.0);
+    box-shadow: 0 5px 15px rgba(255, 65, 108, 0.4);
+}
+
+.Habit-Card:active {
+    /* transform: scale(0.95); */
+    box-shadow: 0 3px 10px rgba(255, 65, 108, 0.3);
+}

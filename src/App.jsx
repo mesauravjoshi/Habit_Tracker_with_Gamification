@@ -1,21 +1,22 @@
-import { useState } from 'react'
 import './App.css'
-import Nav from './Components/Nav/Nav'
-import Hero from './Components/Hero/Hero'
-import Slider from './Components/Slider/Slider'
+import Habit from './Components/Pages/Habit/Habit';
+import Home from './Components/Pages/Home/Home'
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Streak from './Components/Pages/Streak/Streak';
 
 function App() {
 
   return (
     <>
-    <div className="track-app">
-      <Slider/>
-      <Nav/>
-      <Hero/>
-      {/* <div style={{border: '1px solid white'}} className="one">One</div>
-      <div style={{border: '1px solid white'}} className="two">two</div>
-      <div style={{border: '1px solid white'}} className="three">three</div> */}
-    </div>
+      <div className="track-app">
+        <Router>
+          <Routes>
+            <Route path="/" element={<Home/>} />
+            <Route path="/habit" element={<Habit/>} />
+            <Route path="/track-streak" element={<Streak/>} />
+          </Routes>
+        </Router>
+      </div>
     </>
   )
 }

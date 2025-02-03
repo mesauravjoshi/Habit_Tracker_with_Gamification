@@ -7,7 +7,8 @@
 
 /* Apply styles to the entire page */
 html, body {
-  font-family: 'Arial', sans-serif;
+  font-family: "Mulish", serif;
+  /* font-family: 'Arial', sans-serif; */
   background-color: #292931;
   color: #f19c20;
   line-height: 1.6;
