@@ -6,7 +6,10 @@ import { useEffect } from 'react';
 
 function Habit() {
   const priorityLabels = ["Low", "Medium", "High", "Critical"];
-  const [habitData , setHabitData] = useState([]);
+  // Initial state to hold the form data
+  // const [habitData , setHabitData] = useState({});
+  // State to hold the data from local storage
+  const [habits, setHabits] = useState([]);
   const [habit , setHabit] = useState('');
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedFrequency, setSelectedFrequency] = useState("");
@@ -20,36 +23,36 @@ function Habit() {
   };
 
   const handleAddHabit = () => {
-    if (selectedCategory) {
-      setHabitData((prevData) => ({
-        ...prevData,
-        'Habit': habit,
-        'Category': selectedCategory,
-        'Frequency': selectedFrequency,
-        'Priority': priorityLabels[priority],
-        'Target Duration': targetDuration,
-        'Started Date': new Date()
-      }));
-    }
+
+    const newHabit = {
+      Habit: habit,
+      Category: selectedCategory,
+      Frequency: selectedFrequency,
+      Priority: priorityLabels[priority],
+      TargetDuration: targetDuration,
+      StartedDate: new Date().toString(),
+    };
+    const newHabits = [...habits, newHabit];
+    setHabits(newHabits)
+    setHabit('')
+    setSelectedCategory('')
+    setSelectedFrequency('')
+    setTargetDuration('')
+    setPriority(0)
   };
-  // console.log(habitData);
 
   useEffect(() => {
-    console.log(Object.keys(habitData).length);
-    
-    if (Object.keys(habitData).length > 0) {
-      console.log('yes');
-      
-      localStorage.setItem('Habit Track', JSON.stringify(habitData));
+    if (habits.length > 0) {
+      localStorage.setItem('Habit Track', JSON.stringify(habits));
     }
-  }, [habitData]); // This runs whenever habitData changes
+  }, [habits]); // This runs whenever habitData changes
 
-  useEffect(() => {
-    const savedHabitData = localStorage.getItem('Habit Track');
-    if (savedHabitData) {
-      setHabitData(JSON.parse(savedHabitData)); // Parse the data and set it as initial state
-    }
-  }, []); // Empty dependency array ensures this runs only once when the component mounts
+  // useEffect(() => {
+  //   const savedHabitData = localStorage.getItem('Habit Track');
+  //   if (savedHabitData) {
+  //     setHabitData(JSON.parse(savedHabitData)); // Parse the data and set it as initial state
+  //   }
+  // }, []); // Empty dependency array ensures this runs only once when the component mounts
 
 
   return (

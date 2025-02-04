@@ -1,1 +1,28 @@
-{"Habit":"DSA","Category":"Coding","Frequency":"Daily","Priority":"High","Target Duration":"2025-02-28" ,"Started Date": "Mon Feb 03 2025 02:25:10 GMT+0530 (India Standard Time)", "Total Streak": 1}
+[
+    {
+        "Habit": "dsa",
+        "Category": "Coding",
+        "Frequency": "Weekly",
+        "Priority": "Critical",
+        "TargetDuration": "2025-02-07",
+        "StartedDate": "Sat Feb 1 2025 14:22:52 GMT+0530 (India Standard Time)",
+        "StreakRecord": {
+            "LastUpdate": "Thu Feb 06 2025 21:00:52 GMT+0530 (India Standard Time)",
+            "TotalStreak": 1
+        },
+        "DaysLeft": 21
+    },
+    {
+        "Habit": "push up",
+        "Category": "Workout",
+        "Frequency": "Daily",
+        "Priority": "Medium",
+        "TargetDuration": "2025-02-20",
+        "StartedDate": "Sat Feb 1 2025 14:23:23 GMT+0530 (India Standard Time)",
+        "StreakRecord": {
+            "LastUpdate": "Thu Feb 06 2025 21:00:59 GMT+0530 (India Standard Time)",
+            "TotalStreak": 1
+        },
+        "DaysLeft": 52
+    }
+]

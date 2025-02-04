@@ -2,80 +2,104 @@ import { useEffect, useState } from 'react';
 import Nav from '../../Nav/Nav';
 import Slider from '../../Slider/Slider';
 import './Streak.css'
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import StreakUpdate from './StreakUpdate';
+import './StreakUpdate.css'
 
 function Streak() {
   const [streakData, setStreakData] = useState({});
-  const [totalStreak, setTotalStreak] = useState(0);
-  const [streakName, setStreakName] = useState('');
-  const [streakDayLeft, setStreakDayLeft] = useState('');
-  const [isChecked, setIsChecked] = useState(false);
-  // console.log(streakDayLeft);
 
   useEffect(() => {
-    const getHabit_from_localStorage = localStorage.getItem('Habit Track')
-    const habitJSON_data = JSON.parse(getHabit_from_localStorage)
+    const getHabit_from_localStorage = localStorage.getItem('Habit Track');
+    const habitJSON_data = JSON.parse(getHabit_from_localStorage);
+    // calculate day left 
+    const calculateDayLeft = (TargetDuration) => {
+      const today = new Date(); // Get today's date
+      // console.log(today);
+      
+      const targetDate = new Date(TargetDuration); // Convert TargetDuration to Date
 
-    if (habitJSON_data) {
-      setStreakName(habitJSON_data.Habit);
-      setStreakData(habitJSON_data);
-      setTotalStreak(habitJSON_data['Total Streak'])
-      // Date complete 
-      const targetDate = new Date(habitJSON_data['Target Duration']);
-      const currentDate = new Date();
-      const timeDifference = targetDate - currentDate;
-
-      // If target date is in the future, calculate the number of days left
-      if (timeDifference > 0) {
-        const daysLeft = Math.ceil(timeDifference / (1000 * 3600 * 24)); // Convert milliseconds to days
-        setStreakDayLeft(String(daysLeft))
-        // console.log(`Number of days left: ${daysLeft}`);
-      } else {
-        console.log("Target Duration has passed or is today.");
+      // Calculate difference in time (in milliseconds)
+      const timeDiff = targetDate - today;
+      if (timeDiff > 0) {
+        // Convert milliseconds to days
+        const daysLeft = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+        return daysLeft;
       }
     }
-    if (habitJSON_data['Target Duration']) {
-    }
+
+    const updatedStreakData = habitJSON_data.map((item, index) => {
+      const dayLeft = calculateDayLeft(item.TargetDuration);
+      return { ...item, DaysLeft: dayLeft }
+    })
+    // calculate day left 
+    setStreakData(updatedStreakData);
+    localStorage.setItem('Habit Track', JSON.stringify(updatedStreakData));
   }, [])
 
-  useEffect(() => {
-    if (Object.keys(streakData).length > 0) {
-      localStorage.setItem('Habit Track', JSON.stringify(streakData));
-    }
-  }, [streakData]); // This runs whenever streakData changes
+  // Function to update the streak when the button is clicked
+  const handleMarkAsDone = (index) => {
+    // Create a copy of streakData
+    const updatedStreakData = [...streakData];
 
-  const handleUpdate = () => {
-    if (isChecked) {
-      console.log("Clicked after check mark");
-      setIsShowToday_Done(true)
-      setTotalStreak((prev) => prev + 1)
-      setStreakData((prev) => ({
-        ...prev,
-        'Total Streak': totalStreak + 1
-      }))
-    }
+    // Get the current habit
+    const habit = updatedStreakData[index];
+
+    // Increase the streak count and update the LastUpdate date
+    habit.StreakRecord.TotalStreak += 1;
+    habit.StreakRecord.LastUpdate = new Date().toString(); // Update to today's date
+
+    // Set the updated streak data back to state
+    setStreakData(updatedStreakData);
+    localStorage.setItem('Habit Track', JSON.stringify(streakData));
   };
-  // console.log(streakData);
+
+  // Function to check if the habit has been marked today
+  const isMarkedToday = (lastUpdate) => {
+    const lastUpdateDate = new Date(lastUpdate);
+    const today = new Date();
+    // Check if the date matches today's date
+    return (
+      lastUpdateDate.getDate() === today.getDate() &&
+      lastUpdateDate.getMonth() === today.getMonth() &&
+      lastUpdateDate.getFullYear() === today.getFullYear()
+    );
+  };
+
+  const totalStreak = Array.isArray(streakData)
+    ? streakData.reduce((acc, habit) => acc + habit.StreakRecord.TotalStreak, 0)
+    : 0;
 
   return (
     <>
       <Slider />
       <Nav />
       <div>
+        <h1> Habit list {totalStreak} </h1>
         <div className="Streak">
-          <h1>Habits List  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Total strek - {totalStreak}</h1>
-          <div className="Habit-Card">
-            <h3>{streakName} </h3>
-            <p>
-              🔥 Streak: {totalStreak} Days
-            </p>
-            <StreakUpdate />
-            <p>
-              Number of days left: {streakDayLeft}
-            </p>
-            <p>📊 Progress: [██████░░░░░░] 60%</p>
-          </div>
+          {streakData.length > 0 &&
+            streakData.map((streak, index) => (
+              <div key={index} className="Habit-Card">
+                <h3>{streak.Habit}</h3>
+                <p>🔥 Streak: {streak.StreakRecord.TotalStreak} Days</p>
+                <div style={{ display: 'flex', gap: '13px' }}>
+                  <label className="checkbox-container">
+                    <input
+                      type="checkbox"
+                      defaultChecked={isMarkedToday(streak.StreakRecord.LastUpdate)} // Use defaultChecked instead of checked
+                      disabled={isMarkedToday(streak.StreakRecord.LastUpdate)} // Disable checkbox if marked today
+                    />
+                  </label>
+                  <button
+                    className="StreakUpdate-button"
+                    onClick={() => handleMarkAsDone(index)} // Handle the "Mark as Done" button click
+                    disabled={isMarkedToday(streak.StreakRecord.LastUpdate)} // Disable button if marked today
+                  >
+                    Mark as Done
+                  </button>
+                </div>
+                <p>Number of days left: {streak.DaysLeft}</p>
+                <p>Progress: [██████░░░░░░] 60%</p>
+              </div>
+            ))}
         </div>
       </div>
     </>
