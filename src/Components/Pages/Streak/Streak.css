@@ -20,7 +20,8 @@
     border-radius: 8px;
     font-weight: bold;
     transition: transform 0.3s ease-in-out, box-shadow 0.3s;
-    border: 0.5px solid rgba(255, 65, 108, 0.8); /* Ultra-thin border */
+    border: 0.5px solid rgba(255, 65, 108, 0.8);
+    /* Ultra-thin border */
 
     /* cursor: pointer; */
     color: #db386f;
@@ -36,3 +37,45 @@
     /* transform: scale(0.95); */
     box-shadow: 0 3px 10px rgba(255, 65, 108, 0.3);
 }
+
+/* Progress bar Styling code  */
+
+/* Progress Bar Container */
+/* Progress Bar Container */
+.progress-container {
+    width: 100%;
+    background: #222;
+    border-radius: 10px;
+    padding: 5px;
+    box-shadow: 0px 4px 10px rgba(255, 65, 108, 0.3);
+    overflow: hidden;
+  }
+  
+  /* Progress Bar */
+  .progress-bar {
+    height: 20px;
+    width: 0%;  /* Start from 0% */
+    background: linear-gradient(45deg, #ff416c, #ff4b2b);
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    /* Use CSS variable for dynamic width */
+    animation: progressLoad 2s ease-in-out forwards;
+  }
+  
+  /* Keyframes Animation */
+  @keyframes progressLoad {
+    from {
+      width: 0%;
+    }
+    to {
+      width: var(--progress, 60%); /* Dynamic progress */
+    }
+  }
+  
+
+/* Progress bar Styling code  */

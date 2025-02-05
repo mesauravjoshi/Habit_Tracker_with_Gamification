@@ -1,73 +1,118 @@
-import { useState, useEffect } from "react";
 import './StreakUpdate.css'
 
-function StreakUpdate() {
-  const [habitData, setHabitData] = useState(null);
-  const [isChecked, setIsChecked] = useState(false);
-  const [isDisabled, setIsDisabled] = useState(false);
+function StreakUpdate({ setStreakData, LastUpdate, index, streakData }) {
 
-  useEffect(() => {
-    // Fetch habit data from localStorage
-    const storedData = localStorage.getItem("Habit Track");
-    const lastUpdated = localStorage.getItem("LastUpdatedDate");
-    const today = new Date().toISOString().split("T")[0]; // YYYY-MM-DD format
+  // Function to update the streak when the button is clicked
+  const handleMarkAsDone = (index) => {
+    // Create a copy of streakData
+    const updatedStreakData = [...streakData];
 
-    if (storedData) {
-      setHabitData(JSON.parse(storedData));
-    }
+    // Get the current habit
+    const habit = updatedStreakData[index];
 
-    // If the streak was updated today, disable the checkbox and keep it checked
-    if (lastUpdated === today) {
-      setIsChecked(true);
-      setIsDisabled(true);
-    }
-  }, []);
+    // Increase the streak count and update the LastUpdate date
+    habit.StreakRecord.TotalStreak += 1;
+    habit.StreakRecord.LastUpdate = new Date().toString(); // Update to today's date
 
-  const handleUpdate = () => {
-    if (!habitData) return;
+    // Set the updated streak data back to state
+    setStreakData(updatedStreakData);
+    localStorage.setItem('Habit Track', JSON.stringify(streakData));
+  };
 
-    const today = new Date().toISOString().split("T")[0];
-    const lastUpdated = localStorage.getItem("LastUpdatedDate");
-
-    if (lastUpdated === today) {
-      alert("Streak already updated today!");
-      return;
-    }
-
-    if (isChecked) {
-      const updatedData = {
-        ...habitData,
-        "Total Streak": (habitData["Total Streak"] || 0) + 1
-      };
-
-      setHabitData(updatedData);
-      localStorage.setItem("Habit Track", JSON.stringify(updatedData));
-      localStorage.setItem("LastUpdatedDate", today);
-
-      // Lock the checkbox after updating
-      setIsChecked(true);
-      setIsDisabled(true);
-      alert("Streak updated!");
-    }
+  // Function to check if the habit has been marked today
+  const isMarkedToday = (lastUpdate) => {
+    const lastUpdateDate = new Date(lastUpdate);
+    const today = new Date();
+    // Check if the date matches today's date
+    return (
+      lastUpdateDate.getDate() === today.getDate() &&
+      lastUpdateDate.getMonth() === today.getMonth() &&
+      lastUpdateDate.getFullYear() === today.getFullYear()
+    );
   };
 
   return (
-    <div className="StreakUpdate">
-      {/* <p>Streak: {habitData?.["Total Streak"]}</p> */}
-
-      <label className="checkbox-container">
-        <input
-          type="checkbox"
-          checked={isChecked}
-          disabled={isDisabled}
-          onChange={(e) => setIsChecked(e.target.checked)}
-        />
-        <span>Mark as Done</span>
-      </label>
-
-      <button className="StreakUpdate-button" onClick={handleUpdate} disabled={isDisabled}>Update</button>
+    <div style={{ display: 'flex', gap: '13px' }}>
+      <button
+        className="StreakUpdate-button"
+        onClick={() => handleMarkAsDone(index)} // Handle the "Mark as Done" button click
+        disabled={isMarkedToday(LastUpdate)} // Disable button if marked today
+      >
+        ✅ Mark as Done</button>
     </div>
   );
 }
 
 export default StreakUpdate;
+
+
+/*
+AI code 
+
+import { useEffect, useState } from 'react';
+import './StreakUpdate.css';
+
+function StreakUpdate({ setStreakData, LastUpdate, index, streakData }) {
+  const [currentStreak, setCurrentStreak] = useState(streakData[index].StreakRecord.TotalStreak);
+  const [totalDaysCompleted, setTotalDaysCompleted] = useState(streakData[index].TotalDaysCompleted);
+
+  useEffect(() => {
+    // Ensure that TotalDaysCompleted persists and doesn't reset unnecessarily
+    setTotalDaysCompleted(streakData[index].TotalDaysCompleted);
+    setCurrentStreak(streakData[index].StreakRecord.TotalStreak);
+  }, [index, streakData]);
+
+  // Function to update the streak when the button is clicked
+  const handleMarkAsDone = (index) => {
+    const updatedStreakData = [...streakData];
+    const habit = updatedStreakData[index];
+
+    // Check if today is being marked as done
+    const today = new Date().toLocaleDateString();
+
+    // If the streak was already marked today, no changes are made
+    if (isMarkedToday(habit.StreakRecord.LastUpdate)) {
+      return;
+    }
+
+    // If today isn't marked, we can increase TotalDaysCompleted
+    habit.TotalDaysCompleted += 1;
+
+    // Check if the habit was missed, and reset the streak if so
+    if (isMarkedToday(habit.StreakRecord.LastUpdate)) {
+      habit.StreakRecord.TotalStreak += 1;
+    } else {
+      habit.StreakRecord.TotalStreak = 1; // Reset streak if missed
+    }
+
+    habit.StreakRecord.LastUpdate = new Date().toString(); // Update to today's date
+
+    // Set the updated streak data back to state
+    setStreakData(updatedStreakData);
+    localStorage.setItem('Habit Track', JSON.stringify(updatedStreakData));
+  };
+
+  // Function to check if the habit has been marked today
+  const isMarkedToday = (lastUpdate) => {
+    const lastUpdateDate = new Date(lastUpdate).toLocaleDateString();
+    const today = new Date().toLocaleDateString();
+    return lastUpdateDate === today;
+  };
+
+  return (
+    <div style={{ display: 'flex', gap: '13px' }}>
+      <button
+        className="StreakUpdate-button"
+        onClick={() => handleMarkAsDone(index)} // Handle the "Mark as Done" button click
+        disabled={isMarkedToday(streakData[index].StreakRecord.LastUpdate)} // Disable button if marked today
+      >
+        ✅ Mark as Done
+      </button>
+    </div>
+  );
+}
+
+export default StreakUpdate;
+
+
+*/

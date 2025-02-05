@@ -82,7 +82,8 @@
 
 /* Disabled Button */
 .StreakUpdate-button:disabled {
-    background: #aaa;
+    color: black;
+    background: #d99292;
     cursor: not-allowed;
     box-shadow: none;
 }
