@@ -4,14 +4,13 @@
         "Category": "Coding",
         "Frequency": "Weekly",
         "Priority": "Critical",
-        "TargetDuration": "2025-02-07",
+        "TargetDuration": "2025-02-05",
         "StartedDate": "Sat Feb 1 2025 14:22:52 GMT+0530 (India Standard Time)",
         "StreakRecord": {
-            "LastUpdate": "Tue Feb 04 2025 23:15:52 GMT+0530 (India Standard Time)",
-            "TotalStreak": 4
+            "LastUpdate": "Thu Feb 06 2025 18:09:32 GMT+0530 (India Standard Time)",
+            "TotalStreak": 6
         },
-        "TotalDaysCompleted": 4,
-        "DaysLeft": 2
+        "TotalDaysCompleted": 6
     },
     {
         "Habit": "push up",
@@ -21,10 +20,9 @@
         "TargetDuration": "2025-02-20",
         "StartedDate": "Sat Feb 1 2025 14:23:23 GMT+0530 (India Standard Time)",
         "StreakRecord": {
-            "LastUpdate": "Tue Feb 04 2025 22:56:05 GMT+0530 (India Standard Time)",
-            "TotalStreak": 4
+            "LastUpdate": "Thu Feb 06 2025 16:16:39 GMT+0530 (India Standard Time)",
+            "TotalStreak": 6
         },
-        "TotalDaysCompleted": 4,
-        "DaysLeft": 15
+        "TotalDaysCompleted": 6
     }
 ]

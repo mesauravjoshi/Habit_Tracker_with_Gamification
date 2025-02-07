@@ -31,8 +31,14 @@ function Habit() {
       Priority: priorityLabels[priority],
       TargetDuration: targetDuration,
       StartedDate: new Date().toString(),
+      StreakRecord: {
+        LastUpdate: "",
+        TotalStreak: 0
+      },
+      TotalDaysCompleted: 0
     };
     const newHabits = [...habits, newHabit];
+    console.log(newHabit);
     setHabits(newHabits)
     setHabit('')
     setSelectedCategory('')
@@ -47,12 +53,12 @@ function Habit() {
     }
   }, [habits]); // This runs whenever habitData changes
 
-  // useEffect(() => {
-  //   const savedHabitData = localStorage.getItem('Habit Track');
-  //   if (savedHabitData) {
-  //     setHabitData(JSON.parse(savedHabitData)); // Parse the data and set it as initial state
-  //   }
-  // }, []); // Empty dependency array ensures this runs only once when the component mounts
+  useEffect(() => {
+    const savedHabitData = localStorage.getItem('Habit Track');
+    if (savedHabitData) {
+      setHabits(JSON.parse(savedHabitData)); // Parse the data and set it as initial state
+    }
+  }, []); // Empty dependency array ensures this runs only once when the component mounts
 
 
   return (
@@ -77,6 +83,7 @@ function Habit() {
         value={selectedCategory}>
       <option > e.g.,Exercise, Coding, Meditation</option>
       <option value="Coding"> Coding</option>
+      <option value="Reading"> Reading</option>
       <option value="Workout"> Workout</option>
       </select>
     </div>
