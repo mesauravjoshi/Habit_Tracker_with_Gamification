@@ -1,28 +1,16 @@
 [
     {
-        "Habit": "dsa",
-        "Category": "Coding",
-        "Frequency": "Weekly",
-        "Priority": "Critical",
-        "TargetDuration": "2025-02-05",
-        "StartedDate": "Sat Feb 1 2025 14:22:52 GMT+0530 (India Standard Time)",
-        "StreakRecord": {
-            "LastUpdate": "Thu Feb 06 2025 18:09:32 GMT+0530 (India Standard Time)",
-            "TotalStreak": 6
-        },
-        "TotalDaysCompleted": 6
-    },
-    {
-        "Habit": "push up",
+        "Habit": "leg day",
         "Category": "Workout",
-        "Frequency": "Daily",
-        "Priority": "Medium",
-        "TargetDuration": "2025-02-20",
-        "StartedDate": "Sat Feb 1 2025 14:23:23 GMT+0530 (India Standard Time)",
+        "Frequency": "Weekly",
+        "Priority": "High",
+        "TargetDuration": "2025-02-28",
+        "StartedDate": "Sat Feb 01 2025 20:22:53 GMT+0530 (India Standard Time)",
         "StreakRecord": {
-            "LastUpdate": "Thu Feb 06 2025 16:16:39 GMT+0530 (India Standard Time)",
-            "TotalStreak": 6
+            "LastDayForWeek": "2025-02-07",
+            "LastUpdate": "",
+            "TotalStreak": 0
         },
-        "TotalDaysCompleted": 6
+        "TotalDaysCompleted": 0
     }
 ]

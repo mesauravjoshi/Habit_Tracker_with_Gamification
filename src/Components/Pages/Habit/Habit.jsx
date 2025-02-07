@@ -1,6 +1,4 @@
 import React,{useState} from 'react'
-import Slider from '../../Slider/Slider';
-import Nav from '../../Nav/Nav';
 import './Habit.css';
 import { useEffect } from 'react';
 
@@ -32,6 +30,7 @@ function Habit() {
       TargetDuration: targetDuration,
       StartedDate: new Date().toString(),
       StreakRecord: {
+        LastDayForWeek: "",  // only used when user choose frequency weekly
         LastUpdate: "",
         TotalStreak: 0
       },
@@ -58,8 +57,7 @@ function Habit() {
     if (savedHabitData) {
       setHabits(JSON.parse(savedHabitData)); // Parse the data and set it as initial state
     }
-  }, []); // Empty dependency array ensures this runs only once when the component mounts
-
+  }, []); 
 
   return (
   <>
@@ -110,9 +108,9 @@ function Habit() {
     </div>
 
     {/* 5.  Reminder Time */}
-    <div id='borderr' className="Reminder-Time">
+    {/* <div id='borderr' className="Reminder-Time">
       <h2>Reminder Time</h2>
-    </div>
+    </div> */}
 
     {/* 6.  Priority Level */}
     <div id="borderr" className="Priority-Level">
