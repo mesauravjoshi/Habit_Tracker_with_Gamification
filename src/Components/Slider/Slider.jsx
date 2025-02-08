@@ -1,10 +1,14 @@
-import { useState } from 'react'
 import { Link } from "react-router-dom";
 import './Slider.css'
-function Slider() {
+function Slider({ isOpen, closeSlider }) {
 
   return (
-    <div className='Slider'>
+    <div className={`Slider show-slider ${isOpen ? "show" : ""}`}>
+
+    {/* <div className={`Slider ${isOpen ? "show-slider" : ""}`}> */}
+      <div className="close-icon" onClick={closeSlider}>
+        ✖ {/* Close button */}
+      </div>
       <div className='logo'>
         <h3>
           <center>
@@ -16,13 +20,13 @@ function Slider() {
         <Link to='/' className="nav-link">
           <li>Home</li>
         </Link>
-         <Link to="/habit" className="nav-link">
+        <Link to="/habit" className="nav-link">
           <li>My Habit</li>
         </Link>
-         <Link to="/track-streak" className="nav-link">
+        <Link to="/track-streak" className="nav-link">
           <li>Track Streak</li>
         </Link>
-         <Link to="/" className="nav-link">
+        <Link to="/" className="nav-link">
           <li>Completed</li>
         </Link>
       </div>

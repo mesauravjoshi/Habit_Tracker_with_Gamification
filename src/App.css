@@ -11,3 +11,9 @@ h1 {
 h3 {
     font-size: 1.6em;
 }
+
+@media (max-width: 850px) {
+    .track-app {
+        display: block;
+    }
+}

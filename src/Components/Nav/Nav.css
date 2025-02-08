@@ -1,4 +1,4 @@
-.nav{
+.nav {
     grid-column: 2 / 3;
     display: flex;
     height: 4em;
@@ -6,7 +6,7 @@
     padding: 10px 18px;
 }
 
-button{
+button {
     font-size: 1.2em;
     padding: 8px 10px;
     border-radius: 5px;
@@ -14,4 +14,19 @@ button{
     background-color: transparent;
     color: #f19c20;
     cursor: pointer;
+}
+
+/* Menu Icon */
+.menu-icon {
+    font-size: 24px;
+    color: #f19c20;
+    cursor: pointer;
+    display: none;
+}
+
+/* Show Menu Icon on Small Screens */
+@media (max-width: 850px) {
+    .menu-icon {
+        display: block;
+    }
 }

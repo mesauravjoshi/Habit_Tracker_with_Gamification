@@ -8,8 +8,8 @@ function App() {
 
   return (
     <>
-      <Slider/>
-      <Nav/>
+      {/* <Slider/>
+      <Nav/> */}
       <Hero/>
     </>
   )

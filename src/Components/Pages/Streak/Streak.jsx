@@ -7,7 +7,7 @@ import StreakUpdate from './StreakUpdate';
 
 function Streak() {
   const [streakData, setStreakData] = useState({});
-  console.log(streakData.length);
+  // console.log(streakData.length);
   
   useEffect(() => {
     const getHabit_from_localStorage = localStorage.getItem('Habit Track');
@@ -70,8 +70,8 @@ function Streak() {
 
   return (
     <>
-      <Slider />
-      <Nav />
+      {/* <Slider />
+      <Nav /> */}
       <div>
         <h1> Habit list {totalStreak} </h1>
         <div className="Streak">

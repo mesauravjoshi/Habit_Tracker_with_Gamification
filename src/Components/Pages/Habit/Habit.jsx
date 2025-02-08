@@ -63,8 +63,8 @@ function Habit() {
 
   return (
   <>
-    <Slider/>
-    <Nav/>
+    {/* <Slider/>
+    <Nav/> */}
     <div className='habbit'>
     {/* 1. Add-Habit */}
     <div id='borderr' className="Add-Habit">
