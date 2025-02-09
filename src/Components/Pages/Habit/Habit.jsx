@@ -22,7 +22,7 @@ function Habit() {
 
   const handleAddHabit = () => {
     const lastDay = new Date();
-    lastDay.setDate(lastDay.getDate() + 7);
+    lastDay.setDate(lastDay.getDate() + 6);
     lastDay.setHours(0, 0, 0, 0);
 
     console.log(lastDay.toString());

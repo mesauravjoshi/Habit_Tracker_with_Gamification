@@ -1,28 +1,14 @@
 [
     {
-        "Habit": "dsa",
-        "Category": "Reading",
-        "Frequency": "Daily",
-        "Priority": "High",
-        "TargetDuration": "2025-02-08",
-        "StartedDate": "Sat Feb 01 2025 16:00:04 GMT+0530 (India Standard Time)",
-        "StreakRecord": {
-            "LastDayForWeek": "Sat Feb 08 2025 16:00:04 GMT+0530 (India Standard Time)",
-            "LastUpdate": "Sat Feb 08 2025 17:27:11 GMT+0530 (India Standard Time)",
-            "TotalStreak": 8
-        },
-        "TotalDaysCompleted": 8
-    },
-    {
-        "Habit": "leg day",
+        "Habit": "leg",
         "Category": "Workout",
         "Frequency": "Weekly",
         "Priority": "Low",
-        "TargetDuration": "2025-02-28",
-        "StartedDate": "Sat Feb 01 2025 16:00:33 GMT+0530 (India Standard Time)",
+        "TargetDuration": "2025-03-15",
+        "StartedDate": "Sat Feb 01 2025 00:00:00 GMT+0530 (India Standard Time)",
         "StreakRecord": {
-            "LastDayForWeek": "Sat Feb 08 2025 16:00:33 GMT+0530 (India Standard Time)",
-            "LastUpdate": "2025-02-01T10:30:39.430Z",
+            "LastDayForWeek": "Fri Feb 07 2025 00:00:00 GMT+0530 (India Standard Time)",
+            "LastUpdate": "",
             "TotalStreak": 0
         },
         "TotalDaysCompleted": 0
