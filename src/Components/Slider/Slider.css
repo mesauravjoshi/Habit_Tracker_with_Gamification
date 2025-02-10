@@ -100,6 +100,7 @@ li {
 
     /* When it appears, slide in */
     .show-slider.show {
+        z-index: 1;
         transform: translateX(0);
     }
 

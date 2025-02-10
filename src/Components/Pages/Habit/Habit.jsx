@@ -64,7 +64,7 @@ function Habit() {
           LastUpdate: "",
           TotalStreak: 0
         },
-        TotalDaysCompleted: 0
+        TotalWeeksCompleted: 0
       };
       const newHabits = [...habits, newHabit];
       console.log(newHabit);
