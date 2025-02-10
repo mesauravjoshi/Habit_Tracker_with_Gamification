@@ -1,81 +1,125 @@
+.Habit-list {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 2em;
+}
+
 .Streak {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .Streak h1 {
-    font-size: 26px;
-    margin-bottom: 15px;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
+  font-size: 26px;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
 }
 
 .Habit-Card {
-    display: grid;
-    grid-row-gap: 14px;
-    grid-template-columns: 1fr 1fr;
-    justify-content: space-between;
-    padding: 10px 17px;
-    margin: 10px 35px;
-    border-radius: 8px;
-    font-weight: bold;
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s;
-    border: 0.5px solid rgba(255, 65, 108, 0.8);
-    /* Ultra-thin border */
-
-    /* cursor: pointer; */
-    color: #db386f;
+  display: grid;
+  grid-row-gap: 14px;
+  grid-template-columns: 1fr 1fr;
+  padding: 10px 17px;
+  margin: 10px 35px;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s;
+  border: 0.5px solid rgba(255, 65, 108, 0.8);
+  color: #db386f;
 }
 
+.Habit-Card>*:nth-child(odd) {
+  justify-self: start;
+  /* Align the odd items (left column) to the left */
+}
+
+.Habit-Card>*:nth-child(even) {
+  justify-self: end;
+  /* Align the even items (right column) to the right */
+}
 
 .Habit-Card:hover {
-    transform: scale(1.0);
-    box-shadow: 0 5px 15px rgba(255, 65, 108, 0.4);
+  transform: scale(1.0);
+  box-shadow: 0 5px 15px rgba(255, 65, 108, 0.4);
 }
 
 .Habit-Card:active {
-    /* transform: scale(0.95); */
-    box-shadow: 0 3px 10px rgba(255, 65, 108, 0.3);
+  /* transform: scale(0.95); */
+  box-shadow: 0 3px 10px rgba(255, 65, 108, 0.3);
 }
 
 /* Progress bar Styling code  */
 
 /* Progress Bar Container */
-/* Progress Bar Container */
+.progress-outer {
+  display: flex;
+  width: 96%;
+  gap: 10px;
+}
+
 .progress-container {
-    width: 85%;
-    background: #222;
-    border-radius: 10px;
-    padding: 5px;
-    box-shadow: 0px 4px 10px rgba(255, 65, 108, 0.3);
-    overflow: hidden;
+  width: 85%;
+  background: #222;
+  border-radius: 10px;
+  padding: 5px;
+  box-shadow: 0px 4px 10px rgba(255, 65, 108, 0.3);
+  overflow: hidden;
+}
+
+/* Progress Bar */
+.progress-bar {
+  height: 20px;
+  width: 0%;
+  /* Start from 0% */
+  background: linear-gradient(45deg, #ff416c, #ff4b2b);
+  border-radius: 10px;
+  color: white;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Use CSS variable for dynamic width */
+  animation: progressLoad 2s ease-in-out forwards;
+}
+
+/* Keyframes Animation */
+@keyframes progressLoad {
+  from {
+    width: 0%;
   }
-  
-  /* Progress Bar */
-  .progress-bar {
-    height: 20px;
-    width: 0%;  /* Start from 0% */
-    background: linear-gradient(45deg, #ff416c, #ff4b2b);
-    border-radius: 10px;
-    color: white;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  
-    /* Use CSS variable for dynamic width */
-    animation: progressLoad 2s ease-in-out forwards;
+
+  to {
+    width: var(--progress, 60%);
+    /* Dynamic progress */
   }
-  
-  /* Keyframes Animation */
-  @keyframes progressLoad {
-    from {
-      width: 0%;
-    }
-    to {
-      width: var(--progress, 60%); /* Dynamic progress */
-    }
-  }
-  
+}
+
 
 /* Progress bar Styling code  */
+
+.TotalDaysCompleted {
+  display: flex;
+}
+
+@media (max-width: 550px) {
+  .Habit-Card {
+    margin: 10px 13px;
+    grid-row-gap: 14px;
+    align-items: center;
+  }
+
+  .Habit-Card>*:nth-child(6),
+  .Habit-Card>*:nth-child(5) {
+    grid-column: 1 / -1;
+  }
+
+  .TotalDaysCompleted {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+  }
+
+}

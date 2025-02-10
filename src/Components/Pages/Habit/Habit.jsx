@@ -24,57 +24,42 @@ function Habit() {
     const lastDay = new Date();
     lastDay.setDate(lastDay.getDate() + 6);
     lastDay.setHours(0, 0, 0, 0);
-
-    console.log(lastDay.toString());
+  
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    console.log(today);
-    if (selectedFrequency == 'Daily') {
-      const newHabit = {
-        Habit: habit,
-        Category: selectedCategory,
-        Frequency: selectedFrequency,
-        Priority: priorityLabels[priority],
-        TargetDuration: targetDuration,
-        StartedDate: today.toString(),
-        StreakRecord: {
-          LastUpdate: "",
-          TotalStreak: 0
-        },
-        TotalDaysCompleted: 0
-      };
-      const newHabits = [...habits, newHabit];
-      console.log(newHabit);
-      setHabits(newHabits);
-      setHabit('');
-      setSelectedCategory('');
-      setSelectedFrequency('');
-      setTargetDuration('');
-      setPriority(0);
-    } else if (selectedFrequency == 'Weekly') {
-      const newHabit = {
-        Habit: habit,
-        Category: selectedCategory,
-        Frequency: selectedFrequency,
-        Priority: priorityLabels[priority],
-        TargetDuration: targetDuration,
-        StartedDate: today.toString(),
-        StreakRecord: {
-          LastDayForWeek: lastDay.toString(),  // only used when user choose frequency weekly
-          LastUpdate: "",
-          TotalStreak: 0
-        },
-        TotalWeeksCompleted: 0
-      };
-      const newHabits = [...habits, newHabit];
-      console.log(newHabit);
-      setHabits(newHabits);
-      setHabit('');
-      setSelectedCategory('');
-      setSelectedFrequency('');
-      setTargetDuration('');
-      setPriority(0);
+  
+    const newHabit = {
+      Habit: habit,
+      Category: selectedCategory,
+      Frequency: selectedFrequency,
+      Priority: priorityLabels[priority],
+      TargetDuration: targetDuration,
+      StartedDate: today.toString(),
+      StreakRecord: {
+        LastUpdate: "",
+        TotalStreak: 0
+      }
+    };
+  
+    if (selectedFrequency === 'Daily') {
+      newHabit.TotalDaysCompleted = 0;
+    } else if (selectedFrequency === 'Weekly') {
+      newHabit.StreakRecord.LastDayForWeek = lastDay.toString();
+      newHabit.TotalWeeksCompleted = 0;
+    } else {
+      console.log('nothing is selected');
+      return;  // Exit if no valid frequency is selected
     }
+  
+    const newHabits = [...habits, newHabit];
+    setHabits(newHabits);
+  
+    // Reset input fields
+    setHabit('');
+    setSelectedCategory('');
+    setSelectedFrequency('');
+    setTargetDuration('');
+    setPriority(0);
   };
 
   useEffect(() => {

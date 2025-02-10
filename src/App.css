@@ -8,6 +8,10 @@ h1 {
     font-size: 3.5em;
 }
 
+h2 {
+    font-size: 2em;
+}
+
 h3 {
     font-size: 1.6em;
 }
@@ -15,5 +19,14 @@ h3 {
 @media (max-width: 850px) {
     .track-app {
         display: block;
+    }
+}
+
+@media (max-width: 550px) {
+    h1 {
+        font-size: 2em;
+    }
+    h2{
+        font-size: 1.3em;
     }
 }

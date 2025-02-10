@@ -87,3 +87,17 @@
     cursor: not-allowed;
     box-shadow: none;
 }
+
+@media (max-width: 550px) {
+    .StreakUpdate-button {
+        font-size: 13px;
+        padding: 5px 5px;
+    }
+
+    .progress-container{
+        height: 25px;
+    }
+    .progress-bar {
+        height: 18px;
+    }
+}

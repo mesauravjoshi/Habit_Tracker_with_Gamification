@@ -75,7 +75,10 @@ function Streak() {
   return (
     <>
       <div>
-        <h1> Habit list {totalStreak} </h1>
+        <div className='Habit-list'>
+          <h1> Habit list  </h1>
+          <h2>🔥Total Streak: {totalStreak}</h2>
+        </div>
         <div className="Streak">
           {streakData.length > 0 &&
             streakData.map((streak, index) => {
@@ -124,7 +127,7 @@ function Streak() {
                   <p>{daysLeft}</p>
 
                   {/* Progress Bar */}
-                  <div style={{ display: 'flex' }}>
+                  <div className='progress-outer'>
                     <div className="progress-container" style={{ "--progress": `${progress}%` }}>
                       <div className="progress-bar"></div>
                     </div>
