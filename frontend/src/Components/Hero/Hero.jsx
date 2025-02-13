@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './Hero.css';
 
 function Hero() {
-  const ram = 'ram';  // this is the data you want to send to the backend
+  const ram = 'ram';
   
   const handleRam = async (e) => {
     try {
