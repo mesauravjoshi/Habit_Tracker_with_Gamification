@@ -2,13 +2,30 @@ import './StreakUpdate.css'
 
 function StreakUpdate({ setStreakData, LastUpdate, LastDayForWeek, TargetDuration, StartedDate, index, streakData, Frequency }) {
 
+  const IsConmpleted = (StartedDate,TargetDuration,Frequency) => {
+    const startDate = new Date(StartedDate);
+    console.log(startDate);
+    const targetDate = new Date(TargetDuration);
+    targetDate.setHours(0, 0, 0, 0);
+    console.log(targetDate);
+    const timeDiff = targetDate - startDate ;
+    const daysLeft = Math.floor(timeDiff / (1000 * 60 * 60 * 24)) + 1;
+
+    // console.log(Math.floor(daysLeft / 7) + 1);
+    // console.log(daysLeft);
+    if (Frequency === "Weekly") {
+      if (daysLeft > 0) return (Math.floor(daysLeft / 7) + 1);
+    } else if(Frequency === "Daily"){
+      if (daysLeft > 0) return daysLeft;
+    }
+  }
+
   const calculateWeekCompleted = (StartedDate) => {
     // Convert the StartedDate string to a Date object
     const startDate = new Date(StartedDate);
 
     // Get today's date
     const today = new Date();
-    // Calculate the difference in milliseconds
     const diffInMillis = today - startDate;
 
     // Convert milliseconds to weeks (1 week = 7 days = 7 * 24 * 60 * 60 * 1000 milliseconds)
@@ -78,6 +95,10 @@ function StreakUpdate({ setStreakData, LastUpdate, LastDayForWeek, TargetDuratio
         const totalDays = Math.floor(totalMilliseconds / (1000 * 60 * 60 * 24));
         // const update_TotalDaysCompleteds = 
         habit.TotalDaysCompleted = (totalDays + 1)
+        // console.log(IsConmpleted(StartedDate,Frequency))
+        if (IsConmpleted(StartedDate,TargetDuration,Frequency) === habit.TotalDaysCompleted ) {
+          habit.IsConmpleted = true
+        }
         setStreakData(updatedStreakData);
         localStorage.setItem('Habit Track', JSON.stringify(streakData));
       }
@@ -97,21 +118,12 @@ function StreakUpdate({ setStreakData, LastUpdate, LastDayForWeek, TargetDuratio
         // return
         if (today >= dayFrom && today <= endDate || LastUpdate == '') {
           // console.log('between Start - end date', LastUpdate);
-
-          // Increase the streak count and update the LastUpdate date
-          const change_LastDayForWeek = new Date(habit.StreakRecord.LastDayForWeek);
-          change_LastDayForWeek.setDate(change_LastDayForWeek.getDate() + 7);
-
-          habit.StreakRecord.LastDayForWeek = String(change_LastDayForWeek);
           habit.StreakRecord.TotalStreak += 1;
           habit.StreakRecord.LastUpdate = String(today);
           setStreakData(updatedStreakData);
         }
         else if (today > endDate) {
           // console.log('2nd condition');
-          const upcommingDay = calculateUpcommingDay(StartedDate);
-          // console.log('upcoming: ', upcommingDay);
-          habit.StreakRecord.LastDayForWeek = String(upcommingDay);
           habit.StreakRecord.TotalStreak = 1;
           habit.StreakRecord.LastUpdate = String(today);
         }
@@ -119,8 +131,15 @@ function StreakUpdate({ setStreakData, LastUpdate, LastDayForWeek, TargetDuratio
           // console.log('user added streak before');
           return false
         }
+        const upcommingDay = calculateUpcommingDay(StartedDate);
+        // console.log('upcoming: ', upcommingDay);
+        habit.StreakRecord.LastDayForWeek = String(upcommingDay);
+
         habit.TotalWeeksCompleted = calculateWeekCompleted(StartedDate);
         // habit.TotalWeeksCompleted += 1;
+        if (IsConmpleted(StartedDate,TargetDuration,Frequency) === habit.TotalWeeksCompleted ) {
+          habit.IsConmpleted = true
+        }
         setStreakData(updatedStreakData);
         // console.log(streakData);
         localStorage.setItem('Habit Track', JSON.stringify(streakData));

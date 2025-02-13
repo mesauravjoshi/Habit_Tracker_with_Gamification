@@ -1,3 +1,7 @@
+.strek-container{
+  overflow-y: auto;
+}
+
 .Habit-list {
   display: flex;
   justify-content: space-between;

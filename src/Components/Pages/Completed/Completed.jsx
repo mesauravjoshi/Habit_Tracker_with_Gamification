@@ -1,17 +1,14 @@
 import { useEffect, useState } from 'react';
-import './Streak.css'
-import './StreakUpdate.css'
-import StreakUpdate from './StreakUpdate';
+// import './Streak.css'
 
-function Streak() {
+function Completed() {
   const [streakData, setStreakData] = useState([]);
 
   useEffect(() => {
     const getHabit_from_localStorage = localStorage.getItem('Habit Track');
     const habitJSON_data = JSON.parse(getHabit_from_localStorage) || [];
-
-    setStreakData(habitJSON_data);
-    localStorage.setItem('Habit Track', JSON.stringify(habitJSON_data));
+    setStreakData(habitJSON_data.filter(item =>  item.IsConmpleted == true));
+    // localStorage.setItem('Habit Track', JSON.stringify(habitJSON_data));
   }, [])
 
   const totalStreak = Array.isArray(streakData)
@@ -53,7 +50,7 @@ function Streak() {
 
     // console.log(Math.floor(daysLeft/7) +1);
     // console.log(daysLeft);
-
+    
     if (daysLeft > 0) return (Math.floor(daysLeft / 7) + 1);
     else if (daysLeft === 0) return 0;
     else return "Completed";
@@ -76,8 +73,7 @@ function Streak() {
     <>
       <div>
         <div className='Habit-list'>
-          <h1> Habit list  </h1>
-          <h3 style={{ display: 'flex' }} >🔥Total Streak: {totalStreak} | 🎯 XP Points:</h3>
+          <h1> Completed Habits  </h1>
         </div>
         <div className="Streak">
           {streakData.length > 0 &&
@@ -112,18 +108,9 @@ function Streak() {
 
               return (
                 <div key={index} className="Habit-Card">
-                  <h3>{streak.Habit} ({streak.Frequency})</h3>
+                  <h3>{streak.Habit}</h3>
                   <p>{streakUI}</p>
-                  <StreakUpdate
-                    setStreakData={setStreakData}
-                    Frequency={streak.Frequency}
-                    LastDayForWeek={streak.StreakRecord.LastDayForWeek}
-                    LastUpdate={streak.StreakRecord.LastUpdate}
-                    TargetDuration={streak.TargetDuration}
-                    StartedDate={streak.StartedDate}
-                    index={index}
-                    streakData={streakData}
-                  />
+
                   <p>{daysLeft}</p>
 
                   {/* Progress Bar */}
@@ -145,4 +132,4 @@ function Streak() {
   )
 }
 
-export default Streak;
+export default Completed;

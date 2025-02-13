@@ -44,7 +44,8 @@ function Habit() {
       StreakRecord: {
         LastUpdate: "",
         TotalStreak: 0
-      }
+      },
+      IsConmpleted: false
     };
 
     if (selectedFrequency === 'Daily') {
@@ -129,8 +130,8 @@ function Habit() {
           <label htmlFor="Weekly">Weekly</label>
           <br />
 
-          <input type="radio" id="Custom" name="Frequency" value="Custom" checked={selectedFrequency === "Custom"} onChange={handleFrequencyChange} />
-          <label htmlFor="Custom">Custom</label>
+          {/* <input type="radio" id="Custom" name="Frequency" value="Custom" checked={selectedFrequency === "Custom"} onChange={handleFrequencyChange} />
+          <label htmlFor="Custom">Custom</label> */}
         </div>
 
         {/* 5.  Reminder Time */}

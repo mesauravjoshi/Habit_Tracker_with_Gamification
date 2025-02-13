@@ -28,7 +28,7 @@ function Slider({ isOpen, closeSlider }) {
         <Link to="/track-streak" className="nav-link">
           <li>Track Streak</li>
         </Link>
-        <Link to="/" className="nav-link">
+        <Link to="/completed" className="nav-link">
           <li>Completed</li>
         </Link>
       </div>

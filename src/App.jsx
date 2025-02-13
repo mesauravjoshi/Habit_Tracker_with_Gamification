@@ -6,6 +6,7 @@ import Streak from "./Components/Pages/Streak/Streak";
 import Slider from "./Components/Slider/Slider";
 import Nav from "./Components/Nav/Nav";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Completed from "./Components/Pages/Completed/Completed";
 
 function App() {
   const [isSliderOpen, setIsSliderOpen] = useState(false);
@@ -24,6 +25,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/habit" element={<Habit />} />
             <Route path="/track-streak" element={<Streak />} />
+            <Route path="/completed" element={<Completed />} />
           </Routes>
         </Router>
       </div>
