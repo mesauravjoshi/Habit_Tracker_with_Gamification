@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React, { useState } from 'react'
 import './Habit.css';
 import { useEffect } from 'react';
 
@@ -8,12 +8,12 @@ function Habit() {
   // const [habitData , setHabitData] = useState({});
   // State to hold the data from local storage
   const [habits, setHabits] = useState([]);
-  const [habit , setHabit] = useState('');
+  const [habit, setHabit] = useState('');
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedFrequency, setSelectedFrequency] = useState("");
   const [targetDuration, setTargetDuration] = useState("");
   const [priority, setPriority] = useState(0);
-  
+
   const handleFrequencyChange = (event) => {
     if (event.target.name === "Frequency") {
       setSelectedFrequency(event.target.value);
@@ -21,29 +21,60 @@ function Habit() {
   };
 
   const handleAddHabit = () => {
+    const lastDay = new Date();
+    lastDay.setDate(lastDay.getDate() + 7);
+    lastDay.setHours(0, 0, 0, 0);
 
-    const newHabit = {
-      Habit: habit,
-      Category: selectedCategory,
-      Frequency: selectedFrequency,
-      Priority: priorityLabels[priority],
-      TargetDuration: targetDuration,
-      StartedDate: new Date().toString(),
-      StreakRecord: {
-        LastDayForWeek: "",  // only used when user choose frequency weekly
-        LastUpdate: "",
-        TotalStreak: 0
-      },
-      TotalDaysCompleted: 0
-    };
-    const newHabits = [...habits, newHabit];
-    console.log(newHabit);
-    setHabits(newHabits)
-    setHabit('')
-    setSelectedCategory('')
-    setSelectedFrequency('')
-    setTargetDuration('')
-    setPriority(0)
+    console.log(lastDay.toString());
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    console.log(today);
+    if (selectedFrequency == 'Daily') {
+      const newHabit = {
+        Habit: habit,
+        Category: selectedCategory,
+        Frequency: selectedFrequency,
+        Priority: priorityLabels[priority],
+        TargetDuration: targetDuration,
+        StartedDate: today.toString(),
+        StreakRecord: {
+          LastUpdate: "",
+          TotalStreak: 0
+        },
+        TotalDaysCompleted: 0
+      };
+      const newHabits = [...habits, newHabit];
+      console.log(newHabit);
+      setHabits(newHabits);
+      setHabit('');
+      setSelectedCategory('');
+      setSelectedFrequency('');
+      setTargetDuration('');
+      setPriority(0);
+    } else if (selectedFrequency == 'Weekly') {
+      const newHabit = {
+        Habit: habit,
+        Category: selectedCategory,
+        Frequency: selectedFrequency,
+        Priority: priorityLabels[priority],
+        TargetDuration: targetDuration,
+        StartedDate: today.toString(),
+        StreakRecord: {
+          LastDayForWeek: lastDay.toString(),  // only used when user choose frequency weekly
+          LastUpdate: "",
+          TotalStreak: 0
+        },
+        TotalDaysCompleted: 0
+      };
+      const newHabits = [...habits, newHabit];
+      console.log(newHabit);
+      setHabits(newHabits);
+      setHabit('');
+      setSelectedCategory('');
+      setSelectedFrequency('');
+      setTargetDuration('');
+      setPriority(0);
+    }
   };
 
   useEffect(() => {
@@ -57,81 +88,81 @@ function Habit() {
     if (savedHabitData) {
       setHabits(JSON.parse(savedHabitData)); // Parse the data and set it as initial state
     }
-  }, []); 
+  }, []);
 
   return (
-  <>
-    {/* <Slider/>
+    <>
+      {/* <Slider/>
     <Nav/> */}
-    <div className='habbit'>
-    {/* 1. Add-Habit */}
-    <div id='borderr' className="Add-Habit">
-      <h2>Add Yoor Habbit </h2>
-      <input type="text"
-        value={habit}
-        onChange={(e) => setHabit(e.target.value)}
-       />
-    </div>
+      <div className='habbit'>
+        {/* 1. Add-Habit */}
+        <div id='borderr' className="Add-Habit">
+          <h2>Add Yoor Habbit </h2>
+          <input type="text"
+            value={habit}
+            onChange={(e) => setHabit(e.target.value)}
+          />
+        </div>
 
-    {/* 2. Category */}
-    <div id='borderr' className="Category">
-      <h2>Category</h2>
-      <select 
-        onChange={(e) => setSelectedCategory(e.target.value)} 
-        value={selectedCategory}>
-      <option > e.g.,Exercise, Coding, Meditation</option>
-      <option value="Coding"> Coding</option>
-      <option value="Reading"> Reading</option>
-      <option value="Workout"> Workout</option>
-      </select>
-    </div>
+        {/* 2. Category */}
+        <div id='borderr' className="Category">
+          <h2>Category</h2>
+          <select
+            onChange={(e) => setSelectedCategory(e.target.value)}
+            value={selectedCategory}>
+            <option > e.g.,Exercise, Coding, Meditation</option>
+            <option value="Coding"> Coding</option>
+            <option value="Reading"> Reading</option>
+            <option value="Workout"> Workout</option>
+          </select>
+        </div>
 
-    {/* 3. Target Duration */}
-    <div id='borderr' className="Target-Duration">
-      <h2>Target Duration</h2>
-      <input type="date" value={targetDuration}  onChange={(e) => setTargetDuration(e.target.value)}/>
-    </div>
+        {/* 3. Target Duration */}
+        <div id='borderr' className="Target-Duration">
+          <h2>Target Duration</h2>
+          <input type="date" value={targetDuration} onChange={(e) => setTargetDuration(e.target.value)} />
+        </div>
 
-    {/* 4.  Frequency */}
-    <div id="borderr" className="Frequency" onChange={handleFrequencyChange}>
-      <h2>Frequency</h2>
-      <input type="radio" id="Daily" name="Frequency" value="Daily" checked={selectedFrequency === "Daily"} onChange={handleFrequencyChange}  />
-      <label htmlFor="Daily">Daily</label>
-      <br />
+        {/* 4.  Frequency */}
+        <div id="borderr" className="Frequency" onChange={handleFrequencyChange}>
+          <h2>Frequency</h2>
+          <input type="radio" id="Daily" name="Frequency" value="Daily" checked={selectedFrequency === "Daily"} onChange={handleFrequencyChange} />
+          <label htmlFor="Daily">Daily</label>
+          <br />
 
-      <input type="radio" id="Weekly" name="Frequency" value="Weekly" checked={selectedFrequency === "Weekly"} onChange={handleFrequencyChange}  />
-      <label htmlFor="Weekly">Weekly</label>
-      <br />
+          <input type="radio" id="Weekly" name="Frequency" value="Weekly" checked={selectedFrequency === "Weekly"} onChange={handleFrequencyChange} />
+          <label htmlFor="Weekly">Weekly</label>
+          <br />
 
-      <input type="radio" id="Custom" name="Frequency" value="Custom" checked={selectedFrequency === "Custom"} onChange={handleFrequencyChange}  />
-      <label htmlFor="Custom">Custom</label>
-    </div>
+          <input type="radio" id="Custom" name="Frequency" value="Custom" checked={selectedFrequency === "Custom"} onChange={handleFrequencyChange} />
+          <label htmlFor="Custom">Custom</label>
+        </div>
 
-    {/* 5.  Reminder Time */}
-    {/* <div id='borderr' className="Reminder-Time">
+        {/* 5.  Reminder Time */}
+        {/* <div id='borderr' className="Reminder-Time">
       <h2>Reminder Time</h2>
     </div> */}
 
-    {/* 6.  Priority Level */}
-    <div id="borderr" className="Priority-Level">
-      <h2>Priority Level</h2>
-      <input
-        type="range"
-        min="0"
-        max="3"
-        step="1"
-        value={priority}
-        onChange={(e) => setPriority(Number(e.target.value))}
-        className="slider"
-      />
-      <p className="priority-text">{priorityLabels[priority]}</p>
-    </div>
+        {/* 6.  Priority Level */}
+        <div id="borderr" className="Priority-Level">
+          <h2>Priority Level</h2>
+          <input
+            type="range"
+            min="0"
+            max="3"
+            step="1"
+            value={priority}
+            onChange={(e) => setPriority(Number(e.target.value))}
+            className="slider"
+          />
+          <p className="priority-text">{priorityLabels[priority]}</p>
+        </div>
 
-    <div className="Add-Habit-Button">
-      <button onClick={handleAddHabit}>Add Habit</button>
-    </div>
-    </div>
-  </>
+        <div className="Add-Habit-Button">
+          <button onClick={handleAddHabit}>Add Habit</button>
+        </div>
+      </div>
+    </>
   )
 }
 

@@ -39,7 +39,7 @@ function Streak() {
     targetDateMidnight.setHours(0, 0, 0, 0);
 
     const totalDays = Math.floor((targetDateMidnight - startDateMidnight) / (1000 * 60 * 60 * 24)) + 1;
-    console.log('line 42: ',totalDays);
+    // console.log('line 42: ',totalDays);
     
     return totalDays;
   }
