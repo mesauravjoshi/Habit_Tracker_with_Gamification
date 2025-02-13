@@ -1,6 +1,0 @@
-{
-    "explorer.excludeGitIgnore": false,
-    "git.enabled": true,
-    "git.confirmEmptyCommits": false,
-    "terminal.integrated.shellIntegration.enabled": false
-}
