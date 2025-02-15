@@ -7,11 +7,26 @@ function Streak() {
   const [streakData, setStreakData] = useState([]);
 
   useEffect(() => {
-    const getHabit_from_localStorage = localStorage.getItem('Habit Track');
-    const habitJSON_data = JSON.parse(getHabit_from_localStorage) || [];
-
+    // const getHabit_from_localStorage = localStorage.getItem('Habit Track');
+    // const habitJSON_data = JSON.parse(getHabit_from_localStorage) || [];
+    // 
+    // setStreakData(habitJSON_data);
+    // localStorage.setItem('Habit Track', JSON.stringify(habitJSON_data));
+    const fetchHabits = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/habits');
+        if (!response.ok) {
+          throw new Error('Failed to fetch habits');
+        }
+        const data = await response.json();
+        console.log(data);
+        setHabits(data); // Update state with fetched data
+      } catch (error) {
+        console.error('Error fetching habits:', error);
+      }
+    };
+    fetchHabits();
     setStreakData(habitJSON_data);
-    localStorage.setItem('Habit Track', JSON.stringify(habitJSON_data));
   }, [])
 
   const totalStreak = Array.isArray(streakData)

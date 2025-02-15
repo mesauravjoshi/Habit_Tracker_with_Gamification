@@ -2,16 +2,18 @@ import { useState } from 'react';
 import './Hero.css';
 
 function Hero() {
-  const ram = 'ram';
-  
+
   const handleRam = async (e) => {
+    const ram = {
+      name: 'sita'
+    };
     try {
       const response = await fetch('http://localhost:3000/ram', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',  // Make sure the server understands the data format
         },
-        body: JSON.stringify({ ram: ram }),  // Send data as JSON
+        body: JSON.stringify(ram),  // Send data as JSON
       });
 
       if (response.ok) {

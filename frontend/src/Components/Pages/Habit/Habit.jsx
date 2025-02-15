@@ -26,7 +26,7 @@ function Habit() {
     }
   };
 
-  const handleAddHabit = () => {
+  const handleAddHabit = async () => {
     const lastDay = new Date();
     lastDay.setDate(lastDay.getDate() + 6);
     lastDay.setHours(0, 0, 0, 0);
@@ -58,8 +58,27 @@ function Habit() {
       return;  // Exit if no valid frequency is selected
     }
 
-    const newHabits = [...habits, newHabit];
-    setHabits(newHabits);
+    console.log('line 63 : ',newHabit);
+
+    try {
+      const response = await fetch('http://localhost:3000/habits', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',  // Make sure the server understands the data format
+        },
+        body: JSON.stringify(newHabit),  // Send data as JSON
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log(result);
+      } else {
+        const errorResponse = await response.json();
+        console.error('Error:', errorResponse.message);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
 
     // Reset input fields
     setHabit('');
