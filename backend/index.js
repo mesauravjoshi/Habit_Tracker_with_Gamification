@@ -23,34 +23,39 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.post('/habits', async (req, res) => {
-    const data = req.body;
-    console.log(data);
 
     try {
-        // Check if the frequency is Daily or Weekly and handle accordingly
-        let newHabitData = {
-            Habit: data.Habit,
-            Category: data.Category,
-            Frequency: data.Frequency,
-            Priority: data.Priority,
-            TargetDuration: new Date(data.TargetDuration),
-            StartedDate: new Date(data.StartedDate),
+        const { HabitName, Category, Frequency, Priority, TargetDuration, StartedDate, StreakRecord } = req.body;
+
+        let newHabit = {
+            HabitName,
+            Category,
+            Frequency,
+            Priority,
+            TargetDuration,
+            StartedDate,
             StreakRecord: {
-                LastUpdate: data.StreakRecord.LastUpdate || null,
-                TotalStreak: data.StreakRecord.TotalStreak || 0,
-                LastDayForWeek: data.Frequency === 'Weekly' ? new Date(data.StreakRecord.LastDayForWeek) : null,
+                LastUpdate: "",
+                TotalStreak: 0
             },
-            IsCompleted: false,
-            TotalDaysCompleted: data.Frequency === 'Daily' ? 0 : null,
-            TotalWeeksCompleted: data.Frequency === 'Weekly' ? 0 : null,
+            IsCompleted: false
         };
 
-        // Create the habit and save it
-        const newHabit = new Habit(newHabitData);
-        await newHabit.save();
-        console.log('Habit saved successfully:', newHabit);
+        // Add extra fields based on Frequency
+        if (Frequency === 'Daily') {
+            newHabit.TotalDaysCompleted = 0;
+        } else if (Frequency === 'Weekly') {
+            newHabit.StreakRecord.LastDayForWeek = StreakRecord.LastDayForWeek;
+            newHabit.TotalWeeksCompleted = 0;
+        } else {
+            return res.status(400).json({ error: "Invalid Frequency" });
+        }
 
-        res.send({ message: 'Habit saved successfully', data: newHabit });
+        // const habit = new Habit(newHabit);
+        const habit = new Habit(newHabit);
+        await habit.save();
+
+        res.json({ message: "Habit saved successfully", data: habit });
     } catch (error) {
         console.error(error);
         res.status(500).send({ error: 'Failed to save habit' });
@@ -67,8 +72,47 @@ app.get('/habits', async (req, res) => {
     }
 });
 
+app.post('/markAsDone', async (req, res) => {
+    const habitData = req.body;
+    // console.log(habitData);
+    try {
+        // Check if habit._id exists in request body
+        if (!habitData._id) {
+            return res.status(400).send({ message: 'Habit _id is required' });
+        }
+
+        // Find the habit by _id and update its fields
+        const updatedHabit = await Habit.findByIdAndUpdate(
+            habitData._id,
+            {
+                $set: {
+                    'StreakRecord.LastUpdate': habitData.StreakRecord.LastUpdate,
+                    'StreakRecord.TotalStreak': habitData.StreakRecord.TotalStreak,
+                    'StreakRecord.LastDayForWeek': habitData.StreakRecord.LastDayForWeek,
+                    'IsCompleted': habitData.IsCompleted,
+                    'TotalDaysCompleted': habitData.TotalDaysCompleted,
+                    'TargetDuration': habitData.TargetDuration
+                }
+            },
+            { new: true } // Returns the updated document
+        );
+
+        if (!updatedHabit) {
+            return res.status(404).send({ message: 'Habit not found' });
+        }
+
+        // Respond with the updated habit data
+        return res.status(200).json(updatedHabit);
+
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send({ message: 'Server error' });
+    }
+
+})
+
 const PORT = process.env.PORT || 3000;
-console.log(PORT);
+// console.log(PORT);
 
 app.listen(PORT, () => {
     console.log(`Server is running on ${PORT}`);

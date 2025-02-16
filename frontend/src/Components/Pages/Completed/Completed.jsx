@@ -3,14 +3,7 @@ import { useEffect, useState } from 'react';
 
 function Completed() {
   const [streakData, setStreakData] = useState([]);
-
-  useEffect(() => {
-    const getHabit_from_localStorage = localStorage.getItem('Habit Track');
-    const habitJSON_data = JSON.parse(getHabit_from_localStorage) || [];
-    setStreakData(habitJSON_data.filter(item =>  item.IsConmpleted == true));
-    // localStorage.setItem('Habit Track', JSON.stringify(habitJSON_data));
-  }, [])
-
+  
   const totalStreak = Array.isArray(streakData)
     ? streakData.reduce((acc, habit) => acc + habit.StreakRecord.TotalStreak, 0)
     : 0;

@@ -35,7 +35,7 @@ function Habit() {
     today.setHours(0, 0, 0, 0);
 
     const newHabit = {
-      Habit: habit,
+      HabitName: habit,
       Category: selectedCategory,
       Frequency: selectedFrequency,
       Priority: priorityLabels[priority],
@@ -81,11 +81,11 @@ function Habit() {
     }
 
     // Reset input fields
-    setHabit('');
-    setSelectedCategory('');
-    setSelectedFrequency('');
-    setTargetDuration('');
-    setPriority(0);
+    // setHabit('');
+    // setSelectedCategory('');
+    // setSelectedFrequency('');
+    // setTargetDuration('');
+    // setPriority(0);
   };
 
   useEffect(() => {

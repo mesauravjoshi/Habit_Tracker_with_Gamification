@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const habitSchema = new mongoose.Schema({
-    Habit: { type: String, required: true },
+    HabitName: { type: String, required: true },
     Category: { type: String, required: true },
     Frequency: { type: String, enum: ["Daily", "Weekly"], required: true },
     Priority: { type: String, required: true },

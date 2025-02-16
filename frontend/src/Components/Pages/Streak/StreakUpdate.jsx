@@ -2,20 +2,44 @@ import './StreakUpdate.css'
 
 function StreakUpdate({ setStreakData, LastUpdate, LastDayForWeek, TargetDuration, StartedDate, index, streakData, Frequency }) {
 
-  const IsConmpleted = (StartedDate,TargetDuration,Frequency) => {
+  const markAsDone = async (updatedStreakData) => {
+    console.log('inside fetch function',updatedStreakData[0]);
+    
+    try {
+      const response = await fetch('http://localhost:3000/markAsDone', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',  // Make sure the server understands the data format
+        },
+        body: JSON.stringify(updatedStreakData[0]),  // Send data as JSON
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log(result);
+      } else {
+        const errorResponse = await response.json();
+        console.error('Error:', errorResponse.message);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
+
+  const IsConmpleted = (StartedDate, TargetDuration, Frequency) => {
     const startDate = new Date(StartedDate);
     console.log(startDate);
     const targetDate = new Date(TargetDuration);
     targetDate.setHours(0, 0, 0, 0);
     console.log(targetDate);
-    const timeDiff = targetDate - startDate ;
+    const timeDiff = targetDate - startDate;
     const daysLeft = Math.floor(timeDiff / (1000 * 60 * 60 * 24)) + 1;
 
     // console.log(Math.floor(daysLeft / 7) + 1);
     // console.log(daysLeft);
     if (Frequency === "Weekly") {
       if (daysLeft > 0) return (Math.floor(daysLeft / 7) + 1);
-    } else if(Frequency === "Daily"){
+    } else if (Frequency === "Daily") {
       if (daysLeft > 0) return daysLeft;
     }
   }
@@ -96,14 +120,14 @@ function StreakUpdate({ setStreakData, LastUpdate, LastDayForWeek, TargetDuratio
         // const update_TotalDaysCompleteds = 
         habit.TotalDaysCompleted = (totalDays + 1)
         // console.log(IsConmpleted(StartedDate,Frequency))
-        if (IsConmpleted(StartedDate,TargetDuration,Frequency) === habit.TotalDaysCompleted ) {
+        if (IsConmpleted(StartedDate, TargetDuration, Frequency) === habit.TotalDaysCompleted) {
           habit.IsConmpleted = true
         }
         setStreakData(updatedStreakData);
-        localStorage.setItem('Habit Track', JSON.stringify(streakData));
+        markAsDone(updatedStreakData);
       }
       else if (Frequency === "Weekly") {
-
+        console.log('weekly');
         // Create a copy of streakData
         const updatedStreakData = [...streakData];
         // Get the current habit
@@ -137,12 +161,12 @@ function StreakUpdate({ setStreakData, LastUpdate, LastDayForWeek, TargetDuratio
 
         habit.TotalWeeksCompleted = calculateWeekCompleted(StartedDate);
         // habit.TotalWeeksCompleted += 1;
-        if (IsConmpleted(StartedDate,TargetDuration,Frequency) === habit.TotalWeeksCompleted ) {
+        if (IsConmpleted(StartedDate, TargetDuration, Frequency) === habit.TotalWeeksCompleted) {
           habit.IsConmpleted = true
         }
         setStreakData(updatedStreakData);
         // console.log(streakData);
-        localStorage.setItem('Habit Track', JSON.stringify(streakData));
+        markAsDone(updatedStreakData);
       }
       else {
         console.log('Frequency is neither daily nor weekly ')
