@@ -38,7 +38,8 @@ app.post('/habits', async (req, res) => {
                 LastUpdate: "",
                 TotalStreak: 0
             },
-            IsCompleted: false
+            IsCompleted: false,
+            XPPoints: 0
         };
 
         // Add extra fields based on Frequency

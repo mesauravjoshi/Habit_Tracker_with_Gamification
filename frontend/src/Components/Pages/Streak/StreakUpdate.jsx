@@ -9,6 +9,7 @@ function StreakUpdate({ setStreakData, LastUpdate, LastDayForWeek, TargetDuratio
       "StreakRecord": {
         "LastUpdate": habit.StreakRecord.LastUpdate,
         "TotalStreak": habit.StreakRecord.TotalStreak,
+        "XPPoints": habit.StreakRecord.XPPoints,
       },
     }
     if (habit.Frequency === "Daily") {
@@ -17,7 +18,6 @@ function StreakUpdate({ setStreakData, LastUpdate, LastDayForWeek, TargetDuratio
       updatedData.StreakRecord.LastDayForWeek = habit.StreakRecord.LastDayForWeek;
       updatedData.TotalWeeksCompleted = habit.TotalWeeksCompleted;
     }
-    console.log(updatedData);
 
     try {
       const response = await fetch(`http://localhost:3000/markAsDone/${habit._id}`, {
@@ -42,10 +42,10 @@ function StreakUpdate({ setStreakData, LastUpdate, LastDayForWeek, TargetDuratio
 
   const IsCompleted = (StartedDate, TargetDuration, Frequency) => {
     const startDate = new Date(StartedDate);
-    console.log(startDate);
+    // console.log(startDate);
     const targetDate = new Date(TargetDuration);
     targetDate.setHours(0, 0, 0, 0);
-    console.log(targetDate);
+    // console.log(targetDate);
     const timeDiff = targetDate - startDate;
     const daysLeft = Math.floor(timeDiff / (1000 * 60 * 60 * 24)) + 1;
 
@@ -116,12 +116,14 @@ function StreakUpdate({ setStreakData, LastUpdate, LastDayForWeek, TargetDuratio
         if (timeDiff_inDays > 1) {
           // reset streak to 1 and update the LastUpdate date
           habit.StreakRecord.TotalStreak = 1;
+          habit.StreakRecord.XPPoints = 0;
           habit.StreakRecord.LastUpdate = new Date().toString(); // Update to today's date
           setStreakData(updatedStreakData);
 
         } else {
           // Increase the streak count and update the LastUpdate date
           habit.StreakRecord.TotalStreak += 1;
+          habit.StreakRecord.XPPoints += 10;
           habit.StreakRecord.LastUpdate = new Date().toString(); // Update to today's date
 
           // Set the updated streak data back to state
@@ -157,12 +159,14 @@ function StreakUpdate({ setStreakData, LastUpdate, LastDayForWeek, TargetDuratio
         if (today >= dayFrom && today <= endDate || LastUpdate == '') {
           // console.log('between Start - end date', LastUpdate);
           habit.StreakRecord.TotalStreak += 1;
+          habit.StreakRecord.XPPoints += 10;
           habit.StreakRecord.LastUpdate = String(today);
           setStreakData(updatedStreakData);
         }
         else if (today > endDate) {
           // console.log('2nd condition');
           habit.StreakRecord.TotalStreak = 1;
+          habit.StreakRecord.XPPoints = 0;
           habit.StreakRecord.LastUpdate = String(today);
         }
         else {

@@ -33,59 +33,67 @@ function Habit() {
 
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-
-    const newHabit = {
-      HabitName: habit,
-      Category: selectedCategory,
-      Frequency: selectedFrequency,
-      Priority: priorityLabels[priority],
-      TargetDuration: targetDuration,
-      StartedDate: today.toString(),
-      StreakRecord: {
-        LastUpdate: "",
-        TotalStreak: 0
-      },
-      IsConmpleted: false
-    };
-
-    if (selectedFrequency === 'Daily') {
-      newHabit.TotalDaysCompleted = 0;
-    } else if (selectedFrequency === 'Weekly') {
-      newHabit.StreakRecord.LastDayForWeek = lastDay.toString();
-      newHabit.TotalWeeksCompleted = 0;
+    // console.log('line 36:', targetDuration);
+    if (habit.trim() === '' || targetDuration === '' || selectedFrequency === '') {
+      console.log('empty');
+      alert("All field required !")
     } else {
-      console.log('nothing is selected');
-      return;  // Exit if no valid frequency is selected
-    }
-
-    console.log('line 63 : ',newHabit);
-
-    try {
-      const response = await fetch('http://localhost:3000/habits', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',  // Make sure the server understands the data format
+      const newHabit = {
+        HabitName: habit,
+        Category: selectedCategory,
+        Frequency: selectedFrequency,
+        Priority: priorityLabels[priority],
+        TargetDuration: targetDuration,
+        StartedDate: today.toString(),
+        StreakRecord: {
+          LastUpdate: "",
+          TotalStreak: 0,
+          XPPoints: 0
         },
-        body: JSON.stringify(newHabit),  // Send data as JSON
-      });
+        IsConmpleted: false,
+      };
 
-      if (response.ok) {
-        const result = await response.json();
-        console.log(result);
+      if (selectedFrequency === 'Daily') {
+        newHabit.TotalDaysCompleted = 0;
+      } else if (selectedFrequency === 'Weekly') {
+        newHabit.StreakRecord.LastDayForWeek = lastDay.toString();
+        newHabit.TotalWeeksCompleted = 0;
       } else {
-        const errorResponse = await response.json();
-        console.error('Error:', errorResponse.message);
+        console.log('nothing is selected');
+        return;  // Exit if no valid frequency is selected
       }
-    } catch (error) {
-      console.error('Error:', error);
+
+      console.log('line 63 : ', newHabit);
+
+      try {
+        const response = await fetch('http://localhost:3000/habits', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',  // Make sure the server understands the data format
+          },
+          body: JSON.stringify(newHabit),  // Send data as JSON
+        });
+
+        if (response.ok) {
+          const result = await response.json();
+          console.log(result);
+        } else {
+          const errorResponse = await response.json();
+          console.error('Error:', errorResponse.message);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+
+      // Reset input fields
+      // setHabit('');
+      // setSelectedCategory('');
+      // setSelectedFrequency('');
+      // setTargetDuration('');
+      // setPriority(0);
     }
 
-    // Reset input fields
-    // setHabit('');
-    // setSelectedCategory('');
-    // setSelectedFrequency('');
-    // setTargetDuration('');
-    // setPriority(0);
+
   };
 
   useEffect(() => {

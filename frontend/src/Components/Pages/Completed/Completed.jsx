@@ -12,7 +12,7 @@ function Completed() {
           throw new Error('Failed to fetch habits');
         }
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
         setStreakData(data.filter(item => (item.IsCompleted == true))); // Update state with fetched data
       } catch (error) {
         console.error('Error fetching habits:', error);
