@@ -27,10 +27,10 @@ function Streak() {
     ? streakData.reduce((acc, habit) => acc + habit.StreakRecord.TotalStreak, 0)
     : 0;
 
-  const XPPoints = Array.isArray(streakData)
+  const xPPoints = Array.isArray(streakData)
     ? streakData.reduce((acc, habit) => acc + habit.StreakRecord.XPPoints, 0)
     : 0;
-
+    console.log(streakData);
 
   // ✅ Function to Calculate Day Left
   const calculateDayLeft = (TargetDuration) => {
@@ -91,7 +91,7 @@ function Streak() {
       <div>
         <div className='Habit-list'>
           <h1> Habit list  </h1>
-          <h3 style={{ display: 'flex' }} >🔥Total Streak: {totalStreak} | 🎯 XP Points: {XPPoints} </h3>
+          <h3 style={{ display: 'flex' }} >🔥Total Streak: {totalStreak} | 🎯 XP Points: {xPPoints} </h3>
         </div>
         <div className="Streak">
           {streakData.length > 0 &&
