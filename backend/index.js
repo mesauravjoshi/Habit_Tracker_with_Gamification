@@ -72,44 +72,30 @@ app.get('/habits', async (req, res) => {
     }
 });
 
-app.post('/markAsDone', async (req, res) => {
-    const habitData = req.body;
-    // console.log(habitData);
-    try {
-        // Check if habit._id exists in request body
-        if (!habitData._id) {
-            return res.status(400).send({ message: 'Habit _id is required' });
-        }
+app.put('/markAsDone/:id', async (req, res) => {
+    const { id } = req.params; // Extract habit ID from URL
+    const updatedFields = req.body; // Extract fields to update
+    // console.log(id);
+    // console.log(updatedFields);
 
-        // Find the habit by _id and update its fields
+    try {
         const updatedHabit = await Habit.findByIdAndUpdate(
-            habitData._id,
-            {
-                $set: {
-                    'StreakRecord.LastUpdate': habitData.StreakRecord.LastUpdate,
-                    'StreakRecord.TotalStreak': habitData.StreakRecord.TotalStreak,
-                    'StreakRecord.LastDayForWeek': habitData.StreakRecord.LastDayForWeek,
-                    'IsCompleted': habitData.IsCompleted,
-                    'TotalDaysCompleted': habitData.TotalDaysCompleted,
-                    'TargetDuration': habitData.TargetDuration
-                }
-            },
-            { new: true } // Returns the updated document
+            id,  // The habit ID to update
+            { $set: updatedFields }, // Update only specified fields
+            { new: true } // Return the updated document
         );
 
         if (!updatedHabit) {
-            return res.status(404).send({ message: 'Habit not found' });
+            return res.status(404).json({ error: 'Habit not found' });
         }
 
-        // Respond with the updated habit data
-        return res.status(200).json(updatedHabit);
-
-    } catch (err) {
-        console.error(err);
-        return res.status(500).send({ message: 'Server error' });
+        res.json({ message: 'Habit updated successfully', data: updatedHabit });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Failed to update habit' });
     }
+});
 
-})
 
 const PORT = process.env.PORT || 3000;
 // console.log(PORT);

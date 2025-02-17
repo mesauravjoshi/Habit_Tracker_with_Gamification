@@ -3,29 +3,44 @@ import './StreakUpdate.css'
 function StreakUpdate({ setStreakData, LastUpdate, LastDayForWeek, TargetDuration, StartedDate, index, streakData, Frequency }) {
 
   const markAsDone = async (habit) => {
-    console.log('inside fetch function',habit);
-    
+    console.log('inside fetch function', habit);
+    const updatedData = {
+      "IsCompleted": habit.IsCompleted,
+      "StreakRecord": {
+        "LastUpdate": habit.StreakRecord.LastUpdate,
+        "TotalStreak": habit.StreakRecord.TotalStreak,
+      },
+    }
+    if (habit.Frequency === "Daily") {
+      updatedData.TotalDaysCompleted = habit.TotalDaysCompleted;
+    } else if (habit.Frequency === "Weekly") {
+      updatedData.StreakRecord.LastDayForWeek = habit.StreakRecord.LastDayForWeek;
+      updatedData.TotalWeeksCompleted = habit.TotalWeeksCompleted;
+    }
+    console.log(updatedData);
+
     try {
-      const response = await fetch('http://localhost:3000/markAsDone', {
-        method: 'POST',
+      const response = await fetch(`http://localhost:3000/markAsDone/${habit._id}`, {
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',  // Make sure the server understands the data format
         },
-        body: JSON.stringify(habit),  // Send data as JSON
+        body: JSON.stringify(updatedData),  // Send data as JSON
       });
 
       if (response.ok) {
         const result = await response.json();
+        console.log("Habit updated successfully:", result);
       } else {
-        const errorResponse = await response.json();
-        console.error('Error:', errorResponse.message);
+        const errorResponse = await response.json(); a
+        console.error('Error:', errorResponse.messge);
       }
     } catch (error) {
       console.error('Error:', error);
     }
   }
 
-  const IsConmpleted = (StartedDate, TargetDuration, Frequency) => {
+  const IsCompleted = (StartedDate, TargetDuration, Frequency) => {
     const startDate = new Date(StartedDate);
     console.log(startDate);
     const targetDate = new Date(TargetDuration);
@@ -53,7 +68,7 @@ function StreakUpdate({ setStreakData, LastUpdate, LastDayForWeek, TargetDuratio
 
     // Convert milliseconds to weeks (1 week = 7 days = 7 * 24 * 60 * 60 * 1000 milliseconds)
     const weeksCompleted = (diffInMillis / (7 * 24 * 60 * 60 * 1000));
-    console.log('calculte week completed: ',Math.ceil(weeksCompleted));
+    console.log('calculte week completed: ', Math.ceil(weeksCompleted));
     return Math.ceil(weeksCompleted);
   };
 
@@ -119,9 +134,9 @@ function StreakUpdate({ setStreakData, LastUpdate, LastDayForWeek, TargetDuratio
         const totalDays = Math.floor(totalMilliseconds / (1000 * 60 * 60 * 24));
         // const update_TotalDaysCompleteds = 
         habit.TotalDaysCompleted = (totalDays + 1)
-        // console.log(IsConmpleted(StartedDate,Frequency))
-        if (IsConmpleted(StartedDate, TargetDuration, Frequency) === habit.TotalDaysCompleted) {
-          habit.IsConmpleted = true
+        // console.log(IsCompleted(StartedDate,Frequency))
+        if (IsCompleted(StartedDate, TargetDuration, Frequency) === habit.TotalDaysCompleted) {
+          habit.IsCompleted = true
         }
         setStreakData(updatedStreakData);
         markAsDone(habit);
@@ -159,12 +174,12 @@ function StreakUpdate({ setStreakData, LastUpdate, LastDayForWeek, TargetDuratio
         habit.StreakRecord.LastDayForWeek = String(upcommingDay);
 
         habit.TotalWeeksCompleted = calculateWeekCompleted(StartedDate);
-        habit.TotalWeeksCompleted += 1;
-        if (IsConmpleted(StartedDate, TargetDuration, Frequency) === habit.TotalWeeksCompleted) {
-          habit.IsConmpleted = true
+        // habit.TotalWeeksCompleted += 1;
+        if (IsCompleted(StartedDate, TargetDuration, Frequency) === habit.TotalWeeksCompleted) {
+          habit.IsCompleted = true
         }
         setStreakData(updatedStreakData);
-        // console.log(streakData);
+        // console.log(habit);
         markAsDone(habit);
       }
       else {
