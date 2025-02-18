@@ -35,11 +35,12 @@ app.post('/habits', async (req, res) => {
             TargetDuration,
             StartedDate,
             StreakRecord: {
+                Badge: "",
                 LastUpdate: "",
-                TotalStreak: 0
+                TotalStreak: 0,
+                XPPoints: 0
             },
             IsCompleted: false,
-            XPPoints: 0
         };
 
         // Add extra fields based on Frequency

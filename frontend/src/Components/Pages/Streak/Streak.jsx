@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import './Streak.css'
-import './StreakUpdate.css'
 import StreakUpdate from './StreakUpdate';
 
 function Streak() {
@@ -15,7 +14,7 @@ function Streak() {
         }
         const data = await response.json();
         // console.log(data);
-        setStreakData(data); // Update state with fetched data
+        setStreakData(data);
       } catch (error) {
         console.error('Error fetching habits:', error);
       }
@@ -30,7 +29,6 @@ function Streak() {
   const xPPoints = Array.isArray(streakData)
     ? streakData.reduce((acc, habit) => acc + habit.StreakRecord.XPPoints, 0)
     : 0;
-    console.log(streakData);
 
   // ✅ Function to Calculate Day Left
   const calculateDayLeft = (TargetDuration) => {
@@ -53,7 +51,6 @@ function Streak() {
     targetDateMidnight.setHours(0, 0, 0, 0);
 
     const totalDays = Math.floor((targetDateMidnight - startDateMidnight) / (1000 * 60 * 60 * 24)) + 1;
-    // console.log('line 42: ',totalDays);
 
     return totalDays;
   }
@@ -61,14 +58,18 @@ function Streak() {
   // ✅ Function to Calculate Weeks Left
   const calculateWeekLeft = (TargetDuration) => {
     const today = new Date();
-    const targetDate = new Date(TargetDuration);
-    const timeDiff = targetDate - today;
-    const daysLeft = Math.floor(timeDiff / (1000 * 60 * 60 * 24)) + 1;
+    today.setHours(0, 0, 0, 0);
 
+    const targetDate = new Date(TargetDuration);
+    targetDate.setHours(0, 0, 0, 0);
+    const timeDiff = targetDate - today;
+    // console.log(today);
+    // console.log(targetDate);
+
+    const daysLeft = Math.floor(timeDiff / (1000 * 60 * 60 * 24)) + 1;
     // console.log(Math.floor(daysLeft/7) +1);
     // console.log(daysLeft);
-
-    if (daysLeft > 0) return (Math.floor(daysLeft / 7) + 1);
+    if (daysLeft > 0) return (Math.floor(daysLeft / 7));
     else if (daysLeft === 0) return 0;
     else return "Completed";
   }
@@ -82,7 +83,6 @@ function Streak() {
     targetDateMidnight.setHours(0, 0, 0, 0);
 
     const totalDays = Math.floor((targetDateMidnight - startDateMidnight) / (1000 * 60 * 60 * 24)) + 1;
-    // console.log('line 71: ',Math.ceil(totalDays/7));
     return Math.ceil(totalDays / 7);
   }
 
@@ -93,6 +93,16 @@ function Streak() {
           <h1> Habit list  </h1>
           <h3 style={{ display: 'flex' }} >🔥Total Streak: {totalStreak} | 🎯 XP Points: {xPPoints} </h3>
         </div>
+          <div className="filter-habit">
+          <select
+            onChange={(e) => setSelectedCategory(e.target.value)}
+            >
+            <option >All</option>
+            <option value="Coding">Not Completed</option>
+            <option value="Reading">Silver Badge</option>
+            <option value="Workout">Gold Badge</option>
+          </select>
+          </div>
         <div className="Streak">
           {streakData.length > 0 &&
             streakData.map((streak, index) => {
@@ -119,14 +129,13 @@ function Streak() {
                   Math.round((streak.TotalWeeksCompleted / calculateTotalWeeks(streak.TargetDuration, streak.StartedDate)) * 100),
                   100
                 );
-                // console.log(progress);
 
                 DayWeeksCompeted = `Total Weeks Completed: ${streak.TotalWeeksCompleted}`;
               }
 
               return (
                 <div key={index} className="Habit-Card">
-                  <h3>{streak.HabitName} ({streak.Frequency})</h3>
+                  <h3>{streak.HabitName} ({streak.Frequency}) {streak.StreakRecord.Badge} </h3>
                   <p>{streakUI}</p>
                   <StreakUpdate
                     setStreakData={setStreakData}

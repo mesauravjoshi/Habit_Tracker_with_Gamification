@@ -7,6 +7,7 @@ function StreakUpdate({ setStreakData, LastUpdate, LastDayForWeek, TargetDuratio
     const updatedData = {
       "IsCompleted": habit.IsCompleted,
       "StreakRecord": {
+        "Badge": habit.StreakRecord.Badge,
         "LastUpdate": habit.StreakRecord.LastUpdate,
         "TotalStreak": habit.StreakRecord.TotalStreak,
         "XPPoints": habit.StreakRecord.XPPoints,
@@ -18,21 +19,21 @@ function StreakUpdate({ setStreakData, LastUpdate, LastDayForWeek, TargetDuratio
       updatedData.StreakRecord.LastDayForWeek = habit.StreakRecord.LastDayForWeek;
       updatedData.TotalWeeksCompleted = habit.TotalWeeksCompleted;
     }
-
+    console.log(updatedData)
     try {
-      const response = await fetch(`http://localhost:3000/markAsDoneS/${habit._id}`, {
+      const response = await fetch(`http://localhost:3000/markAsDone/${habit._id}`, {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json',  // Make sure the server understands the data format
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(updatedData),  // Send data as JSON
+        body: JSON.stringify(updatedData),
       });
 
       if (response.ok) {
         const result = await response.json();
         // console.log("Habit updated successfully:", result);
       } else {
-        const errorResponse = await response.json(); 
+        const errorResponse = await response.json();
         console.error('Error:', errorResponse.messge);
       }
     } catch (error) {
@@ -46,22 +47,35 @@ function StreakUpdate({ setStreakData, LastUpdate, LastDayForWeek, TargetDuratio
     targetDate.setHours(0, 0, 0, 0);
     const timeDiff = targetDate - startDate;
     const daysLeft = Math.floor(timeDiff / (1000 * 60 * 60 * 24)) + 1;
-  
+    // console.log('ISCOMPLETED', targetDate);
+    // console.log(daysLeft);
+
     if (Frequency === "Weekly") {
-      if (daysLeft > 0) return (Math.floor(daysLeft / 7) + 1);
+      // console.log('ISCOMPLETED', (Math.ceil(daysLeft / 7)));
+      if (daysLeft > 0) return (Math.ceil(daysLeft / 7));
     } else if (Frequency === "Daily") {
       if (daysLeft > 0) return daysLeft;
     }
   }
 
-  const calculateWeekCompleted = (today,dayFrom) => {
-    const diffInMillis = today - dayFrom;
-    const weeksCompleted = (diffInMillis / (7 * 24 * 60 * 60 * 1000));
+  const calculateWeekCompleted = (today, StartedDate) => {
+    const startDate = new Date(StartedDate);
+    // console.log(startDate);
+    // console.log(today);
+
+    const diffInMillis = today - startDate;
+    const daysCompleted = Math.floor(diffInMillis / (1000 * 60 * 60 * 24)) + 1;
+    const weeksCompleted = (daysCompleted / 7);
     // console.log('calculte week completed: ', Math.ceil(weeksCompleted));
-    return Math.ceil(weeksCompleted);
+    if (Math.ceil(weeksCompleted) > 0) {
+      // console.log(Math.ceil(weeksCompleted));
+      return Math.ceil(weeksCompleted);
+    } else {
+      return 1;
+    }
   };
 
-  const calculateUpcommingDay = (today,dayFrom) => {
+  const calculateUpcommingDay = (today, dayFrom) => {
     const startDayIndex = dayFrom.getDay();
 
     const previousDayIndex = (startDayIndex - 1 + 7) % 7;
@@ -85,27 +99,38 @@ function StreakUpdate({ setStreakData, LastUpdate, LastDayForWeek, TargetDuratio
     const updatedStreakData = [...streakData];
     // Get the current habit
     const habit = updatedStreakData[index];
-    
+
     if (today >= dayFrom && today <= endDate) {
       if (Frequency === "Daily") {
         const last_date = new Date(habit.StreakRecord.LastUpdate);
+        last_date.setHours(0, 0, 0, 0);
         const timeDiff = today - last_date;
         const timeDiff_inDays = (Math.floor(timeDiff / (1000 * 60 * 60 * 24)));
+        console.log(today);
+        console.log(last_date);
 
+        // console.log(timeDiff_inDays);
         if (timeDiff_inDays > 1) {
           // reset streak to 1 and update the LastUpdate date
           habit.StreakRecord.TotalStreak = 1;
-          habit.StreakRecord.XPPoints = 0;
         } else {
           // Increase the streak count and update the LastUpdate date
           habit.StreakRecord.TotalStreak += 1;
-          habit.StreakRecord.XPPoints += 10;
+          if(habit.StreakRecord.TotalStreak === 7 ){
+            // console.log('🥈 Silver Badge');
+            habit.StreakRecord.Badge = "🥈 Silver Badge";
+            habit.StreakRecord.XPPoints += 40;
+          } else if (habit.StreakRecord.TotalStreak === 30){
+            // console.log('🏆 Gold Badge');
+            habit.StreakRecord.Badge = "🏆 Gold Badge";
+            habit.StreakRecord.XPPoints += 190;
+          }
         }
-        habit.StreakRecord.LastUpdate = new Date().toString(); 
+        habit.StreakRecord.XPPoints += 10;
+        habit.StreakRecord.LastUpdate = String(today);
 
-        const totalMilliseconds = today - dayFrom;
-        const totalDays = Math.floor(totalMilliseconds / (1000 * 60 * 60 * 24));
-        habit.TotalDaysCompleted = (totalDays + 1)
+        const totalDays = Math.floor((today - dayFrom) / (1000 * 60 * 60 * 24));
+        habit.TotalDaysCompleted = (totalDays + 1);
         if (IsCompleted(StartedDate, TargetDuration, Frequency) === habit.TotalDaysCompleted) {
           habit.IsCompleted = true;
         }
@@ -120,23 +145,22 @@ function StreakUpdate({ setStreakData, LastUpdate, LastDayForWeek, TargetDuratio
         if (today >= dayFrom && today <= endDate || LastUpdate == '') {
           // console.log('between Start - end date', LastUpdate);
           habit.StreakRecord.TotalStreak += 1;
-          habit.StreakRecord.XPPoints += 10;
-          habit.StreakRecord.LastUpdate = String(today);
         }
         else if (today > endDate) {
           // console.log('2nd condition');
           habit.StreakRecord.TotalStreak = 1;
-          habit.StreakRecord.XPPoints = 0;
-          habit.StreakRecord.LastUpdate = String(today);
         }
         else {
           // console.log('user added streak before');
           return false
         }
-        const upcommingDay = calculateUpcommingDay(today,dayFrom);
-        // console.log('upcoming: ', upcommingDay);
-        habit.StreakRecord.LastDayForWeek = String(upcommingDay);
-        habit.TotalWeeksCompleted = calculateWeekCompleted(today,dayFrom);
+        habit.StreakRecord.LastUpdate = String(today);
+        habit.StreakRecord.XPPoints += 10;
+
+        const upcommingDay_ForWeek = calculateUpcommingDay(today, dayFrom);
+        // console.log('upcoming: ', upcommingDay_ForWeek);
+        habit.StreakRecord.LastDayForWeek = String(upcommingDay_ForWeek);
+        habit.TotalWeeksCompleted = calculateWeekCompleted(today, StartedDate);
 
         if (IsCompleted(StartedDate, TargetDuration, Frequency) === habit.TotalWeeksCompleted) {
           habit.IsCompleted = true
@@ -159,29 +183,26 @@ function StreakUpdate({ setStreakData, LastUpdate, LastDayForWeek, TargetDuratio
     const endDate = new Date(TargetDuration);
     endDate.setHours(0, 0, 0, 0);
     const lastUpdateDate = new Date(lastUpdate);
-
+    lastUpdateDate.setHours(0, 0, 0, 0);
+    
     if (today >= dayFrom && today <= endDate) {
-      if (Frequency === "Daily") {
-        // const lastUpdateDate = new Date(lastUpdate);
-        // const target_day = new Date(TargetDuration);
-        const after_day_completed = today - endDate;
+      
+      if (Frequency === "Daily") {        
+        const after_day_completed = today - lastUpdateDate;
         const daysPassed = Math.floor(after_day_completed / (1000 * 60 * 60 * 24));
-
         if (daysPassed >= 1) {
-          // console.log(daysPassed);
+          console.log('not update yet');
+          return false
+        } else if (String(today) == String(lastUpdateDate) ) {
+          console.log('today');
+          return true
+        } else if (daysPassed < 1) {
+          console.log('already updated/ day passed');
           return true
         }
-        // Check if the date matches today's date
-        return (
-          // isDayLeft &&
-          lastUpdateDate.getDate() === today.getDate() &&
-          lastUpdateDate.getMonth() === today.getMonth() &&
-          lastUpdateDate.getFullYear() === today.getFullYear()
-        );
       }
       else if (Frequency === "Weekly") {
         // console.log('inside weekly');
-
         const dayFrom = new Date(LastDayForWeek);
         dayFrom.setDate(dayFrom.getDate() - 6);
         const endDate = new Date(LastDayForWeek);

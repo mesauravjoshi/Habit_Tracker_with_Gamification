@@ -46,6 +46,7 @@ function Habit() {
         TargetDuration: targetDuration,
         StartedDate: today.toString(),
         StreakRecord: {
+          Badge: "",
           LastUpdate: "",
           TotalStreak: 0,
           XPPoints: 0
@@ -60,10 +61,8 @@ function Habit() {
         newHabit.TotalWeeksCompleted = 0;
       } else {
         console.log('nothing is selected');
-        return;  // Exit if no valid frequency is selected
+        return; 
       }
-
-      console.log('line 63 : ', newHabit);
 
       try {
         const response = await fetch('http://localhost:3000/habits', {
