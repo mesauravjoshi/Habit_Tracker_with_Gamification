@@ -11,11 +11,15 @@ const habitSchema = new mongoose.Schema({
     
     // Streak tracking for Daily & Weekly
     StreakRecord: {
-        Badge: { type: String, default: "" },
         LastUpdate: { type: String, default: "" },
         TotalStreak: { type: Number, default: 0 },
         LastDayForWeek: { type: String },  // Only for Weekly habits
         XPPoints: { type: Number, default: 0 },
+    },
+    BadgeRecord: {
+        AchievedOn: { type: String, default: "" },
+        Badge: { type: String, default: "" },
+        StreakDuration: { type: Number, default: 0 },
     },
 
     // Dynamic fields based on Frequency

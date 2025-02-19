@@ -1,16 +1,16 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import './Slider.css'
 function Slider({ isOpen, closeSlider }) {
 
   return (
     <div className={`Slider show-slider ${isOpen ? "show" : ""}`}>
 
-    {/* <div className={`Slider ${isOpen ? "show-slider" : ""}`}> */}
-    <div className="close-container">
-      <div className="close-icon" onClick={closeSlider}>
-        ✖ {/* Close button */}
+      {/* <div className={`Slider ${isOpen ? "show-slider" : ""}`}> */}
+      <div className="close-container">
+        <div className="close-icon" onClick={closeSlider}>
+          ✖ {/* Close button */}
+        </div>
       </div>
-    </div>
       <div className='logo'>
         <h3>
           <center>
@@ -19,18 +19,21 @@ function Slider({ isOpen, closeSlider }) {
         </h3>
       </div>
       <div className="Slider-list">
-        <Link to='/' className="nav-link">
+        <NavLink to="/" className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}>
           <li>Home</li>
-        </Link>
-        <Link to="/habit" className="nav-link">
+        </NavLink>
+        <NavLink to="/habit" className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}>
           <li>My Habit</li>
-        </Link>
-        <Link to="/track-streak" className="nav-link">
+        </NavLink>
+        <NavLink to="/track-streak" className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}>
           <li>Track Streak</li>
-        </Link>
-        <Link to="/completed" className="nav-link">
+        </NavLink>
+        <NavLink to="/completed" className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}>
           <li>Completed</li>
-        </Link>
+        </NavLink>
+        <NavLink to="/badges" className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}>
+          <li>Badges</li>
+        </NavLink>
       </div>
     </div>
   )

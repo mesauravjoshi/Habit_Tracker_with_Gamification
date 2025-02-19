@@ -7,10 +7,14 @@ function StreakUpdate({ setStreakData, LastUpdate, LastDayForWeek, TargetDuratio
     const updatedData = {
       "IsCompleted": habit.IsCompleted,
       "StreakRecord": {
-        "Badge": habit.StreakRecord.Badge,
         "LastUpdate": habit.StreakRecord.LastUpdate,
         "TotalStreak": habit.StreakRecord.TotalStreak,
         "XPPoints": habit.StreakRecord.XPPoints,
+      },
+      "BadgeRecord": {
+        "AchievedOn": habit.BadgeRecord.AchievedOn,
+        "Badge": habit.BadgeRecord.Badge,
+        "StreakDuration": habit.BadgeRecord.StreakDuration
       },
     }
     if (habit.Frequency === "Daily") {
@@ -106,8 +110,8 @@ function StreakUpdate({ setStreakData, LastUpdate, LastDayForWeek, TargetDuratio
         last_date.setHours(0, 0, 0, 0);
         const timeDiff = today - last_date;
         const timeDiff_inDays = (Math.floor(timeDiff / (1000 * 60 * 60 * 24)));
-        console.log(today);
-        console.log(last_date);
+        // console.log(today);
+        // console.log(last_date);
 
         // console.log(timeDiff_inDays);
         if (timeDiff_inDays > 1) {
@@ -118,12 +122,16 @@ function StreakUpdate({ setStreakData, LastUpdate, LastDayForWeek, TargetDuratio
           habit.StreakRecord.TotalStreak += 1;
           if(habit.StreakRecord.TotalStreak === 7 ){
             // console.log('🥈 Silver Badge');
-            habit.StreakRecord.Badge = "🥈 Silver Badge";
             habit.StreakRecord.XPPoints += 40;
+            habit.BadgeRecord.Badge = "🥈 Silver Badge";
+            habit.BadgeRecord.AchievedOn = String(today);
+            habit.BadgeRecord.StreakDuration = 7
           } else if (habit.StreakRecord.TotalStreak === 30){
             // console.log('🏆 Gold Badge');
-            habit.StreakRecord.Badge = "🏆 Gold Badge";
             habit.StreakRecord.XPPoints += 190;
+            habit.BadgeRecord.Badge = "🏆 Gold Badge";
+            habit.BadgeRecord.AchievedOn = String(today);
+            habit.BadgeRecord.StreakDuration = 30
           }
         }
         habit.StreakRecord.XPPoints += 10;
@@ -145,6 +153,17 @@ function StreakUpdate({ setStreakData, LastUpdate, LastDayForWeek, TargetDuratio
         if (today >= dayFrom && today <= endDate || LastUpdate == '') {
           // console.log('between Start - end date', LastUpdate);
           habit.StreakRecord.TotalStreak += 1;
+          if(habit.StreakRecord.TotalStreak === 4 ){
+            habit.StreakRecord.XPPoints += 40;
+            habit.BadgeRecord.Badge = "🥈 Silver Badge";
+            habit.BadgeRecord.AchievedOn = String(today);
+            habit.BadgeRecord.StreakDuration = 4
+          } else if (habit.StreakRecord.TotalStreak === 12){
+            habit.StreakRecord.XPPoints += 190;
+            habit.BadgeRecord.Badge = "🏆 Gold Badge";
+            habit.BadgeRecord.AchievedOn = String(today);
+            habit.BadgeRecord.StreakDuration = 12
+          }
         }
         else if (today > endDate) {
           // console.log('2nd condition');

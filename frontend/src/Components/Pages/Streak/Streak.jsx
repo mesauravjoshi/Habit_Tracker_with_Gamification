@@ -88,7 +88,7 @@ function Streak() {
 
   return (
     <>
-      <div>
+      <div className='strek-container'>
         <div className='Habit-list'>
           <h1> Habit list  </h1>
           <h3 style={{ display: 'flex' }} >🔥Total Streak: {totalStreak} | 🎯 XP Points: {xPPoints} </h3>
@@ -135,7 +135,7 @@ function Streak() {
 
               return (
                 <div key={index} className="Habit-Card">
-                  <h3>{streak.HabitName} ({streak.Frequency}) {streak.StreakRecord.Badge} </h3>
+                  <h3>{streak.HabitName} ({streak.Frequency}) {streak.BadgeRecord.Badge} </h3>
                   <p>{streakUI}</p>
                   <StreakUpdate
                     setStreakData={setStreakData}

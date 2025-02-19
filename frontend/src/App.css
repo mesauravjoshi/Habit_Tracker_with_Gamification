@@ -5,6 +5,9 @@
     grid-template-rows: .2fr 3fr;
 }
 
+p {
+    margin: 0;
+}
 h1 {
     font-size: 3.5em;
 }

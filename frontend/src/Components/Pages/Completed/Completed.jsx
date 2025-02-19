@@ -60,7 +60,7 @@ function Completed() {
 
     // console.log(Math.floor(daysLeft/7) +1);
     // console.log(daysLeft);
-    
+
     if (daysLeft > 0) return (Math.floor(daysLeft / 7) + 1);
     else if (daysLeft === 0) return 0;
     else return "Completed";
@@ -81,7 +81,7 @@ function Completed() {
 
   return (
     <>
-      <div>
+      <div className='Complete-streak' style={{ overflowY: 'auto' }}>
         <div className='Habit-list'>
           <h1> Completed Habits  </h1>
         </div>

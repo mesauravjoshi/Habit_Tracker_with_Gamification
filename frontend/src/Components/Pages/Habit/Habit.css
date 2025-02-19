@@ -4,6 +4,7 @@
     gap: 12px;
     grid-template-columns: 1fr 1fr;
     /* height: 90vh; */
+    overflow-y: auto;
     margin: 2em 1em;
     flex-direction: column;
     justify-content: center;

@@ -46,10 +46,14 @@ function Habit() {
         TargetDuration: targetDuration,
         StartedDate: today.toString(),
         StreakRecord: {
-          Badge: "",
           LastUpdate: "",
           TotalStreak: 0,
           XPPoints: 0
+        },
+        BadgeRecord: {
+          AchievedOn: "",
+          Badge: "",
+          StreakDuration: ""
         },
         IsConmpleted: false,
       };
