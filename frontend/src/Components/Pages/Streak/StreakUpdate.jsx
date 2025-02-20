@@ -210,13 +210,13 @@ function StreakUpdate({ setStreakData, LastUpdate, LastDayForWeek, TargetDuratio
         const after_day_completed = today - lastUpdateDate;
         const daysPassed = Math.floor(after_day_completed / (1000 * 60 * 60 * 24));
         if (daysPassed >= 1) {
-          console.log('not update yet');
+          // console.log('not update yet');
           return false
         } else if (String(today) == String(lastUpdateDate) ) {
-          console.log('today');
+          // console.log('today');
           return true
         } else if (daysPassed < 1) {
-          console.log('already updated/ day passed');
+          // console.log('already updated/ day passed');
           return true
         }
       }

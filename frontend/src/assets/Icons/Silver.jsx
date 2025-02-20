@@ -4,13 +4,13 @@ const ShieldCheckIcon = () => {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="40"
-            height="40"
+            width="100%"
+            height="100%"
             fill="currentColor"
             className="bi bi-shield-check"
             viewBox="0 0 16 16"
-            color='#9c8e35'
-            stroke="#baba9f"    // Blue stroke for the second path
+            color='#b3b3b3'
+            stroke="#b3b3b3"    // Blue stroke for the second path
             // strokeWidth="2"  // Slightly thinner stroke
         >
             <path

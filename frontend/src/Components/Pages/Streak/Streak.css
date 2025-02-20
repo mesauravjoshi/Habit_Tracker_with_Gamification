@@ -1,4 +1,4 @@
-.strek-container{
+.strek-container {
   overflow-y: auto;
 }
 
@@ -7,7 +7,63 @@
   justify-content: space-between;
   align-items: center;
   margin: 0 2em;
+  font-size: 0.8em;
 }
+
+.display-streak-XPPoints {
+  display: flex;
+  height: 4.6em;
+  margin-right: 2em;
+  flex-direction: column;
+  font-size: 0.9em;
+  justify-content: space-around;
+}
+
+.filter-habit{
+  font-family: "Phudu", serif;
+}
+.filter-habit select {
+  background: transparent;
+  color: #ff483d;
+  padding: 6px 3px;
+  font-size: 16px;
+  letter-spacing: 5px;
+  font-weight: 600;
+  border-radius: 8px;
+  border: 1px solid #ff483d;
+  cursor: pointer;
+  transition: all 0.3sease-in-out;
+  outline: none;
+}
+
+/* Hover effect */
+.filter-habit select:hover {
+  border-color: #ee433a;
+}
+
+/* Focus effect */
+.filter-habit select:focus {
+  border-color: #ee433a;
+}
+
+/* Dropdown options styling */
+.filter-habit select option {
+  background: #5f102a;  /* Dark background for dropdown */
+  letter-spacing: 5px;
+  color: #9a888e;
+  padding: 10px;
+}
+
+.filter-habit select option:hover {
+  background-color: yellow;
+}
+
+/* Highlight selected option */
+.filter-habit select option:checked {
+  background: #dc8a18;
+  color: black;
+}
+
 
 .Streak {
   display: flex;
@@ -109,6 +165,9 @@
 }
 
 @media (max-width: 550px) {
+  .strek-container {
+    overflow-y: hidden;
+  }
   .Habit-Card {
     margin: 10px 13px;
     grid-row-gap: 14px;
@@ -126,16 +185,30 @@
     width: 100%;
   }
 
+  .filter-habit select{
+    width: 5em;
+    letter-spacing: 0;
+  }
+
+  .display-streak-XPPoints{
+    font-size: 1.2em;
+    margin: 0;
+  }
+
 }
 
 .material-symbols-outlined {
   font-variation-settings:
-    'FILL' 0,   /* Icon color fill */
-    'wght' 400, /* Icon weight */
-    'GRAD' 0,   /* Gradient angle */
-    'opsz' 24   /* Icon size */
+    'FILL' 0,
+    /* Icon color fill */
+    'wght' 400,
+    /* Icon weight */
+    'GRAD' 0,
+    /* Gradient angle */
+    'opsz' 24
+    /* Icon size */
 }
 
-.three-dot-elips{
+.three-dot-elips {
   position: relative;
 }

@@ -4,6 +4,8 @@ import StreakUpdate from './StreakUpdate';
 
 function Streak() {
   const [streakData, setStreakData] = useState([]);
+  const [updatedStreakData, setUpdatedStreakData] = useState([]);
+  const [habitListCategory, setHabitListCategory] = useState('');
 
   useEffect(() => {
     const fetchHabits = async () => {
@@ -15,12 +17,32 @@ function Streak() {
         const data = await response.json();
         // console.log(data);
         setStreakData(data);
+        setUpdatedStreakData(data);
       } catch (error) {
         console.error('Error fetching habits:', error);
       }
     };
     fetchHabits();
   }, [])
+
+  const handleHabitListCategory = (val) => {
+    setHabitListCategory(val);
+    const copy_inside = [...streakData];
+
+    if (val === "Not Completed") {
+      setUpdatedStreakData(copy_inside.filter(habit => (habit.IsCompleted == false)));
+    } else if (val === "Daily") {
+      setUpdatedStreakData(copy_inside.filter(habit => (habit.Frequency == 'Daily')));
+    } else if (val === "Weekly") {
+      setUpdatedStreakData(copy_inside.filter(habit => (habit.Frequency == "Weekly")));
+    } else if (val === "Silver Badge") {
+      setUpdatedStreakData(copy_inside.filter(habit => (habit.BadgeRecord.Badge == "🥈 Silver Badge")));
+    } else if (val === "Gold Badge") {
+      setUpdatedStreakData(copy_inside.filter(habit => (habit.BadgeRecord.Badge == "🏆 Gold Badge")));
+    } else {
+      setUpdatedStreakData(copy_inside);
+    }
+  }
 
   const totalStreak = Array.isArray(streakData)
     ? streakData.reduce((acc, habit) => acc + habit.StreakRecord.TotalStreak, 0)
@@ -91,21 +113,28 @@ function Streak() {
       <div className='strek-container'>
         <div className='Habit-list'>
           <h1> Habit list  </h1>
-          <h3 style={{ display: 'flex' }} >🔥Total Streak: {totalStreak} | 🎯 XP Points: {xPPoints} </h3>
-        </div>
           <div className="filter-habit">
-          <select
-            onChange={(e) => setSelectedCategory(e.target.value)}
+            <select
+              onChange={(e) => handleHabitListCategory(e.target.value)}
+              value={habitListCategory}
             >
-            <option >All</option>
-            <option value="Coding">Not Completed</option>
-            <option value="Reading">Silver Badge</option>
-            <option value="Workout">Gold Badge</option>
-          </select>
+              <option >All</option>
+              <option value="Not Completed">Not Completed</option>
+              <option value="Daily">Daily</option>
+              <option value="Weekly">Weekly</option>
+              <option value="Silver Badge">Silver Badge</option>
+              <option value="Gold Badge">Gold Badge</option>
+            </select>
           </div>
+          <div className='display-streak-XPPoints'>
+            <h3 >🔥Total Streak: {totalStreak}</h3>
+            <h3 >🎯 XP Points: {xPPoints} </h3>
+          </div>
+        </div>
+
         <div className="Streak">
-          {streakData.length > 0 &&
-            streakData.map((streak, index) => {
+          {updatedStreakData.length > 0 &&
+            updatedStreakData.map((streak, index) => {
               let daysLeft_cal = 0;
               let progress = 0;
               let daysLeft = '';

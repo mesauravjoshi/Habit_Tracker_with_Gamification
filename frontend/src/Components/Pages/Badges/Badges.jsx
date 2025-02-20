@@ -35,20 +35,28 @@ function Badge() {
             allBadges.map((item, index) => (
               <div key={index} className={`Badge-card ${item.BadgeRecord.Badge === '🥈 Silver Badge' ? 'silver-card' : 'gold-card'}  `}>
                 <div className="badge-header">
-                  {/* <Silver /> */}
-                  <img src={Gold} alt="" />
-                  {/* <span className="material-symbols-outlined">
-                    local_police
-                  </span> */}
+                  {
+                    item.BadgeRecord.Badge === '🥈 Silver Badge' ?
+                    <div className="icon-Image">
+                      <Silver /> 
+                    </div> :
+                    <div>
+                      <img src={Gold} alt="" /> 
+                    </div>
+                    // <span className="material-symbols-outlined"> local_police </span>
+                  }
                   <h3>{(item.BadgeRecord.Badge).slice(2)} </h3>
                 </div>
-                <span>({item.Frequency} )</span>
+                  <span className='badge-Frequency'>({(item.Frequency).toUpperCase()})</span>
                 {/* <hr /> */}
                 <div className="badge-details">
                   <p> Habit: {item.HabitName} </p>
                   <p>Achieved on: {(item.BadgeRecord.AchievedOn).slice(3, 15)} </p>
                   <p>Streak: {item.BadgeRecord.StreakDuration} {item.Frequency === 'Daily' ? 'Days' : 'Weeks'} </p>
-                  <p>XP Earned: +{item.BadgeRecord.StreakDuration === 7 ? '50' : '100'} </p>
+                </div>
+                <div className="badge-footer">
+                  <span className='plus-text' >+{item.BadgeRecord.StreakDuration === 7 ? '50' : '100'}</span>
+                  <span className='XP-text'>XP <br /> Points</span>
                 </div>
               </div>
             ))
