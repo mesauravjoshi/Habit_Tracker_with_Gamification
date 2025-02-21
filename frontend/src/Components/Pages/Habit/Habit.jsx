@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import './Habit.css';
 import { useEffect } from 'react';
+import { url } from '../../../URL/Url';
 
 function Habit() {
   const priorityLabels = ["Low", "Medium", "High", "Critical"];
@@ -69,7 +70,7 @@ function Habit() {
       }
 
       try {
-        const response = await fetch('http://localhost:3000/habits', {
+        const response = await fetch(`${url}/habits`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',  // Make sure the server understands the data format
@@ -89,14 +90,12 @@ function Habit() {
       }
 
       // Reset input fields
-      // setHabit('');
-      // setSelectedCategory('');
-      // setSelectedFrequency('');
-      // setTargetDuration('');
-      // setPriority(0);
+      setHabit('');
+      setSelectedCategory('');
+      setSelectedFrequency('');
+      setTargetDuration('');
+      setPriority(0);
     }
-
-
   };
 
   useEffect(() => {

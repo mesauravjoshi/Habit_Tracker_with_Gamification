@@ -1,21 +1,12 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-// const connectDB = require('./db'); 
+const connectDB = require('./db'); 
 const Habit = require('./models/habits');
 
-const mongoose = require('mongoose');
+require('dotenv').config();
 
-main().catch(err => console.log(err));
-
-async function main() {
-    await mongoose.connect('mongodb://127.0.0.1:27017/habit');
-    console.log('db connected');
-}
-
-// require('dotenv').config();
-
-// connectDB().catch(err => console.log(err)); // Call connectDB function
+connectDB().catch(err => console.log(err)); // Call connectDB function
 
 const app = express();
 
@@ -23,7 +14,6 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.post('/habits', async (req, res) => {
-
     try {
         const { HabitName, Category, Frequency, Priority, TargetDuration, StartedDate, StreakRecord } = req.body;
 
@@ -98,6 +88,22 @@ app.put('/markAsDone/:id', async (req, res) => {
     }
 });
 
+app.delete('/habitDelete/:id', async (req, res) => {
+    const { id } = req.params; // Extract habit ID from URL
+
+    try {
+        const deletedHabit = await Habit.findByIdAndDelete(id);
+
+        if (!deletedHabit) {
+            return res.status(404).json({ error: 'Habit not found' });
+        }
+
+        res.json({ message: 'Habit deleted  successfully', data: deletedHabit });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Failed to delete habit' });
+    }
+});
 
 const PORT = process.env.PORT || 3000;
 // console.log(PORT);

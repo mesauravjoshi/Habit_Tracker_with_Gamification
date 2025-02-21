@@ -1,0 +1,86 @@
+/* Background Overlay for Blur Effect */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Dark transparent background */
+    backdrop-filter: blur(8px); /* Glassmorphic Blur Effect */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Ensure it's above everything */
+}
+
+/* Delete Confirmation Box */
+.DeleteConfirmUI {
+    background: rgba(255, 255, 255, 0.15); /* Semi-transparent white */
+    backdrop-filter: blur(12px); /* Frosted glass effect */
+    padding: 20px;
+    border-radius: 12px;
+    border: 2px solid rgba(255, 0, 0, 0.5);
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 350px;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Warning Message */
+.DeleteConfirmUI h3 {
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+/* Buttons */
+.deleteConfrim-footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.deleteConfrim-footer button {
+    padding: 10px 15px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Cancel Button */
+.deleteConfrim-footer button:first-child {
+    background: white;
+    color: black;
+    border: 2px solid gray;
+}
+
+.deleteConfrim-footer button:first-child:hover {
+    background: gray;
+    color: white;
+}
+
+/* Delete Button */
+.deleteConfrim-footer button:last-child {
+    background: red;
+    color: white;
+    border: 2px solid red;
+}
+
+.deleteConfrim-footer button:last-child:hover {
+    background: darkred;
+}
+
+/* Fade-in Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}

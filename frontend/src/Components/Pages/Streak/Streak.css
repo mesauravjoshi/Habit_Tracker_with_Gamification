@@ -19,9 +19,10 @@
   justify-content: space-around;
 }
 
-.filter-habit{
+.filter-habit {
   font-family: "Phudu", serif;
 }
+
 .filter-habit select {
   background: transparent;
   color: #ff483d;
@@ -48,7 +49,8 @@
 
 /* Dropdown options styling */
 .filter-habit select option {
-  background: #5f102a;  /* Dark background for dropdown */
+  background: #5f102a;
+  /* Dark background for dropdown */
   letter-spacing: 5px;
   color: #9a888e;
   padding: 10px;
@@ -77,12 +79,22 @@
   letter-spacing: 1.5px;
 }
 
+.HabitCard-Container {
+  display: flex;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  /* border: 1px solid; */
+  flex-direction: row;
+  justify-content: center;
+}
+
 .Habit-Card {
+  width: 100%;
   display: grid;
   grid-row-gap: 14px;
   grid-template-columns: 1fr 1fr;
   padding: 10px 17px;
-  margin: 10px 35px;
+  margin: 0 5px 14px 35px;
   border-radius: 8px;
   /* font-weight: bold; */
   transition: transform 0.3s ease-in-out, box-shadow 0.3s;
@@ -164,10 +176,19 @@
   display: flex;
 }
 
+.habitCard-options {
+  margin-right: 1em;
+  /* cursor: pointer; */
+  svg {
+    cursor: pointer;
+  }
+}
+
 @media (max-width: 550px) {
   .strek-container {
     overflow-y: hidden;
   }
+
   .Habit-Card {
     margin: 10px 13px;
     grid-row-gap: 14px;
@@ -185,12 +206,12 @@
     width: 100%;
   }
 
-  .filter-habit select{
+  .filter-habit select {
     width: 5em;
     letter-spacing: 0;
   }
 
-  .display-streak-XPPoints{
+  .display-streak-XPPoints {
     font-size: 1.2em;
     margin: 0;
   }

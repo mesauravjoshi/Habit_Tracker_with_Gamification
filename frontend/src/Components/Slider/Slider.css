@@ -1,4 +1,5 @@
 .Slider {
+    border-right: 0.7px solid #43434b;
     height: 100%;
     /* overflow-y: auto; */
     grid-row: 1 / 3;
@@ -10,12 +11,15 @@
 }
 
 .logo {
+    font-family: "Phudu", serif;
     padding: 1em;
+    letter-spacing: 4px;
+    font-weight: 427;
+    font-style: oblique;
 }
 
 li {
-    padding: 0.8em 1em;
-    /* margin-bottom: 2em; */
+    padding: 0.8em 0.3em;
 }
 
 .slider-list {
@@ -68,6 +72,7 @@ li {
 .nav-link:hover {
     transform: scale(1.05);
     color: #c88f3c;
+    margin: 0 1em 4px 17px;
 }
 
 /* Remove hover effect if the link is active */
@@ -120,7 +125,7 @@ li {
     /* When it appears, slide in */
     .show-slider.show {
         z-index: 3;
-        box-shadow: 5px 1px 20px 20px #2c2c37;
+        /* box-shadow: 5px 1px 20px 20px #2c2c37; */
         transform: translateX(0);
     }
 

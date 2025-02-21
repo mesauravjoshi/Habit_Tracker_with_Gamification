@@ -14,13 +14,14 @@
 
 #borderr {
     /* border: 1px solid #57b957; */
-    border-radius: 4px;
-    padding: 0.3em 0.3em;
+    border-radius: 9px;
+    padding: 0.3em 0.8em;
+    background-color: #23232b;
     /* background-color: #25252c; */
 }
 
 #borderr:hover {
-    background-color: #25252c;
+    background-color: #23232b;;
     /* font-size: 1.02em; */
 }
 
@@ -160,16 +161,13 @@ input[type="date"]:focus {
     /* color: #333; */
 }
 
-
 /* priority ---------------------------- */
-
 
 .Add-Habit-Button {
     display: flex;
     grid-column: 1/ span 2;
     justify-content: center;
 }
-
 
 @media (max-width: 500px) {
     .habbit{

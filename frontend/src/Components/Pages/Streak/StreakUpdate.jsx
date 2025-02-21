@@ -1,3 +1,4 @@
+import { url } from '../../../URL/Url';
 import './StreakUpdate.css'
 
 function StreakUpdate({ setStreakData, LastUpdate, LastDayForWeek, TargetDuration, StartedDate, index, streakData, Frequency }) {
@@ -25,7 +26,7 @@ function StreakUpdate({ setStreakData, LastUpdate, LastDayForWeek, TargetDuratio
     }
     console.log(updatedData)
     try {
-      const response = await fetch(`http://localhost:3000/markAsDone/${habit._id}`, {
+      const response = await fetch(`${url}/markAsDone/${habit._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -120,18 +121,23 @@ function StreakUpdate({ setStreakData, LastUpdate, LastDayForWeek, TargetDuratio
         } else {
           // Increase the streak count and update the LastUpdate date
           habit.StreakRecord.TotalStreak += 1;
-          if(habit.StreakRecord.TotalStreak === 7 ){
+          if (habit.StreakRecord.TotalStreak === 7) {
             // console.log('🥈 Silver Badge');
             habit.StreakRecord.XPPoints += 40;
             habit.BadgeRecord.Badge = "🥈 Silver Badge";
             habit.BadgeRecord.AchievedOn = String(today);
             habit.BadgeRecord.StreakDuration = 7
-          } else if (habit.StreakRecord.TotalStreak === 30){
+          } else if (habit.StreakRecord.TotalStreak === 30) {
             // console.log('🏆 Gold Badge');
             habit.StreakRecord.XPPoints += 190;
             habit.BadgeRecord.Badge = "🏆 Gold Badge";
             habit.BadgeRecord.AchievedOn = String(today);
             habit.BadgeRecord.StreakDuration = 30
+          } else if (habit.StreakRecord.TotalStreak === 100) {
+            habit.StreakRecord.XPPoints += 490;
+            habit.BadgeRecord.Badge = "⚜️ Elite Badge";
+            habit.BadgeRecord.AchievedOn = String(today);
+            habit.BadgeRecord.StreakDuration = 100
           }
         }
         habit.StreakRecord.XPPoints += 10;
@@ -153,16 +159,21 @@ function StreakUpdate({ setStreakData, LastUpdate, LastDayForWeek, TargetDuratio
         if (today >= dayFrom && today <= endDate || LastUpdate == '') {
           // console.log('between Start - end date', LastUpdate);
           habit.StreakRecord.TotalStreak += 1;
-          if(habit.StreakRecord.TotalStreak === 4 ){
+          if (habit.StreakRecord.TotalStreak === 4) {
             habit.StreakRecord.XPPoints += 40;
             habit.BadgeRecord.Badge = "🥈 Silver Badge";
             habit.BadgeRecord.AchievedOn = String(today);
             habit.BadgeRecord.StreakDuration = 4
-          } else if (habit.StreakRecord.TotalStreak === 12){
+          } else if (habit.StreakRecord.TotalStreak === 12) {
             habit.StreakRecord.XPPoints += 190;
             habit.BadgeRecord.Badge = "🏆 Gold Badge";
             habit.BadgeRecord.AchievedOn = String(today);
             habit.BadgeRecord.StreakDuration = 12
+          } else if (habit.StreakRecord.TotalStreak === 40) {
+            habit.StreakRecord.XPPoints += 490;
+            habit.BadgeRecord.Badge = "⚜️ Elite Badge";
+            habit.BadgeRecord.AchievedOn = String(today);
+            habit.BadgeRecord.StreakDuration = 40
           }
         }
         else if (today > endDate) {
@@ -203,16 +214,16 @@ function StreakUpdate({ setStreakData, LastUpdate, LastDayForWeek, TargetDuratio
     endDate.setHours(0, 0, 0, 0);
     const lastUpdateDate = new Date(lastUpdate);
     lastUpdateDate.setHours(0, 0, 0, 0);
-    
+
     if (today >= dayFrom && today <= endDate) {
-      
-      if (Frequency === "Daily") {        
+
+      if (Frequency === "Daily") {
         const after_day_completed = today - lastUpdateDate;
         const daysPassed = Math.floor(after_day_completed / (1000 * 60 * 60 * 24));
         if (daysPassed >= 1) {
           // console.log('not update yet');
           return false
-        } else if (String(today) == String(lastUpdateDate) ) {
+        } else if (String(today) == String(lastUpdateDate)) {
           // console.log('today');
           return true
         } else if (daysPassed < 1) {

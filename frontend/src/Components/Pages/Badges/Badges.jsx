@@ -1,16 +1,44 @@
 import React, { useEffect, useState } from 'react';
+import { url } from '../../../URL/Url';
 import Silver from '../../../assets/Icons/Silver'; // Adjust the path based on your folder structure
-import Gold from './gold.svg'; // Adjust the path based on your folder structure
-
+import Gold from '../../../assets/Icons/gold.svg'; // Adjust the path based on your folder structure
 import './Badges.css'
 
 function Badge() {
   const [allBadges, setAllBadges] = useState([]);
 
+  const displayBadgeIcon = (badgeName) => {
+    if (badgeName == '🥈 Silver Badge') {
+      return <div className="icon-Image">
+        <Silver />
+      </div>
+    } else if (badgeName == '🏆 Gold Badge') {
+      return <div>
+        <img src={Gold} alt="" />
+      </div>
+    } else {
+      return <div className="icon-Image">
+        <span className="material-symbols-outlined">
+          local_fire_department
+        </span>
+      </div>
+    }
+  }
+
+  const plusPointCalculate = (badgeName) => {
+    if (badgeName == '🥈 Silver Badge') {
+      return '50'
+    } else if (badgeName == '🏆 Gold Badge'){
+      return '200'
+    } else {
+      return '500'
+    }
+  }
+
   useEffect(() => {
     const fetchBadges = async () => {
       try {
-        const response = await fetch('http://localhost:3000/habits');
+        const response = await fetch(`${url}/habits`);
         if (!response.ok) {
           throw new Error('Failed to fetch habits');
         }
@@ -32,34 +60,37 @@ function Badge() {
         </center>
         <div className='Badge-container'>
           {
-            allBadges.map((item, index) => (
-              <div key={index} className={`Badge-card ${item.BadgeRecord.Badge === '🥈 Silver Badge' ? 'silver-card' : 'gold-card'}  `}>
-                <div className="badge-header">
-                  {
-                    item.BadgeRecord.Badge === '🥈 Silver Badge' ?
-                    <div className="icon-Image">
-                      <Silver /> 
-                    </div> :
-                    <div>
-                      <img src={Gold} alt="" /> 
-                    </div>
-                    // <span className="material-symbols-outlined"> local_police </span>
-                  }
-                  <h3>{(item.BadgeRecord.Badge).slice(2)} </h3>
-                </div>
+            allBadges.map((item, index) => {
+              let badgeCardType = '';
+              if (item.BadgeRecord.Badge === '🥈 Silver Badge') {
+                badgeCardType = 'silver-card';
+              } else if (item.BadgeRecord.Badge === '🏆 Gold Badge') {
+                badgeCardType = 'gold-card';
+              } else {
+                badgeCardType = 'elite-card';
+              }
+              return (
+                <div key={index} className={`Badge-card ${badgeCardType}`}>
+                  <div className="badge-header">
+                    {
+                      displayBadgeIcon(item.BadgeRecord.Badge)
+                    }
+                    <h3>{(item.BadgeRecord.Badge).slice(2)} </h3>
+                  </div>
                   <span className='badge-Frequency'>({(item.Frequency).toUpperCase()})</span>
-                {/* <hr /> */}
-                <div className="badge-details">
-                  <p> Habit: {item.HabitName} </p>
-                  <p>Achieved on: {(item.BadgeRecord.AchievedOn).slice(3, 15)} </p>
-                  <p>Streak: {item.BadgeRecord.StreakDuration} {item.Frequency === 'Daily' ? 'Days' : 'Weeks'} </p>
+                  {/* <hr /> */}
+                  <div className="badge-details">
+                    <p> Habit: {item.HabitName} </p>
+                    <p>Earned on: {(item.BadgeRecord.AchievedOn).slice(3, 15)} </p>
+                    <p>Streak: {item.BadgeRecord.StreakDuration} {item.Frequency === 'Daily' ? 'Days' : 'Weeks'} </p>
+                  </div>
+                  <div className="badge-footer">
+                    <span className='plus-text' >+{plusPointCalculate(item.BadgeRecord.Badge)}</span>
+                    <span className='XP-text'>XP <br /> Points</span>
+                  </div>
                 </div>
-                <div className="badge-footer">
-                  <span className='plus-text' >+{item.BadgeRecord.StreakDuration === 7 ? '50' : '100'}</span>
-                  <span className='XP-text'>XP <br /> Points</span>
-                </div>
-              </div>
-            ))
+              );
+            })
           }
         </div>
 

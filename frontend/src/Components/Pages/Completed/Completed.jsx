@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-// import './Streak.css'
+import { url } from '../../../URL/Url';
 
 function Completed() {
   const [streakData, setStreakData] = useState([]);
@@ -7,7 +7,7 @@ function Completed() {
   useEffect(() => {
     const fetchHabits = async () => {
       try {
-        const response = await fetch('http://localhost:3000/habits');
+        const response = await fetch(`${url}/habits`);
         if (!response.ok) {
           throw new Error('Failed to fetch habits');
         }

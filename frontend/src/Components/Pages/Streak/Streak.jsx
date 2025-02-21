@@ -1,22 +1,27 @@
 import { useEffect, useState } from 'react';
+import { url } from '../../../URL/Url';
 import './Streak.css'
 import StreakUpdate from './StreakUpdate';
+import DeleteConfirmUI from './DeleteConfirmUI';
 
 function Streak() {
   const [streakData, setStreakData] = useState([]);
   const [updatedStreakData, setUpdatedStreakData] = useState([]);
   const [habitListCategory, setHabitListCategory] = useState('');
 
+  const [displayDelUI, setDisplayDelUI] = useState(false);
+  const [selectedStreakID, setSelectedStreakID] = useState(null);
+
   useEffect(() => {
     const fetchHabits = async () => {
       try {
-        const response = await fetch('http://localhost:3000/habits');
+        const response = await fetch(`${url}/habits`);
         if (!response.ok) {
           throw new Error('Failed to fetch habits');
         }
         const data = await response.json();
         // console.log(data);
-        setStreakData(data);
+        setStreakData(data.reverse());
         setUpdatedStreakData(data);
       } catch (error) {
         console.error('Error fetching habits:', error);
@@ -27,29 +32,29 @@ function Streak() {
 
   const handleHabitListCategory = (val) => {
     setHabitListCategory(val);
-    const copy_inside = [...streakData];
+    const copy_inside = [...updatedStreakData];
 
     if (val === "Not Completed") {
-      setUpdatedStreakData(copy_inside.filter(habit => (habit.IsCompleted == false)));
+      setStreakData(copy_inside.filter(habit => (habit.IsCompleted == false)));
     } else if (val === "Daily") {
-      setUpdatedStreakData(copy_inside.filter(habit => (habit.Frequency == 'Daily')));
+      setStreakData(copy_inside.filter(habit => (habit.Frequency == 'Daily')));
     } else if (val === "Weekly") {
-      setUpdatedStreakData(copy_inside.filter(habit => (habit.Frequency == "Weekly")));
+      setStreakData(copy_inside.filter(habit => (habit.Frequency == "Weekly")));
     } else if (val === "Silver Badge") {
-      setUpdatedStreakData(copy_inside.filter(habit => (habit.BadgeRecord.Badge == "🥈 Silver Badge")));
+      setStreakData(copy_inside.filter(habit => (habit.BadgeRecord.Badge == "🥈 Silver Badge")));
     } else if (val === "Gold Badge") {
-      setUpdatedStreakData(copy_inside.filter(habit => (habit.BadgeRecord.Badge == "🏆 Gold Badge")));
+      setStreakData(copy_inside.filter(habit => (habit.BadgeRecord.Badge == "🏆 Gold Badge")));
     } else {
-      setUpdatedStreakData(copy_inside);
+      setStreakData(copy_inside);
     }
   }
 
-  const totalStreak = Array.isArray(streakData)
-    ? streakData.reduce((acc, habit) => acc + habit.StreakRecord.TotalStreak, 0)
+  const totalStreak = Array.isArray(updatedStreakData)
+    ? updatedStreakData.reduce((acc, habit) => acc + habit.StreakRecord.TotalStreak, 0)
     : 0;
 
-  const xPPoints = Array.isArray(streakData)
-    ? streakData.reduce((acc, habit) => acc + habit.StreakRecord.XPPoints, 0)
+  const xPPoints = Array.isArray(updatedStreakData)
+    ? updatedStreakData.reduce((acc, habit) => acc + habit.StreakRecord.XPPoints, 0)
     : 0;
 
   // ✅ Function to Calculate Day Left
@@ -108,8 +113,22 @@ function Streak() {
     return Math.ceil(totalDays / 7);
   }
 
+  const handleDelete = (streakID) => {
+    console.log('selected',String(streakID));
+    setSelectedStreakID(String(streakID));
+    setDisplayDelUI(true);
+  };
+  
   return (
     <>
+      {
+        displayDelUI && 
+        <DeleteConfirmUI
+         setDisplayDelUI={setDisplayDelUI} 
+         streakID={selectedStreakID} 
+         setStreakData={setStreakData}
+         streakData={streakData} />
+      }
       <div className='strek-container'>
         <div className='Habit-list'>
           <h1> Habit list  </h1>
@@ -133,8 +152,8 @@ function Streak() {
         </div>
 
         <div className="Streak">
-          {updatedStreakData.length > 0 &&
-            updatedStreakData.map((streak, index) => {
+          {streakData.length > 0 &&
+            streakData.map((streak, index) => {
               let daysLeft_cal = 0;
               let progress = 0;
               let daysLeft = '';
@@ -163,30 +182,35 @@ function Streak() {
               }
 
               return (
-                <div key={index} className="Habit-Card">
-                  <h3>{streak.HabitName} ({streak.Frequency}) {streak.BadgeRecord.Badge} </h3>
-                  <p>{streakUI}</p>
-                  <StreakUpdate
-                    setStreakData={setStreakData}
-                    Frequency={streak.Frequency}
-                    LastDayForWeek={streak.StreakRecord.LastDayForWeek}
-                    LastUpdate={streak.StreakRecord.LastUpdate}
-                    TargetDuration={streak.TargetDuration}
-                    StartedDate={streak.StartedDate}
-                    index={index}
-                    streakData={streakData}
-                  />
-                  <p>{daysLeft}</p>
+                <div className="HabitCard-Container" key={streak._id}>
+                  <div className="Habit-Card">
+                    <h3>{streak.HabitName} ({streak.Frequency}) {streak.BadgeRecord.Badge} </h3>
+                    <p>{streakUI}</p>
+                    <StreakUpdate
+                      setStreakData={setStreakData}
+                      Frequency={streak.Frequency}
+                      LastDayForWeek={streak.StreakRecord.LastDayForWeek}
+                      LastUpdate={streak.StreakRecord.LastUpdate}
+                      TargetDuration={streak.TargetDuration}
+                      StartedDate={streak.StartedDate}
+                      index={index}
+                      streakData={streakData}
+                    />
+                    <p>{daysLeft}</p>
 
-                  {/* Progress Bar */}
-                  <div className='progress-outer'>
-                    <div className="progress-container" style={{ "--progress": `${progress}%` }}>
-                      <div className="progress-bar"></div>
+                    {/* Progress Bar */}
+                    <div className='progress-outer'>
+                      <div className="progress-container" style={{ "--progress": `${progress}%` }}>
+                        <div className="progress-bar"></div>
+                      </div>
+                      <p> {progress}%</p>
                     </div>
-                    <p> {progress}%</p>
+                    <div className="TotalDaysCompleted">
+                      {DayWeeksCompeted}
+                    </div>
                   </div>
-                  <div className="TotalDaysCompleted">
-                    {DayWeeksCompeted}
+                  <div className="habitCard-options">
+                    <svg onClick={() => handleDelete(streak._id)} xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#dc8a18"><path d="M200-120v-600h-40v-80h200v-40h240v40h200v80h-40v600H200Zm80-80h400v-520H280v520Zm80-80h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z" /></svg>
                   </div>
                 </div>
               );
