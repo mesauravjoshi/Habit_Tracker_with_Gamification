@@ -3,11 +3,15 @@ import { url } from '../../../URL/Url';
 import './Streak.css'
 import StreakUpdate from './StreakUpdate';
 import DeleteConfirmUI from './DeleteConfirmUI';
+import ExpandCard from './ExpandCard';
 
 function Streak() {
   const [streakData, setStreakData] = useState([]);
   const [updatedStreakData, setUpdatedStreakData] = useState([]);
   const [habitListCategory, setHabitListCategory] = useState('');
+
+  const [isExpandVisible, setIsExpandVisible] = useState(false);
+  const [selectedStreakHabitCard, setSelectedStreakHabitCard] = useState([]);
 
   const [displayDelUI, setDisplayDelUI] = useState(false);
   const [selectedStreakID, setSelectedStreakID] = useState(null);
@@ -114,20 +118,33 @@ function Streak() {
   }
 
   const handleDelete = (streakID) => {
-    console.log('selected',String(streakID));
     setSelectedStreakID(String(streakID));
     setDisplayDelUI(true);
   };
-  
+
+  const handleSelectHabitCard = (streakID, daysLeft, Total_Target_Time) => {
+    const seleted = {
+      ...streakID,
+      timeLeft: daysLeft,
+      Total_Target_Time: Total_Target_Time,
+    }
+    // console.log('selected habit',seleted);
+    setSelectedStreakHabitCard(seleted);
+    setIsExpandVisible(true);
+  };
+
   return (
     <>
+      {isExpandVisible &&
+        <ExpandCard streak={selectedStreakHabitCard} setIsExpandVisible={setIsExpandVisible} />
+      }
       {
-        displayDelUI && 
+        displayDelUI &&
         <DeleteConfirmUI
-         setDisplayDelUI={setDisplayDelUI} 
-         streakID={selectedStreakID} 
-         setStreakData={setStreakData}
-         streakData={streakData} />
+          setDisplayDelUI={setDisplayDelUI}
+          streakID={selectedStreakID}
+          setStreakData={setStreakData}
+          streakData={streakData} />
       }
       <div className='strek-container'>
         <div className='Habit-list'>
@@ -159,7 +176,7 @@ function Streak() {
               let daysLeft = '';
               let streakUI = '';
               let DayWeeksCompeted = 0;
-
+              const Total_Target_Time = calculateTotalDays(streak.TargetDuration, streak.StartedDate);
               if (streak.Frequency === 'Daily') {
                 daysLeft_cal = calculateDayLeft(streak.TargetDuration);
                 daysLeft = `No of days left: ${daysLeft_cal}`
@@ -171,7 +188,7 @@ function Streak() {
                 DayWeeksCompeted = `Total Days Completed: ${streak.TotalDaysCompleted}`;
               } else if (streak.Frequency === "Weekly") {
                 daysLeft_cal = calculateWeekLeft(streak.TargetDuration);
-                daysLeft = `No of Weeks: ${daysLeft_cal}`;
+                daysLeft = `No of Weeks left: ${daysLeft_cal}`;
                 streakUI = `🔥 Streak: ${streak.StreakRecord.TotalStreak} Weeks`;
                 progress = Math.min(
                   Math.round((streak.TotalWeeksCompleted / calculateTotalWeeks(streak.TargetDuration, streak.StartedDate)) * 100),
@@ -183,7 +200,7 @@ function Streak() {
 
               return (
                 <div className="HabitCard-Container" key={streak._id}>
-                  <div className="Habit-Card">
+                  <div onClick={() => handleSelectHabitCard(streak, daysLeft, Total_Target_Time)} className="Habit-Card">
                     <h3>{streak.HabitName} ({streak.Frequency}) {streak.BadgeRecord.Badge} </h3>
                     <p>{streakUI}</p>
                     <StreakUpdate
@@ -209,9 +226,9 @@ function Streak() {
                       {DayWeeksCompeted}
                     </div>
                   </div>
-                  <div className="habitCard-options">
+                  {/* <div className="habitCard-options">
                     <svg onClick={() => handleDelete(streak._id)} xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#dc8a18"><path d="M200-120v-600h-40v-80h200v-40h240v40h200v80h-40v600H200Zm80-80h400v-520H280v520Zm80-80h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z" /></svg>
-                  </div>
+                  </div> */}
                 </div>
               );
             })}

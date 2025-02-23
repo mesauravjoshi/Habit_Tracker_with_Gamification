@@ -29,7 +29,8 @@ function DeleteConfirmUI({ setDisplayDelUI,streakID, setStreakData ,streakData }
   return (
     <div className="overlay">
       <div className="DeleteConfirmUI">
-        <h3>⚠️ Warning! "This habit has a 50-day streak! Deleting it will remove XP and badges."</h3>
+        <h3>⚠️ Are you sure?</h3>
+        <h3>"Deleting this habit will remove all progress and XP. This action cannot be undone."</h3>
         <div className="deleteConfrim-footer">
           <button onClick={() => handleCanelDelete()}>Cancel</button>
           <button onClick={() => handleDeleteHabit(streakID)}>Delete</button>
