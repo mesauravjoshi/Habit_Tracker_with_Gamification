@@ -95,6 +95,20 @@
     position: absolute;
     height: 100%;
     width: 100%;
+
+    /* .material-symbols-outlined {
+        font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 8,
+            'opsz' 10000;
+        color: #78490e;
+        font-size: 14em;
+        top: 10px;
+        left: 19px;
+        opacity: 0.7;
+        z-index: -1;
+    } */
 }
 
 .badge-Frequency {
@@ -138,20 +152,6 @@
 .XP-text {
     line-height: 1;
     font-size: 13px;
-}
-
-.material-symbols-outlined {
-    font-variation-settings:
-        'FILL' 0,
-        'wght' 400,
-        'GRAD' 8,
-        'opsz' 10000;
-    color: #78490e;
-    font-size: 14em;
-    top: 10px;
-    left: 19px;
-    opacity: 0.7;
-    z-index: -1;
 }
 
 @media (max-width: 1021px) {

@@ -92,7 +92,9 @@ function StreakUpdate({ setStreakData, LastUpdate, LastDayForWeek, TargetDuratio
     return upcomingDay;
   }
 
-  const handleMarkAsDone = (index) => {
+  const handleMarkAsDone = (event,index) => {
+    event.stopPropagation(); // Prevents event from bubbling up
+
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     today.toString();
@@ -265,7 +267,7 @@ function StreakUpdate({ setStreakData, LastUpdate, LastDayForWeek, TargetDuratio
     <div style={{ display: 'flex', gap: '13px' }}>
       <button
         className="StreakUpdate-button"
-        onClick={() => handleMarkAsDone(index)} // Handle the "Mark as Done" button click
+        onClick={() => handleMarkAsDone(event,index)} // Handle the "Mark as Done" button click
         disabled={isMarkedToday(LastUpdate, LastDayForWeek, TargetDuration, StartedDate)} // Disable button if marked today
       >
         ✅ Mark as Done</button>
