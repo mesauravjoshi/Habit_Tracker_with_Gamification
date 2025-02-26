@@ -1,4 +1,7 @@
 import { useEffect, useState } from "react";
+import axios from 'axios';
+import { url } from '../../URL/Url';
+import SignUp from './SignUp'
 import "./LoginModal.css";
 
 const LoginModal = ({ onClose }) => {
@@ -11,6 +14,8 @@ const LoginModal = ({ onClose }) => {
   const [shakeUsername, setShakeUsername] = useState(false);
   const [shakePassword, setShakePassword] = useState(false);
 
+  const [isFlipBox, setIsFlipBox] = useState(false);
+  
   useEffect(() => {
     const handleEsc = (event) => {
       if (event.key === "Escape") onClose();
@@ -60,52 +65,81 @@ const LoginModal = ({ onClose }) => {
     if (!isValid) return;
 
     console.log("Form is valid, sending data...");
-    // Add API call here
+    const formData = {
+      username: username,
+      password: password
+    }
+    const handleLogin = async () => {
+      try {
+        const response = await axios.post(`${url}/auth/login`, formData);
+        console.log('Success:', response.data.token);
+        const setToken = localStorage.setItem('habit token',response.data.token);
+        console.log(setToken);
+      } catch (error) {
+        console.error('Error:', error.response ? error.response.data : error.message);
+      }
+    };
+    handleLogin();
+    // setUsername('');
+    // setPassword('');
   };
 
   return (
     <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <h2>Login</h2>
-        
-        {/* Username Input */}
-        <input
-          style={{ border: usernameError ? '1px solid #ff4538' : '' }}
-          type="text"
-          placeholder="Email"
-          value={username}
-          onChange={(e) => {
-            setUsername(e.target.value);
-            setUsernameError('');
-          }}
-        />
-        {usernameError && <p className={`error-message ${shakeUsername ? "shake" : ""}`}>{usernameError}</p>}
+      {
+        isFlipBox ?
+          <SignUp setIsFlipBox={setIsFlipBox} /> :
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <h2>Login</h2>
 
-        {/* Password Input */}
-        <div className="password-container">
-          <input
-            style={{ border: passwordError ? '1px solid #ff4538' : '' }}
-            type={showPassword ? "text" : "password"}
-            placeholder="Password"
-            value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-              setPasswordError('');
-            }}
-          />
-          <div className="eye-open" onClick={() => setShowPassword(prev => !prev)}>
-            {showPassword ? (
-              <span className="material-symbols-outlined">visibility_off</span>
-            ) : (
-              <span className="material-symbols-outlined">visibility</span>
-            )}
+            {/* Username Input */}
+            <input
+              style={{ border: usernameError ? '1px solid #ff4538' : '' }}
+              type="text"
+              placeholder="Email"
+              value={username}
+              onChange={(e) => {
+                setUsername(e.target.value);
+                setUsernameError('');
+              }}
+            />
+            {usernameError && <p className={`error-message ${shakeUsername ? "shake" : ""}`}>{usernameError}</p>}
+
+            {/* Password Input */}
+            <div className="password-container">
+              <input
+                style={{ border: passwordError ? '1px solid #ff4538' : '' }}
+                type={showPassword ? "text" : "password"}
+                placeholder="Password"
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  setPasswordError('');
+                }}
+              />
+              <div className="eye-open" onClick={() => setShowPassword(prev => !prev)}>
+                {showPassword ? (
+                  <span className="material-symbols-outlined">visibility_off</span>
+                ) : (
+                  <span className="material-symbols-outlined">visibility</span>
+                )}
+              </div>
+            </div>
+            {passwordError && <p className={`error-message ${shakePassword ? "shake" : ""}`}>{passwordError}</p>}
+
+            <button onClick={handleLogin} className="login-btn">Login</button>
+            <button className="close-btn" onClick={onClose}>Close</button>
           </div>
+      }
+      {
+        !isFlipBox &&
+        <div className="sign-up-p">
+          <p onClick={(e) => {
+            e.stopPropagation()
+            setIsFlipBox(true)
+          }} >SIGN UP</p>
         </div>
-        {passwordError && <p className={`error-message ${shakePassword ? "shake" : ""}`}>{passwordError}</p>}
-
-        <button onClick={handleLogin} className="login-btn">Login</button>
-        <button className="close-btn" onClick={onClose}>Close</button>
-      </div>
+      }
     </div>
   );
 };

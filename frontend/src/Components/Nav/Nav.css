@@ -17,6 +17,12 @@ button {
     cursor: pointer;
 }
 
+button:hover {
+    background-color: #36363f;
+    border: 1px solid #d5891c6e;
+}
+
+
 /* Menu Icon */
 .menu-icon {
     font-size: 24px;

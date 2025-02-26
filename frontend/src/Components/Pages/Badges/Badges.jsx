@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext  } from 'react';
 import { url } from '../../../URL/Url';
+import { AuthContext } from '../../Context/AuthContext';
 import Silver from '../../../assets/Icons/Silver'; // Adjust the path based on your folder structure
 import Gold from '../../../assets/Icons/gold.svg'; // Adjust the path based on your folder structure
 import './Badges.css'
 
 function Badge() {
+  const { user, loading } = useContext(AuthContext); // Access user from context
+  
   const [allBadges, setAllBadges] = useState([]);
 
   const displayBadgeIcon = (badgeName) => {
@@ -28,7 +31,7 @@ function Badge() {
   const plusPointCalculate = (badgeName) => {
     if (badgeName == '🥈 Silver Badge') {
       return '50'
-    } else if (badgeName == '🏆 Gold Badge'){
+    } else if (badgeName == '🏆 Gold Badge') {
       return '200'
     } else {
       return '500'
@@ -36,12 +39,19 @@ function Badge() {
   }
 
   useEffect(() => {
+    if (!user) return;
+
     const fetchBadges = async () => {
+      const token = localStorage.getItem('habit token');
+      
       try {
-        const response = await fetch(`${url}/habits`);
-        if (!response.ok) {
-          throw new Error('Failed to fetch habits');
-        }
+        const response = await fetch(`${url}/habit/habits`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}` // Include JWT token
+          }
+        });
         const data = await response.json();
         setAllBadges(data.filter(item => (item.BadgeRecord.Badge != '')));
       } catch (error) {
@@ -49,8 +59,10 @@ function Badge() {
       }
     }
     fetchBadges();
-  }, [])
-  console.log(allBadges);
+  }, [user])
+
+  if (loading) return <p>Loading...</p>;
+  if (!user) return <p>Please log in to view your badges.</p>;
 
   return (
     <>
@@ -93,7 +105,6 @@ function Badge() {
             })
           }
         </div>
-
       </div>
     </>
   )

@@ -24,12 +24,13 @@ function StreakUpdate({ setStreakData, LastUpdate, LastDayForWeek, TargetDuratio
       updatedData.StreakRecord.LastDayForWeek = habit.StreakRecord.LastDayForWeek;
       updatedData.TotalWeeksCompleted = habit.TotalWeeksCompleted;
     }
-    console.log(updatedData)
     try {
-      const response = await fetch(`${url}/markAsDone/${habit._id}`, {
+      const token = localStorage.getItem('habit token');
+      const response = await fetch(`${url}/habit/markAsDone/${habit._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
+          "Authorization": `Bearer ${token}` // Include JWT token
         },
         body: JSON.stringify(updatedData),
       });

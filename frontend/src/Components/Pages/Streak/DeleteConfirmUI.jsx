@@ -2,17 +2,20 @@ import React from "react";
 import { url } from '../../../URL/Url';
 import "./DeleteConfirmUI.css";
 
-function DeleteConfirmUI({ setDisplayDelUI,streakID, setStreakData ,streakData }) {
+function DeleteConfirmUI({ setDisplayDelUI, streakID, setStreakData, streakData }) {
 
   const handleCanelDelete = () => {
     setDisplayDelUI(false);
   }
 
   const handleDeleteHabit = async (streakID) => {
-    console.log('clicked',streakID);
+    console.log('clicked', streakID);
+    const token = localStorage.getItem('habit token');
+
     try {
-      const response = await fetch(`${url}/habitDelete/${streakID}`,{
+      const response = await fetch(`${url}/habit/habitDelete/${streakID}`, {
         method: 'DELETE',
+        "Authorization": `Bearer ${token}` // Include JWT token
       });
       if (!response.ok) {
         throw new Error('Failed to fetch habits');

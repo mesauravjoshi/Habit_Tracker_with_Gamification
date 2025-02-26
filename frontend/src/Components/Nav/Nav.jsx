@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import LoginModal from "./LoginModal";
 import "./Nav.css";
+import { AuthContext } from "../Context/AuthContext";
 
 function Nav({ toggleSlider }) {
+  const { user} = useContext(AuthContext); // Access user from context
+
   const [isLoginOpen, setLoginOpen] = useState(false);
 
   return (
@@ -12,6 +15,7 @@ function Nav({ toggleSlider }) {
       </div>
       <div className="nav-list">
         <input type="text" placeholder="Search..." />
+        { user && user.username}
       </div>
       <div>
         <button onClick={() => setLoginOpen(true)} className="login-btn">

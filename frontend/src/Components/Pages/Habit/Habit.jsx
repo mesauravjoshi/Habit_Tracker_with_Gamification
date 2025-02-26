@@ -34,7 +34,6 @@ function Habit() {
 
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    // console.log('line 36:', targetDuration);
     if (habit.trim() === '' || targetDuration === '' || selectedFrequency === '') {
       console.log('empty');
       alert("All field required !")
@@ -70,10 +69,12 @@ function Habit() {
       }
 
       try {
-        const response = await fetch(`${url}/habits`, {
+        const token = localStorage.getItem('habit token');
+        const response = await fetch(`${url}/habit/habits`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',  // Make sure the server understands the data format
+            "Authorization": `Bearer ${token}` // Include JWT token
           },
           body: JSON.stringify(newHabit),  // Send data as JSON
         });
@@ -159,8 +160,6 @@ function Habit() {
           <label htmlFor="Weekly">Weekly</label>
           <br />
 
-          {/* <input type="radio" id="Custom" name="Frequency" value="Custom" checked={selectedFrequency === "Custom"} onChange={handleFrequencyChange} />
-          <label htmlFor="Custom">Custom</label> */}
         </div>
 
         {/* 5.  Reminder Time */}

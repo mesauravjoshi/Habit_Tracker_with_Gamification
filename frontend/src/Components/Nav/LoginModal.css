@@ -11,12 +11,13 @@
   justify-content: center;
   backdrop-filter: blur(5px);
   z-index: 1000;
+  flex-direction: column;
 }
 
 /* Modal Box */
 .modal-content {
   background: #292931;
-  padding: 2.5em;
+  padding: 2.5em 2.5em 1.5em  2.5em ;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   width: 35em;
@@ -62,6 +63,7 @@
 }
 
 .eye-open {
+  user-select: none;
   cursor: pointer;
   position: absolute;
   right: 13px;
@@ -97,6 +99,12 @@
 
 .modal-content .close-btn:hover {
   background: darkgray;
+}
+
+.sign-up-p{
+  p{
+    cursor: pointer;
+  }
 }
 
 /* Animation */

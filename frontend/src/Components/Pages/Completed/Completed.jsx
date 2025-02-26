@@ -6,11 +6,16 @@ function Completed() {
 
   useEffect(() => {
     const fetchHabits = async () => {
+      const token = localStorage.getItem('habit token');
       try {
-        const response = await fetch(`${url}/habits`);
-        if (!response.ok) {
-          throw new Error('Failed to fetch habits');
-        }
+      const response = await fetch(`${url}/habit/habits`,{
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}` // Include JWT token
+          }
+        });
+
         const data = await response.json();
         // console.log(data);
         setStreakData(data.filter(item => (item.IsCompleted == true))); // Update state with fetched data
