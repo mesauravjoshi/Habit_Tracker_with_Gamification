@@ -1,11 +1,11 @@
 import React, { createContext, useState, useEffect } from "react";
-import {url} from '../../URL/Url'
+import { url } from '../../URL/Url'
 
 export const ArchiveContext = createContext();
 
 export const ArchiveProvider = ({ children }) => {
   const [archiveHabits, setArchiveHabits] = useState([]);
-  
+
   const fetchArchivePData = async () => {
     const token = localStorage.getItem("habit token");
     try {
@@ -26,8 +26,16 @@ export const ArchiveProvider = ({ children }) => {
     fetchArchivePData();
   }, []);
 
+  // ✅ Force a full reload when HMR updates this file
+  if (import.meta.hot) {
+    import.meta.hot.accept(() => {
+      window.location.reload();
+    });
+  }
+
+
   return (
-    <ArchiveContext.Provider value={{ archiveHabits ,fetchArchivePData}}>
+    <ArchiveContext.Provider value={{ archiveHabits, fetchArchivePData }}>
       {children}
     </ArchiveContext.Provider>
   );
