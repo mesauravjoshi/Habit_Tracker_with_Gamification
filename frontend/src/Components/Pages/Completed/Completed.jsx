@@ -3,7 +3,23 @@ import { useEffect, useState } from 'react';
 
 function Completed() {
   const [streakData, setStreakData] = useState([]);
-  
+
+  useEffect(() => {
+    const fetchHabits = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/habits');
+        if (!response.ok) {
+          throw new Error('Failed to fetch habits');
+        }
+        const data = await response.json();
+        setStreakData(data.filter(item => (item.IsCompleted == false))); // Update state with fetched data
+      } catch (error) {
+        console.error('Error fetching habits:', error);
+      }
+    };
+    fetchHabits();
+  }, [])
+
   const totalStreak = Array.isArray(streakData)
     ? streakData.reduce((acc, habit) => acc + habit.StreakRecord.TotalStreak, 0)
     : 0;
@@ -101,7 +117,7 @@ function Completed() {
 
               return (
                 <div key={index} className="Habit-Card">
-                  <h3>{streak.Habit}</h3>
+                  <h3>{streak.HabitName}</h3>
                   <p>{streakUI}</p>
 
                   <p>{daysLeft}</p>

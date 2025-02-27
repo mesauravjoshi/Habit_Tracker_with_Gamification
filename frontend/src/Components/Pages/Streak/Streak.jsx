@@ -14,7 +14,7 @@ function Streak() {
           throw new Error('Failed to fetch habits');
         }
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
         setStreakData(data); // Update state with fetched data
       } catch (error) {
         console.error('Error fetching habits:', error);
@@ -121,7 +121,7 @@ function Streak() {
 
               return (
                 <div key={index} className="Habit-Card">
-                  <h3>{streak.Habit} ({streak.Frequency})</h3>
+                  <h3>{streak.HabitName} ({streak.Frequency})</h3>
                   <p>{streakUI}</p>
                   <StreakUpdate
                     setStreakData={setStreakData}

@@ -2,8 +2,8 @@ import './StreakUpdate.css'
 
 function StreakUpdate({ setStreakData, LastUpdate, LastDayForWeek, TargetDuration, StartedDate, index, streakData, Frequency }) {
 
-  const markAsDone = async (updatedStreakData) => {
-    console.log('inside fetch function',updatedStreakData[0]);
+  const markAsDone = async (habit) => {
+    console.log('inside fetch function',habit);
     
     try {
       const response = await fetch('http://localhost:3000/markAsDone', {
@@ -11,12 +11,11 @@ function StreakUpdate({ setStreakData, LastUpdate, LastDayForWeek, TargetDuratio
         headers: {
           'Content-Type': 'application/json',  // Make sure the server understands the data format
         },
-        body: JSON.stringify(updatedStreakData[0]),  // Send data as JSON
+        body: JSON.stringify(habit),  // Send data as JSON
       });
 
       if (response.ok) {
         const result = await response.json();
-        console.log(result);
       } else {
         const errorResponse = await response.json();
         console.error('Error:', errorResponse.message);
@@ -54,6 +53,7 @@ function StreakUpdate({ setStreakData, LastUpdate, LastDayForWeek, TargetDuratio
 
     // Convert milliseconds to weeks (1 week = 7 days = 7 * 24 * 60 * 60 * 1000 milliseconds)
     const weeksCompleted = (diffInMillis / (7 * 24 * 60 * 60 * 1000));
+    console.log('calculte week completed: ',Math.ceil(weeksCompleted));
     return Math.ceil(weeksCompleted);
   };
 
@@ -124,10 +124,9 @@ function StreakUpdate({ setStreakData, LastUpdate, LastDayForWeek, TargetDuratio
           habit.IsConmpleted = true
         }
         setStreakData(updatedStreakData);
-        markAsDone(updatedStreakData);
+        markAsDone(habit);
       }
       else if (Frequency === "Weekly") {
-        console.log('weekly');
         // Create a copy of streakData
         const updatedStreakData = [...streakData];
         // Get the current habit
@@ -160,13 +159,13 @@ function StreakUpdate({ setStreakData, LastUpdate, LastDayForWeek, TargetDuratio
         habit.StreakRecord.LastDayForWeek = String(upcommingDay);
 
         habit.TotalWeeksCompleted = calculateWeekCompleted(StartedDate);
-        // habit.TotalWeeksCompleted += 1;
+        habit.TotalWeeksCompleted += 1;
         if (IsConmpleted(StartedDate, TargetDuration, Frequency) === habit.TotalWeeksCompleted) {
           habit.IsConmpleted = true
         }
         setStreakData(updatedStreakData);
         // console.log(streakData);
-        markAsDone(updatedStreakData);
+        markAsDone(habit);
       }
       else {
         console.log('Frequency is neither daily nor weekly ')
