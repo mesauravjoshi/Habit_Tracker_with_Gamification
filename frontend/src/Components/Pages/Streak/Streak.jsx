@@ -6,9 +6,18 @@ import DeleteConfirmUI from './DeleteConfirmUI';
 import ExpandCard from './ExpandCard';
 import MaterialIcon from './MaterialIcon ';
 import { AuthContext } from '../../Context/AuthContext';
+import { ArchiveContext } from '../../Context/ArchiveContext';
 
 function Streak() {
+  const authContext = useContext(AuthContext);
+
+  if (!authContext) {
+    console.log("AuthContext is not yet available.");
+    return null; // or return a loading indicator
+  }
+  
   const { user, token } = useContext(AuthContext); // Access user from context
+  const { archiveHabits, fetchArchivePData} = useContext(ArchiveContext);
   const [streakData, setStreakData] = useState([]);
   const [updatedStreakData, setUpdatedStreakData] = useState([]);
   const [habitListCategory, setHabitListCategory] = useState('');
@@ -23,12 +32,12 @@ function Streak() {
   const [selectedStreakID, setSelectedStreakID] = useState(null);
 
   const menuRef = useRef(null); // Reference for the menu
-
+  if (!authContext) {
+    console.log("AuthContext is not yet available.");
+    return null; // or return a loading indicator
+  }
   useEffect(() => {
     const fetchHabits = async () => {
-      // console.log(user);
-      // console.log(token);
-
       if (!token || user === null) {
         console.log("No token found, user is not logged in");
         return;
@@ -42,12 +51,12 @@ function Streak() {
           }
         });
         const data = await response.json();
-        console.log(data);
-        const filterArchived = data.reverse().filter(item => (item._id != '67bf055cb79c759903502976'));
-        console.log(filterArchived);
-
-        setStreakData(filterArchived);
-        setUpdatedStreakData(data);
+        const edit = data.filter(habit => !archiveHabits.includes(habit._id));
+        // console.log(edit);
+        // const filterArchived = data.reverse().filter(item => (item._id != '67bf055cb79c759903502976'));
+        // console.log(filterArchived);
+        setStreakData(edit.reverse());
+        setUpdatedStreakData(edit);
       } catch (error) {
         console.error('Error fetching habits:', error);
       }
@@ -65,7 +74,7 @@ function Streak() {
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
-  }, [user])
+  }, [user,archiveHabits])
 
   const handleHabitListCategory = (val) => {
     setHabitListCategory(val);
@@ -177,14 +186,12 @@ function Streak() {
           "Authorization": `Bearer ${token}` 
         }
       });
-      // if (!response.ok) {
-      //   throw new Error(error);
-      // }
       const data = await response.json();
       // console.log(data.data.habitId);
       const archivedHabitId = data.data.habitId;
       const filterArchived = streakData.filter(item => (item._id != archivedHabitId));
       setStreakData(filterArchived);
+      fetchArchivePData();
     } catch (error) {
       console.error('Error deleting habits:', error);
     }

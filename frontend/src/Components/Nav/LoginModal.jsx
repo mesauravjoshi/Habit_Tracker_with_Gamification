@@ -1,10 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState,useContext } from "react";
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { url } from '../../URL/Url';
 import SignUp from './SignUp'
 import "./LoginModal.css";
+import { AuthContext } from '../Context/AuthContext';
 
 const LoginModal = ({ setLoginOpen,onClose }) => {
+  const {fetchUserData} = useContext(AuthContext); // Access user from context
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -15,7 +18,8 @@ const LoginModal = ({ setLoginOpen,onClose }) => {
   const [shakePassword, setShakePassword] = useState(false);
 
   const [isFlipBox, setIsFlipBox] = useState(false);
-  
+  const navigate = useNavigate();
+
   useEffect(() => {
     const handleEsc = (event) => {
       if (event.key === "Escape") onClose();
@@ -68,20 +72,22 @@ const LoginModal = ({ setLoginOpen,onClose }) => {
       username: username,
       password: password
     }
+
     const handleLogin = async () => {
       try {
         const response = await axios.post(`${url}/auth/login`, formData);
         // console.log('Success:', response.data.token);
-        const setToken = localStorage.setItem('habit token',response.data.token);
+        localStorage.setItem('habit token',response.data.token);
+        fetchUserData();
         setLoginOpen(false);
-        // console.log(setToken);
+        navigate('/track-streak');
       } catch (error) {
         console.error('Error:', error.response ? error.response.data : error.message);
       }
     };
     handleLogin();
-    // setUsername('');
-    // setPassword('');
+    setUsername('');
+    setPassword('');
   };
 
   return (

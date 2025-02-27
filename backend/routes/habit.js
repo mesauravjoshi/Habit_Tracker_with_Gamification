@@ -88,7 +88,6 @@ router.put('/markAsDone/:id',jwtAuthMiddleware, async (req, res) => {
 });
 
 router.delete('/habitDelete/:id',jwtAuthMiddleware, async (req, res) => {
-    console.log('working');
     const { id } = req.params; // Extract habit ID from URL
 
     try {
