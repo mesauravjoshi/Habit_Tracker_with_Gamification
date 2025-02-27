@@ -4,7 +4,7 @@ import { url } from '../../URL/Url';
 import SignUp from './SignUp'
 import "./LoginModal.css";
 
-const LoginModal = ({ onClose }) => {
+const LoginModal = ({ setLoginOpen,onClose }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -64,7 +64,6 @@ const LoginModal = ({ onClose }) => {
 
     if (!isValid) return;
 
-    console.log("Form is valid, sending data...");
     const formData = {
       username: username,
       password: password
@@ -72,9 +71,10 @@ const LoginModal = ({ onClose }) => {
     const handleLogin = async () => {
       try {
         const response = await axios.post(`${url}/auth/login`, formData);
-        console.log('Success:', response.data.token);
+        // console.log('Success:', response.data.token);
         const setToken = localStorage.setItem('habit token',response.data.token);
-        console.log(setToken);
+        setLoginOpen(false);
+        // console.log(setToken);
       } catch (error) {
         console.error('Error:', error.response ? error.response.data : error.message);
       }

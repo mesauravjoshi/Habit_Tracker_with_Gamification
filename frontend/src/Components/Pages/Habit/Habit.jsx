@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import './Habit.css';
 import { useEffect } from 'react';
 import { url } from '../../../URL/Url';
+import { AuthContext } from "../../Context/AuthContext";
 
 function Habit() {
+  const { user, loading, token } = useContext(AuthContext); // Access user from context
   const priorityLabels = ["Low", "Medium", "High", "Critical"];
   // Initial state to hold the form data
   // const [habitData , setHabitData] = useState({});
@@ -26,7 +28,7 @@ function Habit() {
       setSelectedFrequency(event.target.value);
     }
   };
-
+  
   const handleAddHabit = async () => {
     const lastDay = new Date();
     lastDay.setDate(lastDay.getDate() + 6);
@@ -38,7 +40,9 @@ function Habit() {
       console.log('empty');
       alert("All field required !")
     } else {
+      // const user_id = user._id
       const newHabit = {
+        userId: user._id ,// ✅ Attach user ID
         HabitName: habit,
         Category: selectedCategory,
         Frequency: selectedFrequency,
@@ -57,6 +61,7 @@ function Habit() {
         },
         IsConmpleted: false,
       };
+      console.log(newHabit);
 
       if (selectedFrequency === 'Daily') {
         newHabit.TotalDaysCompleted = 0;
@@ -70,7 +75,7 @@ function Habit() {
 
       try {
         const token = localStorage.getItem('habit token');
-        const response = await fetch(`${url}/habit/habits`, {
+        const response = await fetch(`${url}/habit/add_habit`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',  // Make sure the server understands the data format
@@ -91,11 +96,11 @@ function Habit() {
       }
 
       // Reset input fields
-      setHabit('');
-      setSelectedCategory('');
-      setSelectedFrequency('');
-      setTargetDuration('');
-      setPriority(0);
+      // setHabit('');
+      // setSelectedCategory('');
+      // setSelectedFrequency('');
+      // setTargetDuration('');
+      // setPriority(0);
     }
   };
 

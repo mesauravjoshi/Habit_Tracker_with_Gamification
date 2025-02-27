@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { url } from '../../../URL/Url';
 import "./DeleteConfirmUI.css";
+import { AuthContext } from '../../Context/AuthContext';
 
 function DeleteConfirmUI({ setDisplayDelUI, streakID, setStreakData, streakData }) {
+  const { user, token } = useContext(AuthContext); // Access user from context
+  console.log(token);
 
   const handleCanelDelete = () => {
     setDisplayDelUI(false);
@@ -10,22 +13,26 @@ function DeleteConfirmUI({ setDisplayDelUI, streakID, setStreakData, streakData 
 
   const handleDeleteHabit = async (streakID) => {
     console.log('clicked', streakID);
-    const token = localStorage.getItem('habit token');
+    //     const token = localStorage.getItem('habit token');
+    // console.log(token);
 
     try {
       const response = await fetch(`${url}/habit/habitDelete/${streakID}`, {
         method: 'DELETE',
-        "Authorization": `Bearer ${token}` // Include JWT token
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}` // Include JWT token
+        }
       });
-      if (!response.ok) {
-        throw new Error('Failed to fetch habits');
-      }
+      // if (!response.ok) {
+      //   throw new Error(error);
+      // }
       const data = await response.json();
       setStreakData(streakData.filter((habit) => habit._id !== streakID));
       setDisplayDelUI(false); // Close the confirmation UI
-      // console.log('Habit deleted successfully:', data);
+      console.log('Habit deleted successfully:', data);
     } catch (error) {
-      console.error('Error fetching habits:', error);
+      console.error('Error deleting habits:', error);
     }
   }
 

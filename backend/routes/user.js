@@ -4,9 +4,11 @@ const User = require('../models/User'); // Use lowercase 'user'
 const {jwtAuthMiddleware } = require('../jwt');
 
 router.get('/profile', jwtAuthMiddleware, async (req, res) => {
-    
+    // console.log('working');
+
     try {
         const user = await User.findById(req.user.id).select("-password"); // Exclude password
+        console.log('working');
         
         if (!user) return res.status(404).json({ message: "User not found" });
         res.json(user);

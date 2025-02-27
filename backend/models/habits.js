@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 
 const habitSchema = new mongoose.Schema({
+    userId : { type: String, required: true },
+    // userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }, // ✅ Link to user
     HabitName: { type: String, required: true },
     Category: { type: String, required: true },
     Frequency: { type: String, enum: ["Daily", "Weekly"], required: true },

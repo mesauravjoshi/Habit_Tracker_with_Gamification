@@ -13,8 +13,8 @@ const jwtAuthMiddleware = (req, res, next) => {
         req.user = decoded;
         next();
     } catch (err) {
-        // console.log("Error line 16 jwt.js",err);
-        res.status(401).json({ error: 'Invalid token' });
+        console.log("Error line 16 jwt.js",err);
+        res.status(401).json({ error: err });
     }
 }
 

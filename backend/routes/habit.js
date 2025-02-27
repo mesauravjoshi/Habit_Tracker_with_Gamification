@@ -4,12 +4,17 @@ const jwt = require('jsonwebtoken');
 const Habit = require('../models/habits'); 
 const {jwtAuthMiddleware } = require('../jwt');
 
-router.post('/add_habit',jwtAuthMiddleware, async (req, res) => {
-    
+router.post('/add_habit',jwtAuthMiddleware, async (req, res) => { 
     try {
         const { HabitName, Category, Frequency, Priority, TargetDuration, StartedDate, StreakRecord } = req.body;
-
+        const userId = req.user.id; // Get user ID from JWT middleware
+        console.log(userId);
+        
+        if (!userId) {
+            return res.status(401).json({ error: "Unauthorized: User ID not found" });
+        }
         let newHabit = {
+            userId,
             HabitName,
             Category,
             Frequency,
@@ -47,9 +52,10 @@ router.post('/add_habit',jwtAuthMiddleware, async (req, res) => {
 });
 
 router.get('/habits',jwtAuthMiddleware , async (req, res) => {
-    
+    const userId = req.user.id; // Extract user ID from JWT
+    // console.log('User ID line 58:', userId);
     try {
-        const habits = await Habit.find(); // Fetch all habits from MongoDB
+        const habits = await Habit.find({ 'userId':userId }); // Fetch habits for this user
         res.json(habits);
     } catch (error) {
         console.error(error);
@@ -82,6 +88,7 @@ router.put('/markAsDone/:id',jwtAuthMiddleware, async (req, res) => {
 });
 
 router.delete('/habitDelete/:id',jwtAuthMiddleware, async (req, res) => {
+    console.log('working');
     const { id } = req.params; // Extract habit ID from URL
 
     try {

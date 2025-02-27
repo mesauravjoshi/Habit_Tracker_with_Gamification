@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext  } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { url } from '../../../URL/Url';
 import { AuthContext } from '../../Context/AuthContext';
 import Silver from '../../../assets/Icons/Silver'; // Adjust the path based on your folder structure
@@ -6,8 +6,7 @@ import Gold from '../../../assets/Icons/gold.svg'; // Adjust the path based on y
 import './Badges.css'
 
 function Badge() {
-  const { user, loading } = useContext(AuthContext); // Access user from context
-  
+  const { user, loading, token } = useContext(AuthContext); // Access user from context
   const [allBadges, setAllBadges] = useState([]);
 
   const displayBadgeIcon = (badgeName) => {
@@ -39,11 +38,11 @@ function Badge() {
   }
 
   useEffect(() => {
-    if (!user) return;
-
     const fetchBadges = async () => {
-      const token = localStorage.getItem('habit token');
-      
+      if (!token || user === null) {
+        console.log("No token found, user is not logged in");
+        return;
+      }
       try {
         const response = await fetch(`${url}/habit/habits`, {
           method: "GET",
@@ -61,8 +60,8 @@ function Badge() {
     fetchBadges();
   }, [user])
 
-  if (loading) return <p>Loading...</p>;
-  if (!user) return <p>Please log in to view your badges.</p>;
+  // if (loading) return <p>Loading...</p>;
+  // if (!user) return <p>Please log in to view your badges.</p>;
 
   return (
     <>
@@ -70,41 +69,45 @@ function Badge() {
         <center>
           <h2>Badge</h2>
         </center>
-        <div className='Badge-container'>
-          {
-            allBadges.map((item, index) => {
-              let badgeCardType = '';
-              if (item.BadgeRecord.Badge === '🥈 Silver Badge') {
-                badgeCardType = 'silver-card';
-              } else if (item.BadgeRecord.Badge === '🏆 Gold Badge') {
-                badgeCardType = 'gold-card';
-              } else {
-                badgeCardType = 'elite-card';
+        {
+          user ?
+            <div className='Badge-container'>
+              {
+                allBadges.map((item, index) => {
+                  let badgeCardType = '';
+                  if (item.BadgeRecord.Badge === '🥈 Silver Badge') {
+                    badgeCardType = 'silver-card';
+                  } else if (item.BadgeRecord.Badge === '🏆 Gold Badge') {
+                    badgeCardType = 'gold-card';
+                  } else {
+                    badgeCardType = 'elite-card';
+                  }
+                  return (
+                    <div key={index} className={`Badge-card ${badgeCardType}`}>
+                      <div className="badge-header">
+                        {
+                          displayBadgeIcon(item.BadgeRecord.Badge)
+                        }
+                        <h3>{(item.BadgeRecord.Badge).slice(2)} </h3>
+                      </div>
+                      <span className='badge-Frequency'>({(item.Frequency).toUpperCase()})</span>
+                      {/* <hr /> */}
+                      <div className="badge-details">
+                        <p> Habit: {item.HabitName} </p>
+                        <p>Earned on: {(item.BadgeRecord.AchievedOn).slice(3, 15)} </p>
+                        <p>Streak: {item.BadgeRecord.StreakDuration} {item.Frequency === 'Daily' ? 'Days' : 'Weeks'} </p>
+                      </div>
+                      <div className="badge-footer">
+                        <span className='plus-text' >+{plusPointCalculate(item.BadgeRecord.Badge)}</span>
+                        <span className='XP-text'>XP <br /> Points</span>
+                      </div>
+                    </div>
+                  );
+                })
               }
-              return (
-                <div key={index} className={`Badge-card ${badgeCardType}`}>
-                  <div className="badge-header">
-                    {
-                      displayBadgeIcon(item.BadgeRecord.Badge)
-                    }
-                    <h3>{(item.BadgeRecord.Badge).slice(2)} </h3>
-                  </div>
-                  <span className='badge-Frequency'>({(item.Frequency).toUpperCase()})</span>
-                  {/* <hr /> */}
-                  <div className="badge-details">
-                    <p> Habit: {item.HabitName} </p>
-                    <p>Earned on: {(item.BadgeRecord.AchievedOn).slice(3, 15)} </p>
-                    <p>Streak: {item.BadgeRecord.StreakDuration} {item.Frequency === 'Daily' ? 'Days' : 'Weeks'} </p>
-                  </div>
-                  <div className="badge-footer">
-                    <span className='plus-text' >+{plusPointCalculate(item.BadgeRecord.Badge)}</span>
-                    <span className='XP-text'>XP <br /> Points</span>
-                  </div>
-                </div>
-              );
-            })
-          }
-        </div>
+            </div> :
+            <p>Please login first </p>
+        }
       </div>
     </>
   )

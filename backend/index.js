@@ -14,10 +14,12 @@ app.use(bodyParser.json());
 const authRoutes = require('./routes/auth');
 const habit = require('./routes/habit');
 const user = require('./routes/user');
+const archiveHabit = require('./routes/archive');
 
 app.use('/auth', authRoutes);
 app.use('/habit', habit);
 app.use('/user', user);
+app.use('/archive', archiveHabit);
 
 const PORT = process.env.PORT || 3000;
 // console.log(PORT);

@@ -3,12 +3,13 @@ import "./App.css";
 import Habit from "./Components/Pages/Habit/Habit";
 import Home from "./Components/Pages/Home/Home";
 import Streak from "./Components/Pages/Streak/Streak";
+import Archive from "./Components/Pages/Archive/Archive";
 import Slider from "./Components/Slider/Slider";
 import Nav from "./Components/Nav/Nav";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Completed from "./Components/Pages/Completed/Completed";
 import Badges from "./Components/Pages/Badges/Badges";
-import { AuthProvider } from "./Components/Context/AuthContext";
+// import { AuthProvider } from "./Components/Context/AuthContext";
 
 function App() {
   const [isSliderOpen, setIsSliderOpen] = useState(false);
@@ -20,19 +21,20 @@ function App() {
   return (
     <>
       <div className="track-app">
-      <Router>
-  <AuthProvider>
-    <Slider isOpen={isSliderOpen} closeSlider={toggleSlider} />
-    <Nav toggleSlider={toggleSlider} />
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/habit" element={<Habit />} />
-      <Route path="/track-streak" element={<Streak />} />
-      <Route path="/completed" element={<Completed />} />
-      <Route path="/badges" element={<Badges />} />
-    </Routes>
-  </AuthProvider>
-</Router>
+        <Router>
+          {/* <AuthProvider> */}
+            <Slider isOpen={isSliderOpen} closeSlider={toggleSlider} />
+            <Nav toggleSlider={toggleSlider} />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/habit" element={<Habit />} />
+              <Route path="/track-streak" element={<Streak />} />
+              <Route path="/archive" element={<Archive />} />
+              <Route path="/completed" element={<Completed />} />
+              <Route path="/badges" element={<Badges />} />
+            </Routes>
+          {/* </AuthProvider> */}
+        </Router>
 
       </div>
     </>

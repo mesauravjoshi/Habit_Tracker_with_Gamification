@@ -1,14 +1,18 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { url } from '../../../URL/Url';
+import { AuthContext } from '../../Context/AuthContext';
 
 function Completed() {
+  const { user, token } = useContext(AuthContext); // Access user from context
   const [streakData, setStreakData] = useState([]);
-
   useEffect(() => {
     const fetchHabits = async () => {
-      const token = localStorage.getItem('habit token');
+      if (!token || user === null) {
+        console.log("No token found, user is not logged in");
+        return;
+      }
       try {
-      const response = await fetch(`${url}/habit/habits`,{
+        const response = await fetch(`${url}/habit/habits`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -24,7 +28,7 @@ function Completed() {
       }
     };
     fetchHabits();
-  }, [])
+  }, [user])
 
   const totalStreak = Array.isArray(streakData)
     ? streakData.reduce((acc, habit) => acc + habit.StreakRecord.TotalStreak, 0)
@@ -90,59 +94,63 @@ function Completed() {
         <div className='Habit-list'>
           <h1> Completed Habits  </h1>
         </div>
-        <div className="Streak">
-          {streakData.length > 0 &&
-            streakData.map((streak, index) => {
-              let daysLeft_cal = 0;
-              let progress = 0;
-              let daysLeft = '';
-              let streakUI = '';
-              let DayWeeksCompeted = 0;
+        {
+          user ?
+          < div className="Streak">
+        {streakData.length > 0 &&
+          streakData.map((streak, index) => {
+            let daysLeft_cal = 0;
+            let progress = 0;
+            let daysLeft = '';
+            let streakUI = '';
+            let DayWeeksCompeted = 0;
 
-              if (streak.Frequency === 'Daily') {
-                daysLeft_cal = calculateDayLeft(streak.TargetDuration);
-                daysLeft = `No of days left: ${daysLeft_cal}`
-                streakUI = `🔥 Streak: ${streak.StreakRecord.TotalStreak} Days`
-                progress = Math.min(
-                  Math.round((streak.TotalDaysCompleted / calculateTotalDays(streak.TargetDuration, streak.StartedDate)) * 100),
-                  100
-                );
-                DayWeeksCompeted = `Total Days Completed: ${streak.TotalDaysCompleted}`;
-              } else if (streak.Frequency === "Weekly") {
-                daysLeft_cal = calculateWeekLeft(streak.TargetDuration);
-                daysLeft = `No of Weeks: ${daysLeft_cal}`;
-                streakUI = `🔥 Streak: ${streak.StreakRecord.TotalStreak} Weeks`;
-                progress = Math.min(
-                  Math.round((streak.TotalWeeksCompleted / calculateTotalWeeks(streak.TargetDuration, streak.StartedDate)) * 100),
-                  100
-                );
-                // console.log(progress);
-
-                DayWeeksCompeted = `Total Weeks Completed: ${streak.TotalWeeksCompleted}`;
-              }
-
-              return (
-                <div key={index} className="Habit-Card">
-                  <h3>{streak.HabitName}</h3>
-                  <p>{streakUI}</p>
-
-                  <p>{daysLeft}</p>
-
-                  {/* Progress Bar */}
-                  <div className='progress-outer'>
-                    <div className="progress-container" style={{ "--progress": `${progress}%` }}>
-                      <div className="progress-bar"></div>
-                    </div>
-                    <p> {progress}%</p>
-                  </div>
-                  <div className="TotalDaysCompleted">
-                    {DayWeeksCompeted}
-                  </div>
-                </div>
+            if (streak.Frequency === 'Daily') {
+              daysLeft_cal = calculateDayLeft(streak.TargetDuration);
+              daysLeft = `No of days left: ${daysLeft_cal}`
+              streakUI = `🔥 Streak: ${streak.StreakRecord.TotalStreak} Days`
+              progress = Math.min(
+                Math.round((streak.TotalDaysCompleted / calculateTotalDays(streak.TargetDuration, streak.StartedDate)) * 100),
+                100
               );
-            })}
-        </div>
-      </div>
+              DayWeeksCompeted = `Total Days Completed: ${streak.TotalDaysCompleted}`;
+            } else if (streak.Frequency === "Weekly") {
+              daysLeft_cal = calculateWeekLeft(streak.TargetDuration);
+              daysLeft = `No of Weeks: ${daysLeft_cal}`;
+              streakUI = `🔥 Streak: ${streak.StreakRecord.TotalStreak} Weeks`;
+              progress = Math.min(
+                Math.round((streak.TotalWeeksCompleted / calculateTotalWeeks(streak.TargetDuration, streak.StartedDate)) * 100),
+                100
+              );
+              // console.log(progress);
+
+              DayWeeksCompeted = `Total Weeks Completed: ${streak.TotalWeeksCompleted}`;
+            }
+
+            return (
+              <div key={index} className="Habit-Card">
+                <h3>{streak.HabitName}</h3>
+                <p>{streakUI}</p>
+
+                <p>{daysLeft}</p>
+
+                {/* Progress Bar */}
+                <div className='progress-outer'>
+                  <div className="progress-container" style={{ "--progress": `${progress}%` }}>
+                    <div className="progress-bar"></div>
+                  </div>
+                  <p> {progress}%</p>
+                </div>
+                <div className="TotalDaysCompleted">
+                  {DayWeeksCompeted}
+                </div>
+              </div>
+            );
+          })}
+          </div> :
+          <h2>Please login first</h2>
+        }
+    </div >
     </>
   )
 }

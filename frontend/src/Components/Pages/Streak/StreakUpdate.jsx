@@ -268,7 +268,7 @@ function StreakUpdate({ setStreakData, LastUpdate, LastDayForWeek, TargetDuratio
     <div style={{ display: 'flex', gap: '13px' }}>
       <button
         className="StreakUpdate-button"
-        onClick={() => handleMarkAsDone(event,index)} // Handle the "Mark as Done" button click
+        onClick={(event) => handleMarkAsDone(event,index)} // Handle the "Mark as Done" button click
         disabled={isMarkedToday(LastUpdate, LastDayForWeek, TargetDuration, StartedDate)} // Disable button if marked today
       >
         ✅ Mark as Done</button>
