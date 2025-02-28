@@ -4,16 +4,7 @@ import "./Nav.css";
 import { AuthContext } from "../Context/AuthContext";
 
 function Nav({ toggleSlider }) {
-  const authContext = useContext(AuthContext);
-
-  if (!authContext) {
-    return null; // Or return a loading state
-  }
-
-  const { user } = authContext;
-
-  // const { user } = useContext(AuthContext); // Access user from context
-
+  const { user, setUser, fetchUserData } = useContext(AuthContext); // Access user from context
   const [isLoginOpen, setLoginOpen] = useState(false);
 
   return (
@@ -26,11 +17,17 @@ function Nav({ toggleSlider }) {
         {user && user.username}
       </div>
       <div>
-        <button onClick={() => setLoginOpen(true)} className="login-btn">
-          Login
-        </button>
+        {
+          !user &&
+          <button onClick={() => setLoginOpen(true)} className="login-btn">
+            Login
+          </button>
+        }
         <button onClick={(e) => {
-          localStorage.removeItem('habit token')
+          localStorage.removeItem('habit token');
+          console.log('removed');
+          setUser(null);
+          fetchUserData();
         }} className="">
           Log out
         </button>

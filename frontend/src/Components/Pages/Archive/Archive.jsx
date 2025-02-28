@@ -1,15 +1,13 @@
 import React, { useEffect, useState, useContext } from 'react';
 import HabitCard from '../HabitCard/HabitCard'
 import { url } from '../../../URL/Url';
-import './Archive.css'
 import { AuthContext } from '../../Context/AuthContext';
 import { ArchiveContext } from '../../Context/ArchiveContext';
 
 function Archive() {
   const { user, token } = useContext(AuthContext); // Access user from context
-  const { archiveHabits ,fetchArchivePData } = useContext(ArchiveContext);
+  const { archiveHabits } = useContext(ArchiveContext);
   const [archivedHabit, setArchivedHabit] = useState([]);
-  const [updatedArchivedHabit, setUpdatedArchivedHabit] = useState([]);
 
   useEffect(() => {
     const fetchHabits = async () => {
@@ -28,7 +26,6 @@ function Archive() {
         const data = await response.json();
         const edit = data.filter(habit => archiveHabits.includes(habit._id));
         setArchivedHabit(edit.reverse());
-        setUpdatedArchivedHabit(edit);
       } catch (error) {
         console.error('Error fetching habits:', error);
       }
@@ -36,37 +33,21 @@ function Archive() {
     fetchHabits();
   }, [user, archiveHabits]);
 
-  const handleUnarchive = async (habitId) => {
-    try {
-      const response = await fetch(`${url}/archive/unarchive/${habitId}`, {
-        method: 'DELETE',
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}` 
-        }
-      });
-      const data = await response.json();
-      setArchivedHabit(archivedHabit.filter((habit) => habit._id !== habitId));
-      fetchArchivePData();
-    } catch (error) {
-      console.error('Error deleting habits:', error);
-    }
-  }
-
   return (
     <>
       <div className='Badge'>
         {
           user ?
-            <>
+            <>  {
+              archivedHabit.length > 0 ?
               <HabitCard
               streakData={archivedHabit}
               setStreakData={setArchivedHabit}
               insideArchive={true}
               archivedHabit={archivedHabit}
               setArchivedHabit={setArchivedHabit}
-              />
-            </>
+              />  : <h2>no habit added yet ...</h2>
+            }</>
             :
             <p>Please login first </p>
         }

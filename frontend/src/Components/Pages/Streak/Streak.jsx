@@ -118,11 +118,17 @@ function Streak() {
           </div>
         </div>
         {
-          streakData.length > 0 &&
-          < HabitCard
-            streakData={streakData}
-            setStreakData={setStreakData}
-          />
+          user ? 
+        <div>
+          {
+            streakData.length > 0 ?
+            < HabitCard
+              streakData={streakData}
+              setStreakData={setStreakData}
+            /> : <h2>no habit added yet ...</h2>
+          }
+        </div> 
+        : <p> Please login .........</p>
         }
       </div>
     </>
