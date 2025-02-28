@@ -1,7 +1,6 @@
-import { useState } from 'react'
-// import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Hero from '../../Hero/Hero';
-
+import React from 'react'
+import Hero from '../../Pages/Hero/Hero';
+import HabitCard from '../HabitCard';
 function App() {
 
   return (

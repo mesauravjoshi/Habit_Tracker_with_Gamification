@@ -6,12 +6,12 @@ const { jwtAuthMiddleware } = require('../jwt');
 router.post('/addToArchive/:habitId', jwtAuthMiddleware, async (req, res) => {
     try {
         const userId = req.user.id; // Get user ID from JWT middleware
-        console.log('user id: ', userId);
+        // console.log('user id: ', userId);
 
         const { habitId } = req.params;
         if (!habitId) return res.status(400).json({ message: "habitId is required" });
 
-        console.log('Habit received:', habitId);
+        // console.log('Habit received:', habitId);
 
         // Check if habit ID is already archived
         const isAlreadyArchived = await Archive.findOne({ 'habitId': habitId });
@@ -46,8 +46,9 @@ router.get('/archive', jwtAuthMiddleware, async (req, res) => {
 });
 
 router.delete('/unarchive/:habitId', jwtAuthMiddleware, async (req, res) => {
+    
     const { habitId } = req.params; // Extract habit ID from URL
-
+    // console.log('unarchiving habit.......: ', habitId);
     try {
         const deletedHabit = await Archive.findOneAndDelete({ habitId: habitId });
 

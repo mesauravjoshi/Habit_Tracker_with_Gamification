@@ -9,7 +9,6 @@ import Nav from "./Components/Nav/Nav";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Completed from "./Components/Pages/Completed/Completed";
 import Badges from "./Components/Pages/Badges/Badges";
-// import { AuthProvider } from "./Components/Context/AuthContext";
 
 function App() {
   const [isSliderOpen, setIsSliderOpen] = useState(false);
@@ -22,7 +21,6 @@ function App() {
     <>
       <div className="track-app">
         <Router>
-          {/* <AuthProvider> */}
             <Slider isOpen={isSliderOpen} closeSlider={toggleSlider} />
             <Nav toggleSlider={toggleSlider} />
             <Routes>
@@ -33,7 +31,6 @@ function App() {
               <Route path="/completed" element={<Completed />} />
               <Route path="/badges" element={<Badges />} />
             </Routes>
-          {/* </AuthProvider> */}
         </Router>
 
       </div>

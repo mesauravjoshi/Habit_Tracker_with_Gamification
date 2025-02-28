@@ -4,17 +4,15 @@ import "./DeleteConfirmUI.css";
 import { AuthContext } from '../../Context/AuthContext';
 
 function DeleteConfirmUI({ setDisplayDelUI, streakID, setStreakData, streakData }) {
-  const { user, token } = useContext(AuthContext); // Access user from context
-  console.log(token);
+  const {token } = useContext(AuthContext); // Access user from context
 
   const handleCanelDelete = () => {
     setDisplayDelUI(false);
   }
 
   const handleDeleteHabit = async (streakID) => {
-    console.log('clicked', streakID);
+    // console.log('clicked', streakID);
     //     const token = localStorage.getItem('habit token');
-    // console.log(token);
 
     try {
       const response = await fetch(`${url}/habit/habitDelete/${streakID}`, {
@@ -30,7 +28,7 @@ function DeleteConfirmUI({ setDisplayDelUI, streakID, setStreakData, streakData 
       const data = await response.json();
       setStreakData(streakData.filter((habit) => habit._id !== streakID));
       setDisplayDelUI(false); // Close the confirmation UI
-      console.log('Habit deleted successfully:', data);
+      // console.log('Habit deleted successfully:', data);
     } catch (error) {
       console.error('Error deleting habits:', error);
     }

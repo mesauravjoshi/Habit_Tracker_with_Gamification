@@ -33,7 +33,6 @@ export const ArchiveProvider = ({ children }) => {
     });
   }
 
-
   return (
     <ArchiveContext.Provider value={{ archiveHabits, fetchArchivePData }}>
       {children}
