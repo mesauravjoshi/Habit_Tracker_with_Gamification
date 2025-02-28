@@ -15,7 +15,7 @@ function Streak() {
 
   const { user, token } = useContext(AuthContext); // Access user from context
   const { archiveHabits, fetchArchivePData } = useContext(ArchiveContext);
-  const [streakData, setStreakData] = useState([]);
+  const [habitData, setHabitData] = useState([]);
   const [updatedStreakData, setUpdatedStreakData] = useState([]);
   const [habitListCategory, setHabitListCategory] = useState('');
 
@@ -45,8 +45,8 @@ function Streak() {
         const data = await response.json();
         const edit = data.filter(habit => !archiveHabits.includes(habit._id));
 
-        setStreakData(edit.reverse());
-        // console.log(streakData);
+        setHabitData(edit.reverse());
+        // console.log(habitData);
         setUpdatedStreakData(edit);
       } catch (error) {
         console.error('Error fetching habits:', error);
@@ -72,17 +72,17 @@ function Streak() {
     const copy_inside = [...updatedStreakData];
 
     if (val === "Not Completed") {
-      setStreakData(copy_inside.filter(habit => (habit.IsCompleted == false)));
+      setHabitData(copy_inside.filter(habit => (habit.IsCompleted == false)));
     } else if (val === "Daily") {
-      setStreakData(copy_inside.filter(habit => (habit.Frequency == 'Daily')));
+      setHabitData(copy_inside.filter(habit => (habit.Frequency == 'Daily')));
     } else if (val === "Weekly") {
-      setStreakData(copy_inside.filter(habit => (habit.Frequency == "Weekly")));
+      setHabitData(copy_inside.filter(habit => (habit.Frequency == "Weekly")));
     } else if (val === "Silver Badge") {
-      setStreakData(copy_inside.filter(habit => (habit.BadgeRecord.Badge == "🥈 Silver Badge")));
+      setHabitData(copy_inside.filter(habit => (habit.BadgeRecord.Badge == "🥈 Silver Badge")));
     } else if (val === "Gold Badge") {
-      setStreakData(copy_inside.filter(habit => (habit.BadgeRecord.Badge == "🏆 Gold Badge")));
+      setHabitData(copy_inside.filter(habit => (habit.BadgeRecord.Badge == "🏆 Gold Badge")));
     } else {
-      setStreakData(copy_inside);
+      setHabitData(copy_inside);
     }
   }
 
@@ -121,10 +121,10 @@ function Streak() {
           user ? 
         <div>
           {
-            streakData.length > 0 ?
+            habitData.length > 0 ?
             < HabitCard
-              streakData={streakData}
-              setStreakData={setStreakData}
+            habitData={habitData}
+              setHabitData={setHabitData}
             /> : <h2>no habit added yet ...</h2>
           }
         </div> 

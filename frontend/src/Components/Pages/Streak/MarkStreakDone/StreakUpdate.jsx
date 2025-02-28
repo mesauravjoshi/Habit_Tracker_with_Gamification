@@ -1,7 +1,7 @@
 import { url } from '../../../../URL/Url';
 import './StreakUpdate.css'
 
-function StreakUpdate({ setStreakData, LastUpdate, LastDayForWeek, TargetDuration, StartedDate, index, streakData, Frequency }) {
+function StreakUpdate({ setHabitData, LastUpdate, LastDayForWeek, TargetDuration, StartedDate, index, habitData, Frequency }) {
 
   const markAsDone = async (habit) => {
     // console.log('inside fetch function', habit);
@@ -103,8 +103,8 @@ function StreakUpdate({ setStreakData, LastUpdate, LastDayForWeek, TargetDuratio
     const endDate = new Date(TargetDuration);
     endDate.setHours(0, 0, 0, 0);
 
-    // Create a copy of streakData
-    const updatedStreakData = [...streakData];
+    // Create a copy of habitData
+    const updatedStreakData = [...habitData];
     // Get the current habit
     const habit = updatedStreakData[index];
 
@@ -202,7 +202,7 @@ function StreakUpdate({ setStreakData, LastUpdate, LastDayForWeek, TargetDuratio
       else {
         console.log('Frequency is neither daily nor weekly ')
       }
-      setStreakData(updatedStreakData);
+      setHabitData(updatedStreakData);
       markAsDone(habit);
     }
   };

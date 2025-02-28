@@ -41,8 +41,8 @@ function Archive() {
             <>  {
               archivedHabit.length > 0 ?
               <HabitCard
-              streakData={archivedHabit}
-              setStreakData={setArchivedHabit}
+              habitData={archivedHabit}
+              setHabitData={setArchivedHabit}
               insideArchive={true}
               archivedHabit={archivedHabit}
               setArchivedHabit={setArchivedHabit}

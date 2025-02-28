@@ -5,7 +5,7 @@ import { AuthContext } from '../../Context/AuthContext';
 
 function Completed() {
   const { user, token } = useContext(AuthContext); // Access user from context
-  const [streakData, setStreakData] = useState([]);
+  const [completedHabit, setCompletedHabit] = useState([]);
 
   useEffect(() => {
     const fetchHabits = async () => {
@@ -24,7 +24,7 @@ function Completed() {
 
         const data = await response.json();
         // console.log(data);
-        setStreakData(data.filter(item => (item.IsCompleted == true))); // Update state with fetched data
+        setCompletedHabit(data.filter(item => (item.IsCompleted == true))); // Update state with fetched data
       } catch (error) {
         console.error('Error fetching habits:', error);
       }
@@ -41,8 +41,8 @@ function Completed() {
         {
           user ?
             <HabitCard
-            streakData={streakData}
-            setStreakData={setStreakData}
+            habitData={completedHabit}
+            setHabitData={setCompletedHabit}
             /> :
             <h2>Please login first</h2>
         }

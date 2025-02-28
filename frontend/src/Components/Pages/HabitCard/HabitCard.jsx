@@ -9,7 +9,7 @@ import MaterialIcon from '../Streak/MaterialIcon ';
 import { AuthContext } from '../../Context/AuthContext';
 import { ArchiveContext } from '../../Context/ArchiveContext';
 
-function Streak({ streakData, setStreakData, insideArchive, archivedHabit, setArchivedHabit }) {
+function Streak({ habitData, setHabitData, insideArchive, archivedHabit, setArchivedHabit }) {
   const authContext = useContext(AuthContext);
 
   if (!authContext) {
@@ -134,8 +134,8 @@ function Streak({ streakData, setStreakData, insideArchive, archivedHabit, setAr
       const data = await response.json();
       // console.log(data.data.habitId);
       const archivedHabitId = data.data.habitId;
-      const filterArchived = streakData.filter(item => (item._id != archivedHabitId));
-      setStreakData(filterArchived);
+      const filterArchived = habitData.filter(item => (item._id != archivedHabitId));
+      setHabitData(filterArchived);
       fetchArchivePData();
     } catch (error) {
       console.error('Error deleting habits:', error);
@@ -169,13 +169,13 @@ function Streak({ streakData, setStreakData, insideArchive, archivedHabit, setAr
         <DeleteConfirmUI
           setDisplayDelUI={setDisplayDelUI}
           streakID={selectedStreakID}
-          setStreakData={setStreakData}
-          streakData={streakData} />
+          habitData={habitData} 
+          setHabitData={setHabitData} />
       }
       <div className="Streak">
         {
-          streakData &&
-          streakData.map((streak, index) => {
+          habitData &&
+          habitData.map((streak, index) => {
             let daysLeft_cal = 0;
             let progress = 0;
             let daysLeft = '';
@@ -253,14 +253,14 @@ function Streak({ streakData, setStreakData, insideArchive, archivedHabit, setAr
                   </div>
 
                   <StreakUpdate
-                    setStreakData={setStreakData}
+                    setHabitData={setHabitData}
                     Frequency={streak.Frequency}
                     LastDayForWeek={streak.StreakRecord.LastDayForWeek}
                     LastUpdate={streak.StreakRecord.LastUpdate}
                     TargetDuration={streak.TargetDuration}
                     StartedDate={streak.StartedDate}
                     index={index}
-                    streakData={streakData}
+                    habitData={habitData}
                   />
                   <p>{daysLeft}</p>
 
