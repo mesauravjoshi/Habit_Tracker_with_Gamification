@@ -162,14 +162,20 @@ function Streak({ habitData, setHabitData, insideArchive, archivedHabit, setArch
   return (
     <>
       {isExpandVisible &&
-        <ExpandCard streak={selectedStreakHabitCard} setIsExpandVisible={setIsExpandVisible} />
+        <ExpandCard streak={selectedStreakHabitCard}
+          setHabitData={setHabitData}
+          setIsExpandVisible={setIsExpandVisible}
+          calculateTotalDays={calculateTotalDays}  // for calculating
+          calculateTotalWeeks={calculateTotalWeeks} // for calculating
+          insideArchive={insideArchive}
+        />
       }
       {
         displayDelUI &&
         <DeleteConfirmUI
           setDisplayDelUI={setDisplayDelUI}
           streakID={selectedStreakID}
-          habitData={habitData} 
+          habitData={habitData}
           setHabitData={setHabitData} />
       }
       <div className="Streak">
@@ -252,16 +258,21 @@ function Streak({ habitData, setHabitData, insideArchive, archivedHabit, setArch
                     </div>
                   </div>
 
-                  <StreakUpdate
-                    setHabitData={setHabitData}
-                    Frequency={streak.Frequency}
-                    LastDayForWeek={streak.StreakRecord.LastDayForWeek}
-                    LastUpdate={streak.StreakRecord.LastUpdate}
-                    TargetDuration={streak.TargetDuration}
-                    StartedDate={streak.StartedDate}
-                    index={index}
-                    habitData={habitData}
-                  />
+                  <div style={{ display: 'flex', gap: '13px' }}>
+                  {
+                    insideArchive ? <button className='StreakUpdate-button' disabled={true}>Archived</button> :
+                      <StreakUpdate
+                        setHabitData={setHabitData}
+                        Frequency={streak.Frequency}
+                        LastDayForWeek={streak.StreakRecord.LastDayForWeek}
+                        LastUpdate={streak.StreakRecord.LastUpdate}
+                        TargetDuration={streak.TargetDuration}
+                        StartedDate={streak.StartedDate}
+                        index={index}
+                        habitData={habitData}
+                      />
+                  }
+                  </div>
                   <p>{daysLeft}</p>
 
                   {/* Progress Bar */}

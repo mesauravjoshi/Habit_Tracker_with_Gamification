@@ -18,19 +18,19 @@ function Nav({ toggleSlider }) {
       </div>
       <div>
         {
-          !user &&
-          <button onClick={() => setLoginOpen(true)} className="login-btn">
-            Login
-          </button>
+          !user ?
+            <button onClick={() => setLoginOpen(true)} className="login-btn">
+              Login
+            </button> :
+            <button onClick={(e) => {
+              localStorage.removeItem('habit token');
+              console.log('removed');
+              setUser(null);
+              fetchUserData();
+            }} className="">
+              Log out
+            </button>
         }
-        <button onClick={(e) => {
-          localStorage.removeItem('habit token');
-          console.log('removed');
-          setUser(null);
-          fetchUserData();
-        }} className="">
-          Log out
-        </button>
       </div>
 
       {/* Login Modal */}

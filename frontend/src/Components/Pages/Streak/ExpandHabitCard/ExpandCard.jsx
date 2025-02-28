@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import "./ExpandCard.css";
 import StreakUpdate from '../MarkStreakDone/StreakUpdate';
 
-function ExpandCard({ streak, setIsExpandVisible }) {
+function ExpandCard({ streak, setHabitData, setIsExpandVisible, calculateTotalDays, calculateTotalWeeks, insideArchive }) {
   const expandRef = useRef(null); // Reference for the menu
 
   useEffect(() => {
@@ -11,10 +11,8 @@ function ExpandCard({ streak, setIsExpandVisible }) {
         setIsExpandVisible(false);
       }
     };
-
     // Attach event listener
     document.addEventListener("mousedown", handleClickOutside);
-
     // Cleanup event listener on unmount
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
@@ -35,14 +33,33 @@ function ExpandCard({ streak, setIsExpandVisible }) {
     }
   }
 
+  const calculateProgress = () => {
+    let progress = 0;
+    if (streak.Frequency === 'Daily') {
+      progress = Math.min(
+        Math.round((streak.TotalDaysCompleted / calculateTotalDays(streak.TargetDuration, streak.StartedDate)) * 100),
+        100
+      );
+      // console.log('Daily progess ; ', progress);
+      return progress;
+    } else if (streak.Frequency === 'Weekly') {
+      progress = Math.min(
+        Math.round((streak.TotalWeeksCompleted / calculateTotalWeeks(streak.TargetDuration, streak.StartedDate)) * 100),
+        100
+      );
+      // console.log('Weekly progess ; ', progress);
+      return progress;
+    }
+  }
+
   return (
     <div className="expandHabitCard-overlay" >
 
       <div onClick={() => handleClose_expandHabitCard()} className="close-expandHabitCard">
         ✖
       </div>
-      <div 
-      // onClick={(e) => e.stopPropagation()} // Prevent clicks inside from closing
+      <div
+        // onClick={(e) => e.stopPropagation()} // Prevent clicks inside from closing
         ref={expandRef}
         className="expandHabitCard">
         <svg xmlns="http://www.w3.org/2000/svg" height="100%" viewBox="0 -960 960 960" width="100%" fill="#9657bd"><path d="M600-160q-134 0-227-93t-93-227q0-133 93-226.5T600-800q133 0 226.5 93.5T920-480q0 134-93.5 227T600-160Zm0-80q100 0 170-70t70-170q0-100-70-170t-170-70q-100 0-170 70t-70 170q0 100 70 170t170 70Zm91-91 57-57-108-108v-144h-80v177l131 132ZM80-600v-80h160v80H80ZM40-440v-80h200v80H40Zm40 160v-80h160v80H80Zm520-200Z" /></svg>
@@ -58,12 +75,11 @@ function ExpandCard({ streak, setIsExpandVisible }) {
 
         {/* Progress Bar */}
         <div className='progress-outer'>
-          <div className="progress-container" style={{ "--progress": `100` }}>
+          <div className="progress-container" style={{ "--progress": `${calculateProgress()}%` }}>
             <div className="progress-bar"></div>
           </div>
-          <p> {12}%</p>
+          <p> {calculateProgress()}%</p>
         </div>
-
         <p>
           {
             streak.Frequency == "Daily" ?
@@ -78,24 +94,28 @@ function ExpandCard({ streak, setIsExpandVisible }) {
           } <br />
           {streak.timeLeft}
         </p>
-        <StreakUpdate
-          // setStreakData={setStreakData}
-          Frequency={streak.Frequency}
-          LastDayForWeek={streak.StreakRecord.LastDayForWeek}
-          LastUpdate={streak.StreakRecord.LastUpdate}
-          TargetDuration={streak.TargetDuration}
-          StartedDate={streak.StartedDate}
-        // index={index}
-        // streakData={streakData}
-        />
+
+        {
+          insideArchive ? <button className='StreakUpdate-button' disabled={true}>Archived</button> :
+            <StreakUpdate
+              setHabitData={setHabitData}
+              Frequency={streak.Frequency}
+              LastDayForWeek={streak.StreakRecord.LastDayForWeek}
+              LastUpdate={streak.StreakRecord.LastUpdate}
+              TargetDuration={streak.TargetDuration}
+              StartedDate={streak.StartedDate}
+              index={0}
+              habitData={[streak]}
+            />
+        }
 
         <div className="TotalDaysCompleted">
-          {12}
+
         </div>
         <div className="badge-details">
           <h2>Badge Details</h2>
           <h5>Badge Earned: {streak.BadgeRecord.Badge} </h5>
-          {plusPointCalculate(streak.BadgeRecord.Badge)}
+          <h5>XP Points Earn: +{plusPointCalculate(streak.BadgeRecord.Badge)}</h5>
           <h5>AchievedOn: {streak.BadgeRecord.AchievedOn.slice(0, 15)} </h5>
         </div>
 

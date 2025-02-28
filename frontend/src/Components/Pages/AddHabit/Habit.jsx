@@ -7,9 +7,6 @@ import { AuthContext } from "../../Context/AuthContext";
 function Habit() {
   const { user, loading, token } = useContext(AuthContext); // Access user from context
   const priorityLabels = ["Low", "Medium", "High", "Critical"];
-  // Initial state to hold the form data
-  // const [habitData , setHabitData] = useState({});
-  // State to hold the data from local storage
   const [habits, setHabits] = useState([]);
   const [habit, setHabit] = useState('');
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -74,7 +71,6 @@ function Habit() {
       }
 
       try {
-        const token = localStorage.getItem('habit token');
         const response = await fetch(`${url}/habit/add_habit`, {
           method: 'POST',
           headers: {
@@ -108,7 +104,7 @@ function Habit() {
     if (habits.length > 0) {
       localStorage.setItem('Habit Track', JSON.stringify(habits));
     }
-  }, [habits]); // This runs whenever habitData changes
+  }, [habits]); 
 
   useEffect(() => {
     const savedHabitData = localStorage.getItem('Habit Track');
