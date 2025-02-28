@@ -1,0 +1,192 @@
+.HabitCard-options {
+    position: relative;
+    grid-column: 3;
+    grid-row: 1 / 5;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 3px 0;
+    /* font-size: 1.6em; */
+    border-radius: 8px;
+  }
+  
+  .three-dot-elips,
+  .share-arrow {
+    cursor: pointer;
+    background: #35353d;
+    margin: 5px 2px;
+    display: flex;
+    border-radius: 11px;
+    padding: 5px 8px;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .three-dot-elips:hover {
+    background-color: #464650;
+  }
+  
+  .share-arrow:hover {
+    background-color: #464650;
+  }
+  
+  .Options-details {
+    color: #d1b5b5;
+    position: absolute;
+    background: #4d454580;
+    backdrop-filter: blur(5px);
+    left: -4em;
+    top: 43px;
+    /* row-gap: 5px; */
+    padding: 4px 0px;
+    border-radius: 9px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    letter-spacing: 1px;
+  }
+  
+  .delete-icon,
+  .archieve-icon {
+    display: flex;
+    column-gap: 15px;
+    padding: 3px 11px;
+  }
+  
+  .delete-icon:hover,
+  .archieve-icon:hover {
+    background-color: #464650;
+    /* color: #db386f; */
+    cursor: pointer;
+  }
+  
+  .Streak {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .Streak h1 {
+    font-size: 26px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+  }
+  
+  .HabitCard-Container {
+    display: flex;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    /* border: 1px solid; */
+    flex-direction: row;
+    justify-content: center;
+  }
+  
+  .Habit-Card {
+    width: 100%;
+    display: grid;
+    grid-row-gap: 14px;
+    grid-template-columns: 6fr 3fr 0.6fr;
+    padding: 10px 8px 10px 17px;
+    margin: 0px 17px 14px 30px;
+    border-radius: 8px;
+    /* font-weight: bold; */
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s;
+    border: 0.5px solid rgba(255, 65, 108, 0.8);
+    /* background: linear-gradient(to left, #18181a 0%, transparent 10%); */
+    color: #db386f;
+  }
+  
+  .Habit-Card:hover {
+    /* transform: scale(1.0); */
+    box-shadow: 0 5px 15px rgba(255, 65, 108, 0.4);
+    /* background: linear-gradient(to left, #18181a 0%, transparent 10%); */
+    /* box-shadow: inset 0 5px 15px rgba(255, 65, 108, 0.4); */
+  }
+  
+  .Habit-Card:active {
+    /* transform: scale(0.95); */
+    box-shadow: 0 3px 10px rgba(255, 65, 108, 0.3);
+  }
+  
+  /* Progress bar Styling code  */
+  
+  /* Progress Bar Container */
+  .progress-outer {
+    display: flex;
+    width: 96%;
+    gap: 10px;
+  }
+  
+  .progress-container {
+    width: 85%;
+    background: #222;
+    border-radius: 10px;
+    padding: 5px;
+    box-shadow: 0px 4px 10px rgba(255, 65, 108, 0.3);
+    overflow: hidden;
+  }
+  
+  /* Progress Bar */
+  .progress-bar {
+    height: 20px;
+    width: 0%;
+    /* Start from 0% */
+    background: linear-gradient(45deg, #ff416c, #ff4b2b);
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    /* Use CSS variable for dynamic width */
+    animation: progressLoad 2s ease-in-out forwards;
+  }
+  
+  /* Keyframes Animation */
+  @keyframes progressLoad {
+    from {
+      width: 0%;
+    }
+  
+    to {
+      width: var(--progress, 60%);
+      /* Dynamic progress */
+    }
+  }
+  
+  
+  /* Progress bar Styling code  */
+  
+  .TotalDaysCompleted {
+    display: flex;
+  }
+  
+  .habitCard-options {
+    margin-right: 1em;
+  
+    /* cursor: pointer; */
+    svg {
+      cursor: pointer;
+    }
+  }
+  
+  @media (max-width: 550px) {
+    .Habit-Card {
+      margin: 10px 13px;
+      grid-row-gap: 14px;
+      align-items: center;
+    }
+  
+    .Habit-Card>*:nth-child(6),
+    .Habit-Card>*:nth-child(5) {
+      grid-column: 1 / -1;
+    }
+  
+    .TotalDaysCompleted {
+      display: flex;
+      justify-content: flex-start;
+      width: 100%;
+    }
+  
+  }

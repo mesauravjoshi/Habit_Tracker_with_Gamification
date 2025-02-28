@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
-import { url } from '../../../URL/Url';
+import { url } from '../../../../URL/Url';
 import "./DeleteConfirmUI.css";
-import { AuthContext } from '../../Context/AuthContext';
+import { AuthContext } from '../../../Context/AuthContext';
 
 function DeleteConfirmUI({ setDisplayDelUI, streakID, setStreakData, streakData }) {
   const {token } = useContext(AuthContext); // Access user from context

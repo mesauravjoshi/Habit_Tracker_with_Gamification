@@ -1,4 +1,4 @@
-import { url } from '../../../URL/Url';
+import { url } from '../../../../URL/Url';
 import './StreakUpdate.css'
 
 function StreakUpdate({ setStreakData, LastUpdate, LastDayForWeek, TargetDuration, StartedDate, index, streakData, Frequency }) {

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./App.css";
-import Habit from "./Components/Pages/Habit/Habit";
+import Habit from "./Components/Pages/AddHabit/Habit";
 import Home from "./Components/Pages/Home/Home";
 import Streak from "./Components/Pages/Streak/Streak";
 import Archive from "./Components/Pages/Archive/Archive";

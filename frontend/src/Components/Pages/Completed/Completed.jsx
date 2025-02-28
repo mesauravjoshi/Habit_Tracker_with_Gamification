@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from 'react';
-import HabitCard from '../HabitCard'
+import HabitCard from '../HabitCard/HabitCard'
 import { url } from '../../../URL/Url';
 import { AuthContext } from '../../Context/AuthContext';
 

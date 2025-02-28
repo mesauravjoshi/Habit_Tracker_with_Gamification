@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from "react";
-import { url } from '../../../URL/Url';
 import "./ExpandCard.css";
-import StreakUpdate from './StreakUpdate';
+import StreakUpdate from '../MarkStreakDone/StreakUpdate';
 
 function ExpandCard({ streak, setIsExpandVisible }) {
   const expandRef = useRef(null); // Reference for the menu

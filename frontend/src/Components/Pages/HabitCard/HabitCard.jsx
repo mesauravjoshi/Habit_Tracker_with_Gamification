@@ -1,12 +1,13 @@
 import { useEffect, useState, useRef, useContext } from 'react';
-import { url } from '../../URL/Url';
+import './HabitCard.css'
 import { DotsIcon, ShareIcon, Unarchive } from "./Icons"; // Adjust path as needed
-import StreakUpdate from '../Pages/Streak/StreakUpdate';
-import DeleteConfirmUI from '../Pages/Streak/DeleteConfirmUI';
-import ExpandCard from '../Pages/Streak/ExpandCard';
-import MaterialIcon from '../Pages/Streak/MaterialIcon ';
-import { AuthContext } from '../Context/AuthContext';
-import { ArchiveContext } from '../Context/ArchiveContext';
+import { url } from '../../../URL/Url';
+import StreakUpdate from '../Streak/MarkStreakDone/StreakUpdate';
+import DeleteConfirmUI from '../Streak/DeleteUI/DeleteConfirmUI';
+import ExpandCard from '../Streak/ExpandHabitCard/ExpandCard';
+import MaterialIcon from '../Streak/MaterialIcon ';
+import { AuthContext } from '../../Context/AuthContext';
+import { ArchiveContext } from '../../Context/ArchiveContext';
 
 function Streak({ streakData, setStreakData, insideArchive, archivedHabit, setArchivedHabit }) {
   const authContext = useContext(AuthContext);
