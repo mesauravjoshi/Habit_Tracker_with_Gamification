@@ -20,7 +20,7 @@
   padding: 2.5em 2.5em 1.5em  2.5em ;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  width: 35em;
+  width: 49vw;
   text-align: center;
   animation: slideIn 0.3s ease-in-out;
 }
@@ -117,5 +117,21 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@media (min-width: 9px) and (max-width: 740px) {
+  .modal-content {
+    width: 75vw;
+    padding: 1.5em 1.5em 1em  1.5em;
+  }
+
+  .modal-content input{
+    padding: 7px;
+    font-size: 15px;
+  }
+
+  .modal-content .login-btn {
+    padding: 7px;
   }
 }

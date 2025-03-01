@@ -12,11 +12,11 @@ function Nav({ toggleSlider }) {
       <div className="menu-icon" onClick={toggleSlider}>
         ☰
       </div>
-      <div className="nav-list">
-        <input type="text" placeholder="Search..." />
+      <div className="nav-search">
+        <input type="text" placeholder="Search......." />
       </div>
       <div className="profile-popup">
-        <div className="profile-logo">
+        <div onClick={() => setLoginOpen(true)} className="profile-logo">
           <p>R</p>
         </div>
         {/* {

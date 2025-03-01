@@ -1,7 +1,6 @@
 .Slider {
     border-right: 0.7px solid #43434b;
     height: 100%;
-    /* overflow-y: auto; */
     grid-row: 1 / 3;
     border-radius: 8px;
     background: linear-gradient(272deg, #2b2b33, #212329);
@@ -20,6 +19,7 @@
     letter-spacing: 4px;
     font-weight: 427;
     font-style: oblique;
+    margin-bottom: 0.6em;
     /* color: white; */
     h3 {
         font-size: 1.4em;
@@ -40,7 +40,7 @@
 
 
 li {
-    padding: 0.8em 0.3em;
+    padding: 0.7em 0.3em;
 }
 
 .slider-list {
@@ -153,4 +153,8 @@ li {
     .close-icon {
         display: inline-block;
     }
+
+    .nav-link {
+        padding: 10px;
+      }
 }
