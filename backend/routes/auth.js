@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const User = require('../models/User'); // Use lowercase 'user'
+const User = require('../models/user'); // Use lowercase 'user'
 
 router.post('/signup', async (req, res) => {
     try {

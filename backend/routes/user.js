@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/User'); // Use lowercase 'user'
+const User = require('../models/user'); // Use lowercase 'user'
 const {jwtAuthMiddleware } = require('../jwt');
 
 router.get('/profile', jwtAuthMiddleware, async (req, res) => {

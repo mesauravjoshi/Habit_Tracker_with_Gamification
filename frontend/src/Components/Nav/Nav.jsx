@@ -32,7 +32,7 @@ function Nav({ toggleSlider }) {
             </button> :
             <button onClick={(e) => {
               localStorage.removeItem('habit token');
-              console.log('removed');
+              // console.log('removed');
               setUser(null);
               fetchUserData();
             }} className="login-btn">
