@@ -1,11 +1,10 @@
 import { useEffect, useState, useRef, useContext } from 'react';
 import './HabitCard.css'
-import { DotsIcon, ShareIcon, Unarchive } from "./Icons"; // Adjust path as needed
+import { DotsIcon, ShareIcon, Archive, Unarchive, Delete, Visibility } from "./Icons";
 import { url } from '../../../URL/Url';
 import StreakUpdate from '../Streak/MarkStreakDone/StreakUpdate';
 import DeleteConfirmUI from '../Streak/DeleteUI/DeleteConfirmUI';
 import ExpandCard from '../Streak/ExpandHabitCard/ExpandCard';
-import MaterialIcon from '../Streak/MaterialIcon ';
 import { AuthContext } from '../../Context/AuthContext';
 import { ArchiveContext } from '../../Context/ArchiveContext';
 
@@ -220,7 +219,7 @@ function Streak({ habitData, setHabitData, insideArchive, archivedHabit, setArch
                         <div>
                         </div>
                         <div onClick={(event) => handleDelete(event, streak._id)} className='delete-icon'>
-                          <MaterialIcon name="delete" />
+                          <Delete />
                           <p>Delete</p>
                         </div>
                         <div onClick={(event) => {
@@ -235,13 +234,13 @@ function Streak({ habitData, setHabitData, insideArchive, archivedHabit, setArch
                                 <p>Unarchive</p>
                               </> :
                               <>
-                                <MaterialIcon name="archive" />
+                                <Archive />
                                 <p>Archive</p>
                               </>
                           }
                         </div>
                         <div onClick={() => setIsExpandVisible(true)} className='delete-icon'>
-                          <MaterialIcon name="visibility" />
+                          <Visibility />
                           <p>View</p>
                         </div>
                       </div>
@@ -259,19 +258,19 @@ function Streak({ habitData, setHabitData, insideArchive, archivedHabit, setArch
                   </div>
 
                   <div style={{ display: 'flex', gap: '13px' }}>
-                  {
-                    insideArchive ? <button className='StreakUpdate-button' disabled={true}>Archived</button> :
-                      <StreakUpdate
-                        setHabitData={setHabitData}
-                        Frequency={streak.Frequency}
-                        LastDayForWeek={streak.StreakRecord.LastDayForWeek}
-                        LastUpdate={streak.StreakRecord.LastUpdate}
-                        TargetDuration={streak.TargetDuration}
-                        StartedDate={streak.StartedDate}
-                        index={index}
-                        habitData={habitData}
-                      />
-                  }
+                    {
+                      insideArchive ? <button className='StreakUpdate-button' disabled={true}>Archived</button> :
+                        <StreakUpdate
+                          setHabitData={setHabitData}
+                          Frequency={streak.Frequency}
+                          LastDayForWeek={streak.StreakRecord.LastDayForWeek}
+                          LastUpdate={streak.StreakRecord.LastUpdate}
+                          TargetDuration={streak.TargetDuration}
+                          StartedDate={streak.StartedDate}
+                          index={index}
+                          habitData={habitData}
+                        />
+                    }
                   </div>
                   <p>{daysLeft}</p>
 

@@ -6,19 +6,13 @@ function Slider({ isOpen, closeSlider }) {
   return (
     <div className={`Slider show-slider ${isOpen ? "show" : ""}`}>
 
-      {/* <div className={`Slider ${isOpen ? "show-slider" : ""}`}> */}
-      <div className="close-container">
+      <div className="slider-header">
+        <h3>TRACKER</h3>
         <div className="close-icon" onClick={closeSlider}>
-          ✖ {/* Close button */}
+          ✖
         </div>
       </div>
-      <div className='logo'>
-        <h3>
-          <center>
-            TRACKER
-          </center>
-        </h3>
-      </div>
+
       <div className="Slider-list">
         {/* 1. Home  */}
         <NavLink to="/" className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}>

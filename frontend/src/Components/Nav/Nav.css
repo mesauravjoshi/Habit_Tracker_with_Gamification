@@ -1,45 +1,125 @@
 .nav {
-    background: linear-gradient(359deg, #292931, #2828375c);
-    grid-column: 2 / 3;
-    display: flex;
-    height: 4em;
-    justify-content: space-between;
-    padding: 10px 18px;
+  background: linear-gradient(359deg, #292931, #2828375c);
+  grid-column: 2 / 3;
+  display: flex;
+  height: 4em;
+  justify-content: space-between;
+  padding: 10px 18px;
 }
 
-button {
-    font-size: 1.2em;
-    padding: 8px 10px;
-    border-radius: 5px;
-    border: 1px solid #f19c20;
-    background-color: transparent;
-    color: #f19c20;
-    cursor: pointer;
+.profile-popup {
+  display: flex;
+  column-gap: 14px;
+  align-items: center;
+
 }
 
-button:hover {
-    background-color: #36363f;
-    border: 1px solid #d5891c6e;
+.profile-logo {
+  cursor: pointer;
+  user-select: none;
+  color: #363641;
+  background: linear-gradient(45deg, #ff416c, #db3347);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 22px;
+  font-weight: 800;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(255, 65, 108, 0.5);
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 🔥 Cool Animation - Pulse Border */
+.profile-logo::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  background: linear-gradient(45deg, #ff416c, #ff4b2b);
+  z-index: -1;
+  animation: pulse 2s infinite;
+}
+
+/* 🌟 Hover Glow Effect */
+.profile-logo:hover {
+  box-shadow: 0 0 10px rgba(255, 65, 108, 0.8);
+  transform: scale(1);
+}
+
+/* 🚀 Click Animation */
+.profile-logo:active {
+  transform: scale(0.9);
+}
+
+/* ✨ Pulse Animation */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+
+  50% {
+    transform: scale(1.2);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+}
+
+
+.login-btn {
+  font-size: 1.2em;
+  padding: 8px 10px;
+  border-radius: 5px;
+  border: 1px solid #f19c20;
+  background-color: transparent;
+  color: #f19c20;
+  cursor: pointer;
+}
+
+.login-btn:hover {
+  background-color: #36363f;
+  border: 1px solid #d5891c6e;
 }
 
 
 /* Menu Icon */
 .menu-icon {
-    font-size: 24px;
-    color: #f19c20;
-    cursor: pointer;
-    display: none;
+  font-size: 24px;
+  color: #f19c20;
+  cursor: pointer;
+  display: none;
+  user-select: none;
 }
 
 /* Show Menu Icon on Small Screens */
 @media (max-width: 850px) {
-    .menu-icon {
-        display: block;
-    }
+  .menu-icon {
+    display: block;
+  }
 }
 
 @media (max-width: 850px) {
-    .nav-link {
-        padding: 10px 11px 9px 0px;
-    }
+  .nav-link {
+    padding: 10px 11px 9px 0px;
+  }
+}
+
+
+/* Medium to large mobile devices (landscape) */
+@media (min-width: 413px) and (max-width: 540px) {
+  .login-btn {
+    font-size: 1em;
+    padding: 7px 10px;
+  }
 }

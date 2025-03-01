@@ -14,9 +14,17 @@ function Nav({ toggleSlider }) {
       </div>
       <div className="nav-list">
         <input type="text" placeholder="Search..." />
-        {user && user.username}
       </div>
-      <div>
+      <div className="profile-popup">
+        <div className="profile-logo">
+          <p>R</p>
+        </div>
+        {/* {
+          user &&
+          <div className="profile-logo">
+            <p>{user.username.toUpperCase().slice(0, 1)}</p>
+          </div>
+        } */}
         {
           !user ?
             <button onClick={() => setLoginOpen(true)} className="login-btn">
@@ -27,7 +35,7 @@ function Nav({ toggleSlider }) {
               console.log('removed');
               setUser(null);
               fetchUserData();
-            }} className="">
+            }} className="login-btn">
               Log out
             </button>
         }

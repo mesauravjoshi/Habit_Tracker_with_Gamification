@@ -13,7 +13,7 @@ function Streak() {
     return null; // or return a loading indicator
   }
 
-  const { user, token } = useContext(AuthContext); // Access user from context
+  const { user,setUser, token, setToken } = useContext(AuthContext); // Access user from context
   const { archiveHabits, fetchArchivePData } = useContext(ArchiveContext);
   const [habitData, setHabitData] = useState([]);
   const [updatedStreakData, setUpdatedStreakData] = useState([]);
@@ -30,42 +30,63 @@ function Streak() {
 
   useEffect(() => {
     const fetchHabits = async () => {
-      if (!token || user === null) {
-        console.log("No token found, user is not logged in");
-        return;
-      }
-      try {
-        const response = await fetch(`${url}/habit/habits`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}` // Include JWT token
-          }
-        });
-        const data = await response.json();
-        const edit = data.filter(habit => !archiveHabits.includes(habit._id));
+        if (!token || user === null) {
+            console.log("No token found, user is not logged in");
+            return;
+        }
+        try {
+            const response = await fetch(`${url}/habit/habits`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                }
+            });
 
-        setHabitData(edit.reverse());
-        // console.log(habitData);
-        setUpdatedStreakData(edit);
-      } catch (error) {
-        console.error('Error fetching habits:', error);
-      }
+            const data = await response.json();
+
+            if (data.error) {
+                if (data.error.name === 'TokenExpiredError') {
+                    console.log("Token has expired. Logging out...");
+                    localStorage.removeItem("habit token");
+                    setUser(null);
+                    setToken("");
+                    return;
+                }
+                console.log("Error from API:", data.error.message);
+                return;
+            }
+
+            if (!Array.isArray(data)) {
+                console.log("Unexpected response format", data);
+                return;
+            }
+
+            const edit = data.filter(habit => !archiveHabits.includes(habit._id));
+
+            setHabitData(edit.reverse());
+            setUpdatedStreakData(edit);
+        } catch (error) {
+            console.error('Error fetching habits:', error);
+        }
     };
+
     fetchHabits();
-    const handleClickOutside = (event) => {
 
-      if (menuRef.current && !menuRef.current.contains(event.target)) {
-        setHandleViewOption(false);
-        setSelectedMenuCard(null);
-        // console.log('handleClickOutside');
-      }
+    const handleClickOutside = (event) => {
+        if (menuRef.current && !menuRef.current.contains(event.target)) {
+            setHandleViewOption(false);
+            setSelectedMenuCard(null);
+        }
     };
+
     document.addEventListener("click", handleClickOutside);
+
     return () => {
-      document.removeEventListener("click", handleClickOutside);
+        document.removeEventListener("click", handleClickOutside);
     };
-  }, [user, archiveHabits])
+}, [user, archiveHabits]);
+
 
   const handleHabitListCategory = (val) => {
     setHabitListCategory(val);
@@ -118,17 +139,17 @@ function Streak() {
           </div>
         </div>
         {
-          user ? 
-        <div>
-          {
-            habitData.length > 0 ?
-            < HabitCard
-            habitData={habitData}
-              setHabitData={setHabitData}
-            /> : <h2>no habit added yet ...</h2>
-          }
-        </div> 
-        : <p> Please login .........</p>
+          user ?
+            <div>
+              {
+                habitData.length > 0 ?
+                  < HabitCard
+                    habitData={habitData}
+                    setHabitData={setHabitData}
+                  /> : <h2>no habit added yet ...</h2>
+              }
+            </div>
+            : <p> Please login .........</p>
         }
       </div>
     </>

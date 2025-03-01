@@ -10,13 +10,34 @@
     padding: 8px 2px;
 }
 
-.logo {
+/* 🔹 Logo Container */
+.slider-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Pushes content apart */
+    padding: 10px;
     font-family: "Phudu", serif;
-    padding: 1em;
     letter-spacing: 4px;
     font-weight: 427;
     font-style: oblique;
+    /* color: white; */
+    h3 {
+        font-size: 1.4em;
+    }
 }
+
+/* ✖ Close Button (X) */
+.close-icon {
+    font-size: 22px;
+    color: #f19c20;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+.close-icon:hover {
+    transform: scale(1.2);
+}
+
 
 li {
     padding: 0.8em 0.3em;

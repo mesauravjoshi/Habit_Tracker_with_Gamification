@@ -9,15 +9,37 @@ export const AuthProvider = ({ children }) => {
 
   const fetchUserData = async () => {
     const getToken = localStorage.getItem("habit token");
+
     if (!getToken) {
-      setLoading(false);
-      return;
+        setLoading(false);
+        setUser(null);
+        return;
     }
-    const userData = JSON.parse(atob(getToken.split(".")[1]));
-    setUser(userData);
-    setToken(getToken);
+
+    try {
+        const userData = JSON.parse(atob(getToken.split(".")[1]));
+        const currentTime = Math.floor(Date.now() / 1000);
+
+        if (userData.exp < currentTime) {
+            console.log("Token has expired. Logging out...");
+            localStorage.removeItem("habit token");
+            setUser(null);
+            setToken("");
+            setLoading(false);
+            return;
+        }
+
+        setUser(userData);
+        setToken(getToken);
+    } catch (error) {
+        console.error("Error parsing token:", error);
+        localStorage.removeItem("habit token");
+        setUser(null);
+        setToken("");
+    }
+
     setLoading(false);
-  };
+};
 
   useEffect(() => {
     fetchUserData();
