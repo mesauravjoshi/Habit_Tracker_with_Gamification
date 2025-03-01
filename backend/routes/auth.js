@@ -16,7 +16,7 @@ router.post('/signup', async (req, res) => {
 
         // Hash the password before saving (recommended for security)
         const hashedPassword = await bcrypt.hash(password, 10);
-        console.log(hashedPassword);
+        // console.log(hashedPassword);
 
         // Save user data to MongoDB
         const newUser = new User({
@@ -24,7 +24,7 @@ router.post('/signup', async (req, res) => {
             username,
             password: hashedPassword
         });
-        console.log(newUser);
+        // console.log(newUser);
         await newUser.save();
 
         res.status(201).json({ message: "User registered successfully" });
