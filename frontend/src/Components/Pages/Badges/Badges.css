@@ -169,14 +169,29 @@
 }
 
 @media (max-width: 544px) {
+    .elite-card , .silver-card, .gold-card {
+        height: 14em;
+    }
+
     .Badge-container {
         margin: 1em 0.76em;
         gap: 0.3em;
         grid-template-columns: 1fr 1fr;
     }
 
+    .badge-details {
+        font-size: 15px;
+    }
+
+    .badge-Frequency{
+        font-size: 12px
+    }
+
     .badge-header {
         font-size: 1.6em;
     }
 
+    .badge-footer {
+        font-size: 15px;
+    }
 }

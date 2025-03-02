@@ -1,0 +1,41 @@
+/* Progress Bar Container */
+.progress-circle-container {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* SVG Rotation to Start from Top */
+.progress-svg {
+  transform: rotate(-90deg);
+}
+
+/* Background Circle (Gray) */
+.progress-bg {
+  fill: none;
+  stroke: #333;
+  stroke-width: 10;
+  opacity: 0.3;
+}
+
+/* Progress Circle with Gradient Stroke */
+.progress-bar {
+  fill: none;
+  stroke: url(#progress-gradient); /* Apply the gradient */
+  stroke-width: 10;
+  stroke-linecap: round;
+  stroke-dasharray: 251; /* Full circle */
+  stroke-dashoffset: 251; /* Start from empty */
+  transition: stroke-dashoffset 1.7s ease-in-out;
+}
+
+/* Progress Text */
+.progress-text {
+  position: absolute;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+}

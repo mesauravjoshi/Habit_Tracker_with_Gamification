@@ -211,8 +211,13 @@ function Streak({ habitData, setHabitData, insideArchive, archivedHabit, setArch
             return (
               <div className="HabitCard-Container" key={streak.HabitName}>
                 <div onClick={() => handleSelectHabitCard(streak, daysLeft, Total_Target_Time)} className="Habit-Card">
+                  {/* 1. habit name  */}
                   <h3>{streak.HabitName} ({streak.Frequency}) {streak.BadgeRecord.Badge} </h3>
+
+                  {/* 2 .🔥 Streak */}
                   <p>{streakUI}</p>
+
+                  {/* 3. Options [dot and share icon]  */}
                   <div className='HabitCard-options'>
                     {selectedMenuCard === streak._id && handleViewOption && (
                       <div ref={menuRef} className="Options-details">
@@ -257,7 +262,8 @@ function Streak({ habitData, setHabitData, insideArchive, archivedHabit, setArch
                     </div>
                   </div>
 
-                  <div style={{ display: 'flex', gap: '13px' }}>
+                  {/* 4. Streak update Button  */}
+                  <div style={{ display: 'flex' }}>
                     {
                       insideArchive ? <button className='StreakUpdate-button' disabled={true}>Archived</button> :
                         <StreakUpdate
@@ -272,15 +278,19 @@ function Streak({ habitData, setHabitData, insideArchive, archivedHabit, setArch
                         />
                     }
                   </div>
+
+                  {/* 5. No of days left */}
                   <p>{daysLeft}</p>
 
-                  {/* Progress Bar */}
+                  {/* 6. Progress Bar */}
                   <div className='progress-outer'>
                     <div className="progress-container" style={{ "--progress": `${progress}%` }}>
                       <div className="progress-bar"></div>
                     </div>
                     <p> {progress}%</p>
                   </div>
+                  
+                  {/* 7. completed days/weeks  */}
                   <div className="TotalDaysCompleted">
                     {DayWeeksCompeted}
                   </div>

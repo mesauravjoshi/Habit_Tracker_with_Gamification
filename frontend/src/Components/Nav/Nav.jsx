@@ -16,7 +16,7 @@ function Nav({ toggleSlider }) {
         <input type="text" placeholder="Search......." />
       </div>
       <div className="profile-popup">
-        <div onClick={() => setLoginOpen(true)} className="profile-logo">
+        <div className="profile-logo">
           <p>R</p>
         </div>
         {/* {

@@ -27,29 +27,26 @@
 
 /* Delete Confirmation Box */
 .expandHabitCard {
-    overflow: hidden;
-    position: relative;
+    width: 78vw;
+    height: 97vh;
+    overflow-y: auto;
+    /* position: relative; */
     display: grid;
     grid-row-gap: 25px;
-    grid-column-gap: 19vw;
+    grid-column-gap: 4vw;
     grid-template-columns: 1fr 1fr;
     border-radius: 8px;
     border: 0.5px solid #ff416ccc;
     color: #db386f;
-
     background: #292931;
-    /* Semi-transparent white */
     backdrop-filter: blur(12px);
-    /* Frosted glass effect */
     padding: 20px;
-    margin: 1em 5em;
+    margin: 1em 1em;
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
     text-align: center;
-    animation: fadeIn 0.3s ease-in-out;
-}
+    animation: fadeIn 0.3sease-in-out;
 
-.expandHabitCard {
-    svg {
+    /* svg {
         position: absolute;
         bottom: -23px;
         right: -122px;
@@ -57,7 +54,7 @@
         z-index: -1;
         height: 100%;
         width: 100%;
-    }
+    } */
 }
 
 /* Fade-out animation for expandHabitCard */
@@ -65,20 +62,11 @@
     animation: fadeOut 0.3s ease-in-out forwards;
 }
 
-.expandHabitCard-heading{
-    span{
+.expandHabitCard-heading {
+    span {
         /* font-family: "Rowdies", serif; */
         font-family: "Phudu", serif;
     }
-}
-
-.badge-details {
-    display: flex;
-    font-family: "Josefin Sans", serif;
-    margin-top: 18px;
-    justify-content: flex-start;
-    flex-direction: column;
-    align-items: flex-start;
 }
 
 /* Fade-in Animation */
@@ -104,5 +92,15 @@
     to {
         opacity: 0;
         transform: scale(0.9);
+    }
+}
+
+
+@media (max-width: 550px) {
+    .expandHabitCard{
+        height: 61vh;
+        grid-template-columns: 1fr 0.6fr;
+        grid-row-gap: 4px;
+        width: 97%;
     }
 }
