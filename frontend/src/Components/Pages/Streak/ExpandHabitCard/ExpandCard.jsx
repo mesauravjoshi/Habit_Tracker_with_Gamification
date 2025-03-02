@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import "./ExpandCard.css";
 import StreakUpdate from '../MarkStreakDone/StreakUpdate';
 import CircularProgressBar from "./CircularProgressBar";
+import Calendar from "../../AddHabit/Calendar";
 
 function ExpandCard({ streak, setHabitData, setIsExpandVisible, calculateTotalDays, calculateTotalWeeks, insideArchive }) {
   const expandRef = useRef(null); // Reference for the menu
@@ -75,7 +76,22 @@ function ExpandCard({ streak, setHabitData, setIsExpandVisible, calculateTotalDa
         </div>
 
         {/* Progress Bar */}
+        <div>
         <CircularProgressBar progress={calculateProgress()}/>
+        {
+          insideArchive ? <button className='StreakUpdate-button' disabled={true}>Archived</button> :
+            <StreakUpdate
+              setHabitData={setHabitData}
+              Frequency={streak.Frequency}
+              LastDayForWeek={streak.StreakRecord.LastDayForWeek}
+              LastUpdate={streak.StreakRecord.LastUpdate}
+              TargetDuration={streak.TargetDuration}
+              StartedDate={streak.StartedDate}
+              index={0}
+              habitData={[streak]}
+            />
+        }
+        </div>
 
         <p>
           {
@@ -92,23 +108,10 @@ function ExpandCard({ streak, setHabitData, setIsExpandVisible, calculateTotalDa
           {streak.timeLeft}
         </p>
 
-        {
-          insideArchive ? <button className='StreakUpdate-button' disabled={true}>Archived</button> :
-            <StreakUpdate
-              setHabitData={setHabitData}
-              Frequency={streak.Frequency}
-              LastDayForWeek={streak.StreakRecord.LastDayForWeek}
-              LastUpdate={streak.StreakRecord.LastUpdate}
-              TargetDuration={streak.TargetDuration}
-              StartedDate={streak.StartedDate}
-              index={0}
-              habitData={[streak]}
-            />
-        }
-
-        <div className="TotalDaysCompleted">
-
+        <div className="calendar-detail">
+        <Calendar startDate={streak.StartedDate} endDate={streak.TargetDuration} CalendarData={streak.CalendarData} />
         </div>
+
         <div className="expandHabitCard-badge-details">
           <h2>Badge Details</h2>
           <h5>Badge Earned: {streak.BadgeRecord.Badge} </h5>

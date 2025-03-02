@@ -29,10 +29,10 @@ function Streak({ habitData, setHabitData, insideArchive, archivedHabit, setArch
   const [displayDelUI, setDisplayDelUI] = useState(false);
   const [selectedStreakID, setSelectedStreakID] = useState(null);
 
-  const menuRef = useRef(null); // Reference for the menu
+  const menuRef = useRef(null); 
   if (!authContext) {
     console.log("AuthContext is not yet available.");
-    return null; // or return a loading indicator
+    return null; 
   }
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -295,13 +295,12 @@ function Streak({ habitData, setHabitData, insideArchive, archivedHabit, setArch
                   <div className="TotalDaysCompleted">
                     {DayWeeksCompeted}
                   </div>
-
                 </div>
               </div>
             );
           })
         }
-        <Calendar startDate={habitData[0].StartedDate} endDate={habitData[0].TargetDuration} />
+        {/* <Calendar startDate={habitData[0].StartedDate} endDate={habitData[0].TargetDuration} CalendarData={habitData[0].CalendarData} /> */}
       </div>
     </>
   )
