@@ -6,7 +6,6 @@
   flex-direction: column;
   justify-content: flex-start;
   padding: 3px 0;
-  /* font-size: 1.6em; */
   border-radius: 8px;
 }
 
@@ -22,22 +21,47 @@
   align-items: center;
 }
 
-.three-dot-elips:hover {
-  background-color: #464650;
+.three-dot-elips,
+.share-arrow {
+  position: relative;
+  overflow: hidden;
 }
 
-.share-arrow:hover {
-  background-color: #464650;
+.three-dot-elips::after,
+.share-arrow::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.2); /* Light effect */
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  transition: width 0.3s ease, height 0.3s ease;
+}
+
+.three-dot-elips:hover::after,
+.share-arrow:hover::after {
+  width: 150%;
+  height: 150%;
+}
+
+.three-dot-elips:active::after,
+.share-arrow:active::after {
+  width: 180%;
+  height: 180%;
+  transition: width 0.2s ease-out, height 0.2s ease-out;
 }
 
 .Options-details {
+  z-index: 1;
   color: #d1b5b5;
   position: absolute;
   background: #4d454580;
   backdrop-filter: blur(5px);
   left: -5em;
   top: 43px;
-  /* row-gap: 5px; */
   padding: 4px 0px;
   border-radius: 9px;
   display: flex;
@@ -56,9 +80,19 @@
 .delete-icon:hover,
 .archieve-icon:hover {
   background-color: #464650;
-  /* color: #db386f; */
   cursor: pointer;
 }
+
+.delete-icon,
+.archieve-icon {
+  transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.delete-icon:hover,
+.archieve-icon:hover {
+  transform: scale(1);
+}
+
 
 .Streak {
   display: flex;

@@ -6,6 +6,7 @@ import './TotalStreak&XP.css'
 function TotalStreakAndXP() {
     const { totalStreaXP } = useContext(StreaXPContext);
     const { user } = useContext(AuthContext); // Access user from context
+console.log(totalStreaXP);
 
     return (
         <>

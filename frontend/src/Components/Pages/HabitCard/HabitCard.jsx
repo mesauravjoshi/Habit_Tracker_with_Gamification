@@ -221,8 +221,8 @@ function Streak({ habitData, setHabitData, insideArchive, archivedHabit, setArch
                   <div className='HabitCard-options'>
                     {selectedMenuCard === streak._id && handleViewOption && (
                       <div ref={menuRef} className="Options-details">
-                        <div>
-                        </div>
+                        {/* <div>
+                        </div> */}
                         <div onClick={(event) => handleDelete(event, streak._id)} className='delete-icon'>
                           <Delete />
                           <p>Delete</p>
