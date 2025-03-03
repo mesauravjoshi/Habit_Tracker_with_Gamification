@@ -8,3 +8,10 @@
     align-content: flex-end;
     align-items: flex-end;
 }
+
+@media (max-width: 550px) {
+    .display-streak-XPPoints {
+        font-size: 1.2em;
+        margin: 0;
+    }
+}

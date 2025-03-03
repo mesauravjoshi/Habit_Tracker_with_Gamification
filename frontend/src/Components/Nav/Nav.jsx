@@ -1,12 +1,14 @@
 import { useState, useContext, useEffect, useRef } from "react";
 import LoginModal from "./LoginModal";
+import LogOutPopUp from "./LogOutPopUp";
 import "./Nav.css";
 import { AuthContext } from "../Context/AuthContext";
 
 function Nav({ toggleSlider }) {
-  const { user, setUser, fetchUserData } = useContext(AuthContext); // Access user from context
+  const { user } = useContext(AuthContext); // Access user from context
   const [isLoginOpen, setLoginOpen] = useState(false);
   const [profileDropDown, setProfileDropDown] = useState(false);
+  const [isLogOutPopUpOpen, setIsLogOutPopUpOpen] = useState(false);
 
   const dropdownRef = useRef(null);
 
@@ -50,14 +52,19 @@ function Nav({ toggleSlider }) {
             <p>View Profile</p>
             <p>Settings</p>
             <p onClick={(e) => {
-              localStorage.removeItem('habit token');
               // console.log('removed');
-              setUser(null);
-              fetchUserData();
+              // localStorage.removeItem('habit token');
+              // setUser(null);
+              // fetchUserData();
               setProfileDropDown(prev => !prev)
+              setIsLogOutPopUpOpen(true);
             }}  >Log out</p>
           </div>
         )}
+        {
+          isLogOutPopUpOpen &&
+          <LogOutPopUp setIsLogOutPopUpOpen={setIsLogOutPopUpOpen} />
+        }
 
 
         {/* {

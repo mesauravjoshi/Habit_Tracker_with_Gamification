@@ -12,23 +12,7 @@
     align-content: stretch;
 }
 
-#borderr {
-    /* border: 1px solid #57b957; */
-    border-radius: 9px;
-    padding: 0.3em 0.8em;
-    background-color: #23232b;
-    /* background-color: #25252c; */
-}
-
-#borderr:hover {
-    background-color: #23232b;;
-    /* font-size: 1.02em; */
-}
-
-
 .Target-Duration {
-    /* grid-column-start: 1;
-    grid-column-end: 3; */
     grid-column: 1/ span 2;
 }
 
@@ -73,10 +57,9 @@ input[type="date"]:focus {
     box-shadow: 0px 6px 15px #e4a23f;
 }
 
-
-
 .Add-Habit {
     input {
+        outline-style: none;
         border: 1px solid #f19c20;
         color: #f19c20;
         background: transparent;

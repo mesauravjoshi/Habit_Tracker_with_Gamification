@@ -1,15 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
-const Habit = require('../models/habits'); 
-const {jwtAuthMiddleware } = require('../jwt');
+const Habit = require('../models/habits');
+const Archive = require('../models/archive');
+const { jwtAuthMiddleware } = require('../jwt');
 
-router.post('/add_habit',jwtAuthMiddleware, async (req, res) => { 
+router.post('/add_habit', jwtAuthMiddleware, async (req, res) => {
     try {
         const { HabitName, Category, Frequency, Priority, TargetDuration, StartedDate, StreakRecord } = req.body;
         const userId = req.user.id; // Get user ID from JWT middleware
-        console.log(userId);
-        
+
         if (!userId) {
             return res.status(401).json({ error: "Unauthorized: User ID not found" });
         }
@@ -51,11 +51,11 @@ router.post('/add_habit',jwtAuthMiddleware, async (req, res) => {
     }
 });
 
-router.get('/habits',jwtAuthMiddleware , async (req, res) => {
+router.get('/habits', jwtAuthMiddleware, async (req, res) => {
     const userId = req.user.id; // Extract user ID from JWT
     // console.log('User ID line 58:', userId);
     try {
-        const habits = await Habit.find({ 'userId':userId }); // Fetch habits for this user
+        const habits = await Habit.find({ 'userId': userId }); // Fetch habits for this user
         res.json(habits);
     } catch (error) {
         console.error(error);
@@ -63,7 +63,7 @@ router.get('/habits',jwtAuthMiddleware , async (req, res) => {
     }
 });
 
-router.put('/markAsDone/:id',jwtAuthMiddleware, async (req, res) => {
+router.put('/markAsDone/:id', jwtAuthMiddleware, async (req, res) => {
     const { id } = req.params; // Extract habit ID from URL
     const updatedFields = req.body; // Extract fields to update
     // console.log(id);
@@ -87,41 +87,52 @@ router.put('/markAsDone/:id',jwtAuthMiddleware, async (req, res) => {
     }
 });
 
-router.delete('/habitDelete/:id',jwtAuthMiddleware, async (req, res) => {
+router.delete('/habitDelete/:id', jwtAuthMiddleware, async (req, res) => {
     const { id } = req.params; // Extract habit ID from URL
 
     try {
         const deletedHabit = await Habit.findByIdAndDelete(id);
-
         if (!deletedHabit) {
             return res.status(404).json({ error: 'Habit not found' });
         }
 
-        res.json({ message: 'Habit deleted  successfully', data: deletedHabit });
+        const deletedHabitfromAr = await Archive.findOneAndDelete({ habitId: id });
+
+        // Send a response only once
+        const message = deletedHabitfromAr
+            ? 'Habit deleted successfully from both'
+            : 'Habit deleted successfully';
+
+        return res.json({ message, data: deletedHabit });
+
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Failed to delete habit' });
     }
 });
 
-router.get('/totalStreaXP',jwtAuthMiddleware , async (req, res) => {
-    
+router.get('/totalStreaXP', jwtAuthMiddleware, async (req, res) => {
+
     const userId = req.user.id; // Extract user ID from JWT
     // console.log('User ID line 58:', userId);
     try {
-        const totalStreaXP = await Habit.find({ 'userId':userId }); // Fetch habits for this user
+        const totalStreaXP = await Habit.find({ 'userId': userId }); // Fetch habits for this user
 
         if (totalStreaXP.length > 0) {
             const totalStreak = Array.isArray(totalStreaXP)
-              ? totalStreaXP.reduce((acc, habit) => acc + habit.StreakRecord.TotalStreak, 0)
-              : 0;
-              
-              const totalxPPoints = Array.isArray(totalStreaXP)
-              ? totalStreaXP.reduce((acc, habit) => acc + habit.StreakRecord.XPPoints, 0)
-              : 0;
+                ? totalStreaXP.reduce((acc, habit) => acc + habit.StreakRecord.TotalStreak, 0)
+                : 0;
 
-              res.json({totalStreaAndXP: { totalStreak, totalxPPoints }});
-          }
+            const totalxPPoints = Array.isArray(totalStreaXP)
+                ? totalStreaXP.reduce((acc, habit) => acc + habit.StreakRecord.XPPoints, 0)
+                : 0;
+
+            res.json({ totalStreaAndXP: { totalStreak, totalxPPoints } });
+        }
+        const totalStreak = 0;
+        const totalxPPoints = 0;
+        res.json({ totalStreaAndXP: { totalStreak, totalxPPoints } });
+
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: "Failed to fetch habits" });

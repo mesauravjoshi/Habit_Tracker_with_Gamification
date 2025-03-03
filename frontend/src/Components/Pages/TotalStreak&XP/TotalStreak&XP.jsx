@@ -6,8 +6,13 @@ import './TotalStreak&XP.css'
 function TotalStreakAndXP() {
     const { totalStreaXP } = useContext(StreaXPContext);
     const { user } = useContext(AuthContext); // Access user from context
-console.log(totalStreaXP);
-
+    if (totalStreaXP) {
+        console.log(totalStreaXP.totalStreak);
+    } else{
+        console.log('no');
+        
+    }
+    totalStreaXP ? totalStreaXP.totalStreak : 0
     return (
         <>
             {

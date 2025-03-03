@@ -5,7 +5,7 @@ import { url } from '../../../URL/Url';
 import { AuthContext } from "../../Context/AuthContext";
 
 function Habit() {
-  const { user, loading, token } = useContext(AuthContext); // Access user from context
+  const { user, loading, token } = useContext(AuthContext);
   const priorityLabels = ["Low", "Medium", "High", "Critical"];
   const [habits, setHabits] = useState([]);
   const [habit, setHabit] = useState('');
@@ -34,8 +34,7 @@ function Habit() {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     if (habit.trim() === '' || targetDuration === '' || selectedFrequency === '') {
-      console.log('empty');
-      // alert("All field required !")
+      alert("All field required !")
     } else {
       // const user_id = user._id
       const newHabit = {
@@ -58,7 +57,7 @@ function Habit() {
         },
         IsConmpleted: false,
       };
-      console.log(newHabit);
+      // console.log(newHabit);
 
       if (selectedFrequency === 'Daily') {
         newHabit.TotalDaysCompleted = 0;
@@ -82,7 +81,7 @@ function Habit() {
 
         if (response.ok) {
           const result = await response.json();
-          console.log(result);
+          // console.log(result);
         } else {
           const errorResponse = await response.json();
           console.error('Error:', errorResponse.message);
@@ -92,11 +91,11 @@ function Habit() {
       }
 
       // Reset input fields
-      // setHabit('');
-      // setSelectedCategory('');
-      // setSelectedFrequency('');
-      // setTargetDuration('');
-      // setPriority(0);
+      setHabit('');
+      setSelectedCategory('');
+      setSelectedFrequency('');
+      setTargetDuration('');
+      setPriority(0);
     }
   };
 
@@ -117,16 +116,16 @@ function Habit() {
     <>
       <div className='habbit'>
         {/* 1. Add-Habit */}
-        <div id='borderr' className="Add-Habit">
+        <div id="borderr" className="Add-Habit">
           <h2>Add Yoor Habbit </h2>
-          <input type="text"
+          <input type="text" placeholder='Habit name...'
             value={habit}
             onChange={(e) => setHabit(e.target.value)}
           />
         </div>
 
         {/* 2. Category */}
-        <div id='borderr' className="Category">
+        <div id="borderr" className="Category">
           <h2>Category</h2>
           <select
             onChange={(e) => setSelectedCategory(e.target.value)}
@@ -162,11 +161,6 @@ function Habit() {
           <br />
 
         </div>
-
-        {/* 5.  Reminder Time */}
-        {/* <div id='borderr' className="Reminder-Time">
-      <h2>Reminder Time</h2>
-    </div> */}
 
         {/* 6.  Priority Level */}
         <div id="borderr" className="Priority-Level">
