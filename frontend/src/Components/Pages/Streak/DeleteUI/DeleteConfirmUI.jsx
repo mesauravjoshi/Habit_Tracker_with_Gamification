@@ -2,8 +2,11 @@ import React, { useContext } from "react";
 import { url } from '../../../../URL/Url';
 import "./DeleteConfirmUI.css";
 import { AuthContext } from '../../../Context/AuthContext';
+import { StreaXPContext } from '../../../Context/Strea&XPContext';
+
 
 function DeleteConfirmUI({ setDisplayDelUI, streakID, habitData, setHabitData }) {
+  const { fetchStreaXPData } = useContext(StreaXPContext);
   const {token } = useContext(AuthContext); // Access user from context
 
   const handleCanelDelete = () => {
@@ -26,6 +29,7 @@ function DeleteConfirmUI({ setDisplayDelUI, streakID, habitData, setHabitData })
       //   throw new Error(error);
       // }
       const data = await response.json();
+      fetchStreaXPData();
       setHabitData(habitData.filter((habit) => habit._id !== streakID));
       setDisplayDelUI(false); // Close the confirmation UI
       // console.log('Habit deleted successfully:', data);

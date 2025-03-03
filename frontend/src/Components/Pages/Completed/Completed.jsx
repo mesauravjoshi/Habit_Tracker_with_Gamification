@@ -2,6 +2,7 @@ import { useEffect, useState, useContext } from 'react';
 import HabitCard from '../HabitCard/HabitCard'
 import { url } from '../../../URL/Url';
 import { AuthContext } from '../../Context/AuthContext';
+import TotalStreakAndXP from '../TotalStreak&XP/TotalStreak&XP';
 
 function Completed() {
   const { user, token } = useContext(AuthContext); // Access user from context
@@ -37,6 +38,7 @@ function Completed() {
       <div className='Complete-streak' style={{ overflowY: 'auto' }}>
         <div className='Habit-list'>
           <h1> Completed Habits  </h1>
+          <TotalStreakAndXP/>
         </div>
         {
           user ?

@@ -35,7 +35,7 @@ function Habit() {
     today.setHours(0, 0, 0, 0);
     if (habit.trim() === '' || targetDuration === '' || selectedFrequency === '') {
       console.log('empty');
-      alert("All field required !")
+      // alert("All field required !")
     } else {
       // const user_id = user._id
       const newHabit = {

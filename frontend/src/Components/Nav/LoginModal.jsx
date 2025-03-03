@@ -5,9 +5,11 @@ import { url } from '../../URL/Url';
 import SignUp from './SignUp'
 import "./LoginModal.css";
 import { AuthContext } from '../Context/AuthContext';
+import { StreaXPContext } from "../Context/Strea&XPContext";
 
 const LoginModal = ({ setLoginOpen,onClose }) => {
   const {fetchUserData} = useContext(AuthContext); // Access user from context
+  const { fetchStreaXPData } = useContext(StreaXPContext);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -79,6 +81,7 @@ const LoginModal = ({ setLoginOpen,onClose }) => {
         // console.log('Success:', response.data.token);
         localStorage.setItem('habit token',response.data.token);
         fetchUserData();
+        fetchStreaXPData();
         setLoginOpen(false);
         navigate('/track-streak');
       } catch (error) {

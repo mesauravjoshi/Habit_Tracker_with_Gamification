@@ -11,7 +11,7 @@ function CircularProgressBar({ progress }) {
 
   return (
     <div className="progress-circle-container">
-      <svg className="progress-svg" width="100" height="100" viewBox="0 0 100 100">
+      <svg className="progress-svg" width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
         {/* Gradient Definition */}
         <defs>
           <linearGradient id="progress-gradient" x1="0%" y1="0%" x2="100%" y2="0%">

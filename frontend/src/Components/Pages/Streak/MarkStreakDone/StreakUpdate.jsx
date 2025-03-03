@@ -1,7 +1,10 @@
+import {useContext} from 'react';
 import { url } from '../../../../URL/Url';
+import { StreaXPContext } from '../../../Context/Strea&XPContext';
 import './StreakUpdate.css'
 
 function StreakUpdate({ setHabitData, LastUpdate, LastDayForWeek, TargetDuration, StartedDate, index, habitData, Frequency }) {
+  const { fetchStreaXPData } = useContext(StreaXPContext);
 
   const markAsDone = async (habit) => {
     // console.log('inside fetch function', habit);
@@ -37,6 +40,7 @@ function StreakUpdate({ setHabitData, LastUpdate, LastDayForWeek, TargetDuration
 
       if (response.ok) {
         const result = await response.json();
+        fetchStreaXPData();
         // console.log("Habit updated successfully:", result);
       } else {
         const errorResponse = await response.json();
@@ -93,7 +97,7 @@ function StreakUpdate({ setHabitData, LastUpdate, LastDayForWeek, TargetDuration
     return upcomingDay;
   }
 
-  const handleMarkAsDone = (event,index) => {
+  const handleMarkAsDone = (event, index) => {
     event.stopPropagation(); // Prevents event from bubbling up
 
     const today = new Date();
@@ -268,7 +272,7 @@ function StreakUpdate({ setHabitData, LastUpdate, LastDayForWeek, TargetDuration
     <div style={{ display: 'flex', gap: '13px' }}>
       <button
         className="StreakUpdate-button"
-        onClick={(event) => handleMarkAsDone(event,index)} // Handle the "Mark as Done" button click
+        onClick={(event) => handleMarkAsDone(event, index)} // Handle the "Mark as Done" button click
         disabled={isMarkedToday(LastUpdate, LastDayForWeek, TargetDuration, StartedDate)} // Disable button if marked today
       >
         ✅ Mark as Done</button>

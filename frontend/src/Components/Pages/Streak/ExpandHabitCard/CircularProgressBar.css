@@ -1,8 +1,8 @@
 /* Progress Bar Container */
 .progress-circle-container {
   position: relative;
-  width: 100px;
-  height: 100px;
+  width: 100%;
+  height: 12.4em;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -10,6 +10,9 @@
 
 /* SVG Rotation to Start from Top */
 .progress-svg {
+  width: 100%;   /* Adjust width based on parent container */
+  /* height: auto;  */
+   /* Automatically adjust height to maintain aspect ratio */
   transform: rotate(-90deg);
 }
 
@@ -35,7 +38,9 @@
 /* Progress Text */
 .progress-text {
   position: absolute;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bold;
-  color: white;
+  /* color: white; */
 }
+
+@media (max-width: 550px) {}

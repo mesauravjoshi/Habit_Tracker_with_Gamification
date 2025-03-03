@@ -104,4 +104,28 @@ router.delete('/habitDelete/:id',jwtAuthMiddleware, async (req, res) => {
     }
 });
 
+router.get('/totalStreaXP',jwtAuthMiddleware , async (req, res) => {
+    
+    const userId = req.user.id; // Extract user ID from JWT
+    // console.log('User ID line 58:', userId);
+    try {
+        const totalStreaXP = await Habit.find({ 'userId':userId }); // Fetch habits for this user
+
+        if (totalStreaXP.length > 0) {
+            const totalStreak = Array.isArray(totalStreaXP)
+              ? totalStreaXP.reduce((acc, habit) => acc + habit.StreakRecord.TotalStreak, 0)
+              : 0;
+              
+              const totalxPPoints = Array.isArray(totalStreaXP)
+              ? totalStreaXP.reduce((acc, habit) => acc + habit.StreakRecord.XPPoints, 0)
+              : 0;
+
+              res.json({totalStreaAndXP: { totalStreak, totalxPPoints }});
+          }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Failed to fetch habits" });
+    }
+});
+
 module.exports = router;

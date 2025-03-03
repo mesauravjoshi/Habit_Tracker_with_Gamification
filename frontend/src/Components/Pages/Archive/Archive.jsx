@@ -3,6 +3,7 @@ import HabitCard from '../HabitCard/HabitCard'
 import { url } from '../../../URL/Url';
 import { AuthContext } from '../../Context/AuthContext';
 import { ArchiveContext } from '../../Context/ArchiveContext';
+import TotalStreakAndXP from '../TotalStreak&XP/TotalStreak&XP';
 
 function Archive() {
   const { user, token } = useContext(AuthContext); // Access user from context
@@ -36,17 +37,23 @@ function Archive() {
   return (
     <>
       <div className='Badge'>
+        <div className='Habit-list'>
+          <h1> Archived Habits  </h1>
+          <div className="filter-habit">
+          </div>
+          <TotalStreakAndXP />
+        </div>
         {
           user ?
             <>  {
               archivedHabit.length > 0 ?
-              <HabitCard
-              habitData={archivedHabit}
-              setHabitData={setArchivedHabit}
-              insideArchive={true}
-              archivedHabit={archivedHabit}
-              setArchivedHabit={setArchivedHabit}
-              />  : <h2>no habit added yet ...</h2>
+                <HabitCard
+                  habitData={archivedHabit}
+                  setHabitData={setArchivedHabit}
+                  insideArchive={true}
+                  archivedHabit={archivedHabit}
+                  setArchivedHabit={setArchivedHabit}
+                /> : <h2>no habit added yet ...</h2>
             }</>
             :
             <p>Please login first </p>

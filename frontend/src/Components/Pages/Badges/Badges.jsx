@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { url } from '../../../URL/Url';
 import { AuthContext } from '../../Context/AuthContext';
-import Silver from '../../../assets/Icons/Silver'; // Adjust the path based on your folder structure
-import Gold from '../../../assets/Icons/gold.svg'; // Adjust the path based on your folder structure
+import Silver from '../../../assets/Icons/Silver';
+import Gold from '../../../assets/Icons/gold.svg';
 import './Badges.css'
+import TotalStreakAndXP from '../TotalStreak&XP/TotalStreak&XP';
 
 function Badge() {
   const { user, loading, token } = useContext(AuthContext); // Access user from context
@@ -66,9 +67,10 @@ function Badge() {
   return (
     <>
       <div className='Badge'>
-        <center>
-          <h2>Badge</h2>
-        </center>
+        <div className='Habit-list'>
+          <h1> Badges </h1>
+          <TotalStreakAndXP />
+        </div>
         {
           user ?
             <div className='Badge-container'>
@@ -106,6 +108,7 @@ function Badge() {
                 })
               }
             </div> :
+
             <p>Please login first </p>
         }
       </div>

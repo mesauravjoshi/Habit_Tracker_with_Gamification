@@ -31,7 +31,6 @@
   display: flex;
   column-gap: 14px;
   align-items: center;
-
 }
 
 .profile-logo {
@@ -95,6 +94,65 @@
     opacity: 0.7;
   }
 }
+
+/* .User-Profile-Dropdown{
+  right: 1em;
+  top: 3em;
+  z-index: 3;
+  position: absolute;
+} */
+
+.User-Profile-Dropdown {
+  position: absolute;
+  right: 1em;
+  top: 3em;
+  z-index: 10;
+  background: rgba(40, 40, 50, 0.9); /* Dark semi-transparent */
+  backdrop-filter: blur(10px); /* Glassmorphism effect */
+  padding: 10px;
+  border-radius: 10px;
+  width: 170px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  pointer-events: none; /* Prevent clicks when hidden */
+}
+
+/* Show Dropdown */
+.User-Profile-Dropdown.show {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+/* Dropdown Options */
+.User-Profile-Dropdown p {
+  margin: 0;
+  padding: 7px;
+  font-size: 15px;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background 0.2s ease-in-out;
+}
+
+.User-Profile-Dropdown p:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Arrow Indicator */
+.User-Profile-Dropdown::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  right: 12px;
+  width: 12px;
+  height: 12px;
+  background: rgba(40, 40, 50, 0.9);
+  transform: rotate(45deg);
+}
+
 
 
 .login-btn {
