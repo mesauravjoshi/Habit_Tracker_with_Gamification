@@ -17,7 +17,7 @@ export const StreaXPProvider = ({ children }) => {
         }
       });
       const data = await response.json();
-      console.log(data.totalStreaAndXP);
+      // console.log(data.totalStreaAndXP);
       setTotalStreaXP(data.totalStreaAndXP);
     } catch (error) {
       console.error('Error deleting habits:', error);

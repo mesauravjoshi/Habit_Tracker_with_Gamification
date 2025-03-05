@@ -9,6 +9,7 @@ function StreakUpdate({ setHabitData, LastUpdate, LastDayForWeek, TargetDuration
   const markAsDone = async (habit) => {
     // console.log('inside fetch function', habit);
     const updatedData = {
+      "CalendarData" : habit.CalendarData,
       "IsCompleted": habit.IsCompleted,
       "StreakRecord": {
         "LastUpdate": habit.StreakRecord.LastUpdate,
@@ -37,7 +38,8 @@ function StreakUpdate({ setHabitData, LastUpdate, LastDayForWeek, TargetDuration
         },
         body: JSON.stringify(updatedData),
       });
-
+      console.log(updatedData);
+      
       if (response.ok) {
         const result = await response.json();
         fetchStreaXPData();
@@ -98,7 +100,7 @@ function StreakUpdate({ setHabitData, LastUpdate, LastDayForWeek, TargetDuration
   }
 
   const handleMarkAsDone = (event, index) => {
-    event.stopPropagation(); // Prevents event from bubbling up
+    event.stopPropagation();
 
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -128,6 +130,8 @@ function StreakUpdate({ setHabitData, LastUpdate, LastDayForWeek, TargetDuration
         } else {
           // Increase the streak count and update the LastUpdate date
           habit.StreakRecord.TotalStreak += 1;
+          const prevData = habit.CalendarData
+          habit.CalendarData = {...prevData, [String(today)]: 'green' }
           if (habit.StreakRecord.TotalStreak === 7) {
             // console.log('🥈 Silver Badge');
             habit.StreakRecord.XPPoints += 40;

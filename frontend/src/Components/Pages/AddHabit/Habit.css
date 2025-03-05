@@ -1,3 +1,14 @@
+.call {
+    display: flex;
+    /* overflow-y: scroll; */
+    /* height: 6em; */
+    /* width: 49em; */
+    gap: 6em;
+    /* background: #000; */
+    flex-direction: row;
+    justify-content: center;
+}
+
 /* -------------------------------------- add habit  */
 .habbit {
     display: grid;
@@ -151,6 +162,7 @@ input[type="date"]:focus {
     grid-column: 1/ span 2;
     justify-content: center;
 }
+
 .Add-Habit-Button button {
     height: 2.9em;
     background: linear-gradient(135deg, #f1a234, #d98714);
@@ -182,7 +194,7 @@ input[type="date"]:focus {
 
 
 @media (max-width: 500px) {
-    .habbit{
+    .habbit {
         display: flex;
     }
 

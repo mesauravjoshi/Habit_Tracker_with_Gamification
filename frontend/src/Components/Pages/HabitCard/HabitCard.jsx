@@ -7,6 +7,7 @@ import DeleteConfirmUI from '../Streak/DeleteUI/DeleteConfirmUI';
 import ExpandCard from '../Streak/ExpandHabitCard/ExpandCard';
 import { AuthContext } from '../../Context/AuthContext';
 import { ArchiveContext } from '../../Context/ArchiveContext';
+import Calendar from '../AddHabit/Calendar';
 
 function Streak({ habitData, setHabitData, insideArchive, archivedHabit, setArchivedHabit }) {
   const authContext = useContext(AuthContext);
@@ -56,7 +57,7 @@ function Streak({ habitData, setHabitData, insideArchive, archivedHabit, setArch
 
     if (daysLeft > 0) return daysLeft;
     else if (daysLeft === 0) return 0;
-    else return "Completed";
+    else return "Sucess";
   }
 
   // ✅ Function to Calculate Total Days for Progress
@@ -294,11 +295,13 @@ function Streak({ habitData, setHabitData, insideArchive, archivedHabit, setArch
                   <div className="TotalDaysCompleted">
                     {DayWeeksCompeted}
                   </div>
+
                 </div>
               </div>
             );
           })
         }
+        <Calendar startDate={habitData[0].StartedDate} endDate={habitData[0].TargetDuration} />
       </div>
     </>
   )

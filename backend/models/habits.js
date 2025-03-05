@@ -1,3 +1,4 @@
+const { json } = require('express');
 const mongoose = require('mongoose');
 
 const habitSchema = new mongoose.Schema({
@@ -5,6 +6,9 @@ const habitSchema = new mongoose.Schema({
     // userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }, // ✅ Link to user
     HabitName: { type: String, required: true },
     Category: { type: String, required: true },
+    CalendarData: {  type: Map,
+        of: String,  // Each date key will map to a string value ('red', 'green', etc.)
+        default: {}},
     Frequency: { type: String, enum: ["Daily", "Weekly"], required: true },
     Priority: { type: String, required: true },
     TargetDuration: { type: String, required: true },

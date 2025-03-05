@@ -10,7 +10,7 @@ import TotalStreakAndXP from '../TotalStreak&XP/TotalStreak&XP';
 function Streak() {
   const authContext = useContext(AuthContext);
   const { totalStreaXP } = useContext(StreaXPContext);
-  const { user, setUser, token, setToken } = useContext(AuthContext); // Access user from context
+  const { user, setUser, token, setToken } = useContext(AuthContext);
   const { archiveHabits } = useContext(ArchiveContext);
   const [habitData, setHabitData] = useState([]);
   const [updatedStreakData, setUpdatedStreakData] = useState([]);
@@ -84,6 +84,37 @@ function Streak() {
     };
   }, [user, archiveHabits, totalStreaXP]);
 
+  // Function to generate calendar data
+  // const generateCalendarData = (habitData) => {
+  //   const startDate = new Date(habitData.StartedDate);
+  //   const endDate = new Date(habitData.StreakRecord.LastUpdate); // Or use new Date() for current date
+  //   const calendarData = {};
+
+  //   let currentDate = new Date(startDate);
+
+  //   while (currentDate <= endDate) {
+  //     const formattedDate = currentDate.toISOString().split("T")[0]; // "YYYY-MM-DD"
+
+  //     // Logic to check if this date is in the streak
+  //     if (habitData.TotalDaysCompleted > 0) {
+  //       calendarData[formattedDate] = "green"; // Completed
+  //     } else {
+  //       calendarData[formattedDate] = "red"; // Missed
+  //     }
+
+  //     // Move to the next day
+  //     currentDate.setDate(currentDate.getDate() + 1);
+  //   }
+
+  //   return calendarData;
+  // };
+
+  // // Adding generated data to the object
+  // if (habitData.length>0) {
+  //   habitData[0].calendarDate = generateCalendarData(habitData[0]);
+  //   // console.log(habitData[0]);
+  // } else {
+  // }
 
   const handleHabitListCategory = (val) => {
     setHabitListCategory(val);
@@ -122,7 +153,7 @@ function Streak() {
               <option value="Gold Badge">Gold Badge</option>
             </select>
           </div>
-          <TotalStreakAndXP/>
+          <TotalStreakAndXP />
         </div>
         {
           user ?

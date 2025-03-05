@@ -3,9 +3,10 @@ import './Habit.css';
 import { useEffect } from 'react';
 import { url } from '../../../URL/Url';
 import { AuthContext } from "../../Context/AuthContext";
+import Calendar from './Calendar';
 
 function Habit() {
-  const { user, loading, token } = useContext(AuthContext);
+  const { user, token } = useContext(AuthContext);
   const priorityLabels = ["Low", "Medium", "High", "Critical"];
   const [habits, setHabits] = useState([]);
   const [habit, setHabit] = useState('');
@@ -41,6 +42,7 @@ function Habit() {
         userId: user._id ,// ✅ Attach user ID
         HabitName: habit,
         Category: selectedCategory,
+        CalendarData: {},
         Frequency: selectedFrequency,
         Priority: priorityLabels[priority],
         TargetDuration: targetDuration,
@@ -57,7 +59,7 @@ function Habit() {
         },
         IsConmpleted: false,
       };
-      // console.log(newHabit);
+      console.log(newHabit);
 
       if (selectedFrequency === 'Daily') {
         newHabit.TotalDaysCompleted = 0;
@@ -84,7 +86,7 @@ function Habit() {
           // console.log(result);
         } else {
           const errorResponse = await response.json();
-          console.error('Error:', errorResponse.message);
+          console.error('Error:', errorResponse);
         }
       } catch (error) {
         console.error('Error:', error);
@@ -147,6 +149,9 @@ function Habit() {
             onChange={(e) => setTargetDuration(e.target.value)}
             min={getTodayDate()} // Restrict selection to dates after today
           />
+          <div className="call">
+          {/* <Calendar startDate="2025-01-31" endDate="2025-03-01" /> */}
+          </div>
         </div>
 
         {/* 4.  Frequency */}

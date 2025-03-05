@@ -7,8 +7,9 @@ const { jwtAuthMiddleware } = require('../jwt');
 
 router.post('/add_habit', jwtAuthMiddleware, async (req, res) => {
     try {
-        const { HabitName, Category, Frequency, Priority, TargetDuration, StartedDate, StreakRecord } = req.body;
+        const { HabitName, Category, CalendarData , Frequency, Priority, TargetDuration, StartedDate, StreakRecord } = req.body;
         const userId = req.user.id; // Get user ID from JWT middleware
+console.log(CalendarData);
 
         if (!userId) {
             return res.status(401).json({ error: "Unauthorized: User ID not found" });
@@ -17,6 +18,7 @@ router.post('/add_habit', jwtAuthMiddleware, async (req, res) => {
             userId,
             HabitName,
             Category,
+            CalendarData,
             Frequency,
             Priority,
             TargetDuration,
@@ -29,6 +31,8 @@ router.post('/add_habit', jwtAuthMiddleware, async (req, res) => {
             },
             IsCompleted: false,
         };
+        console.log('newHabit',newHabit);
+        
 
         // Add extra fields based on Frequency
         if (Frequency === 'Daily') {
@@ -39,14 +43,15 @@ router.post('/add_habit', jwtAuthMiddleware, async (req, res) => {
         } else {
             return res.status(400).json({ error: "Invalid Frequency" });
         }
+        console.log('newHabit line 46 ',newHabit);
 
         // const habit = new Habit(newHabit);
         const habit = new Habit(newHabit);
+        console.log('newHabit line 50: ',habit);
         await habit.save();
 
         res.json({ message: "Habit saved successfully", data: habit });
     } catch (error) {
-        console.error(error);
         res.status(500).send({ error: 'Failed to save habit' });
     }
 });
@@ -128,10 +133,11 @@ router.get('/totalStreaXP', jwtAuthMiddleware, async (req, res) => {
                 : 0;
 
             res.json({ totalStreaAndXP: { totalStreak, totalxPPoints } });
+        }else {
+            const totalStreak = 0;
+            const totalxPPoints = 0;
+            res.json({ totalStreaAndXP: { totalStreak, totalxPPoints } });
         }
-        const totalStreak = 0;
-        const totalxPPoints = 0;
-        res.json({ totalStreaAndXP: { totalStreak, totalxPPoints } });
 
     } catch (error) {
         console.error(error);
