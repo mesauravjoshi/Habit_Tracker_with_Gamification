@@ -1,0 +1,70 @@
+.calendar-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.month {
+    border-radius: 10px;
+    width: 220px;
+    text-align: center;
+}
+
+.month-title {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    font-weight: bold;
+}
+
+.weekday {
+    padding: 0 5px;
+}
+
+.days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.day {
+    border-radius: 5px;
+    text-align: center;
+    padding: 5px;
+    min-width: 30px;
+    min-height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+/* Default background color for all days in range */
+.day {
+    /* background-color: #5c2d3d; */
+    color: white;
+}
+
+/* Override colors using CalendarData */
+.day[style*="background-color: green"] {
+    background-color: green !important;
+    color: white !important;
+}
+
+.day[style*="background-color: red"] {
+    background-color: red !important;
+    color: white !important;
+}
+
+/* Transparent for out-of-range dates */
+/* .day[style*="background-color: transparent"] {
+    background-color: transparent !important;
+    color: #5c2d3d !important;
+} */
+
+.empty-day {
+    visibility: hidden;
+}

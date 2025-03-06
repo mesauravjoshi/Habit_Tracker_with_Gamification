@@ -1,11 +1,19 @@
 import React from "react";
-import "./Calendar.css";
-import { format, startOfMonth, endOfMonth, eachDayOfInterval, addMonths, getDay, parseISO, isWithinInterval } from "date-fns";
+import "./CalendarWeek.css";
+import {
+  format,
+  startOfMonth,
+  endOfMonth,
+  eachDayOfInterval,
+  addMonths,
+  getDay,
+  isWithinInterval,
+} from "date-fns";
 
-const CalendarWeek  = ({ startDate, endDate, CalendarData }) => {
+const Calendar = ({ startDate, endDate, CalendarData }) => {
   const start = new Date(startDate);
-  const end = parseISO(endDate);
-  
+  const end = new Date(endDate);
+
   const months = [];
   let currentMonth = startOfMonth(start);
   while (currentMonth <= endOfMonth(end)) {
@@ -15,15 +23,25 @@ const CalendarWeek  = ({ startDate, endDate, CalendarData }) => {
 
   // Function to get color for a specific day
   const getColorForDate = (day) => {
-    for (let week of CalendarData) {
-      const start = new Date(week.start);
-      const end = new Date(week.end);
-      
-      if (isWithinInterval(day, { start, end })) {
-        return week.status; // "green" or "red"
+    const formattedDate = format(day, "EEE MMM dd yyyy 00:00:00 'GMT+0530 (India Standard Time)'"); 
+
+    if (!isWithinInterval(day, { start, end })) {
+      return { backgroundColor: "transparent", color: "#5c2d3d" }; // Hide out-of-range days
+    }
+
+    let dayStyle = { backgroundColor: "#86612b7d", color: "white" }; // Default color
+
+    if (CalendarData) {
+      const entry = CalendarData.find(
+        (entry) => isWithinInterval(day, { start: new Date(entry.start), end: new Date(entry.end) })
+      );
+
+      if (entry) {
+        dayStyle.backgroundColor = entry.status; // Override with CalendarData color
       }
     }
-    return "transparent"; // Default color for other dates
+
+    return dayStyle;
   };
 
   return (
@@ -46,11 +64,16 @@ const CalendarWeek  = ({ startDate, endDate, CalendarData }) => {
               {Array(getDay(daysInMonth[0])).fill(null).map((_, i) => (
                 <div key={`empty-${i}`} className="empty-day"></div>
               ))}
-              {daysInMonth.map((day) => (
-                <div key={day} className="day" style={{ backgroundColor: getColorForDate(day) }}>
-                  {format(day, "d")}
-                </div>
-              ))}
+
+              {daysInMonth.map((day) => {
+                const dayStyle = getColorForDate(day);
+
+                return (
+                  <div key={day} className="day" style={dayStyle}>
+                    {format(day, "d")}
+                  </div>
+                );
+              })}
             </div>
           </div>
         );
@@ -59,4 +82,4 @@ const CalendarWeek  = ({ startDate, endDate, CalendarData }) => {
   );
 };
 
-export default CalendarWeek ;
+export default Calendar;

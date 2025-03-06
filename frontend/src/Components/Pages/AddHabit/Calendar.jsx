@@ -56,7 +56,7 @@ const Calendar = ({ startDate, endDate, CalendarData }) => {
 
                 // Only apply default color if within startDate and endDate
                 if (!isWithinInterval(day, { start, end })) {
-                  dayStyle = {}; // No special color for out-of-range dates
+                  dayStyle = {backgroundColor: "transparent", color: "#5c2d3d"}; // No special color for out-of-range dates
                 }
 
                 return (
