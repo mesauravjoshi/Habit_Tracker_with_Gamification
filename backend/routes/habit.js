@@ -9,7 +9,6 @@ router.post('/add_habit', jwtAuthMiddleware, async (req, res) => {
     try {
         const { HabitName, Category, CalendarData , Frequency, Priority, TargetDuration, StartedDate, StreakRecord } = req.body;
         const userId = req.user.id; // Get user ID from JWT middleware
-console.log(CalendarData);
 
         if (!userId) {
             return res.status(401).json({ error: "Unauthorized: User ID not found" });
@@ -31,9 +30,8 @@ console.log(CalendarData);
             },
             IsCompleted: false,
         };
-        console.log('newHabit',newHabit);
+        // console.log('newHabit',newHabit);
         
-
         // Add extra fields based on Frequency
         if (Frequency === 'Daily') {
             newHabit.TotalDaysCompleted = 0;
@@ -43,11 +41,11 @@ console.log(CalendarData);
         } else {
             return res.status(400).json({ error: "Invalid Frequency" });
         }
-        console.log('newHabit line 46 ',newHabit);
+        // console.log('newHabit line 46 ',newHabit);
 
         // const habit = new Habit(newHabit);
         const habit = new Habit(newHabit);
-        console.log('newHabit line 50: ',habit);
+        // console.log('newHabit line 50: ',habit);
         await habit.save();
 
         res.json({ message: "Habit saved successfully", data: habit });
@@ -88,7 +86,7 @@ router.put('/markAsDone/:id', jwtAuthMiddleware, async (req, res) => {
         res.json({ message: 'Habit updated successfully', data: updatedHabit });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'Failed to update habit' });
+        res.status(500).json({ error: error });
     }
 });
 
