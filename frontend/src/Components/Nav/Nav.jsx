@@ -1,4 +1,5 @@
 import { useState, useContext, useEffect, useRef } from "react";
+import { ProfileIcon, SettingIcon, SignoutIcon, SigninIcon } from "../../assets/Icons/Icons";
 import LoginModal from "./LoginModal";
 import LogOutPopUp from "./LogOutPopUp";
 import "./Nav.css";
@@ -34,7 +35,7 @@ function Nav({ toggleSlider }) {
         ☰
       </div>
       <div className="nav-search">
-        <input type="text" placeholder="Search......." />
+        {/* <input type="text" placeholder="Search......." /> */}
       </div>
       <div className="profile-popup">
         {
@@ -49,8 +50,8 @@ function Nav({ toggleSlider }) {
 
         {profileDropDown && (
           <div ref={dropdownRef} className="User-Profile-Dropdown show">
-            <p>View Profile</p>
-            <p>Settings</p>
+            <p> <ProfileIcon /> &nbsp; &nbsp; View Profile</p>
+            <p> <SettingIcon />  &nbsp; &nbsp; Settings</p>
             <p onClick={(e) => {
               // console.log('removed');
               // localStorage.removeItem('habit token');
@@ -58,34 +59,13 @@ function Nav({ toggleSlider }) {
               // fetchUserData();
               setProfileDropDown(prev => !prev)
               setIsLogOutPopUpOpen(true);
-            }}  >Log out</p>
+            }}  ><SignoutIcon /> &nbsp; &nbsp; Log out</p>
+            <p onClick={() => setLoginOpen(true)} > <SigninIcon /> &nbsp; &nbsp; Sign In</p>
           </div>
         )}
         {
           isLogOutPopUpOpen &&
           <LogOutPopUp setIsLogOutPopUpOpen={setIsLogOutPopUpOpen} />
-        }
-
-
-        {/* {
-          user &&
-          <div className="profile-logo">
-            <p>{user.username.toUpperCase().slice(0, 1)}</p>
-          </div>
-        } */}
-        {
-          // !user ?
-          //   <button onClick={() => setLoginOpen(true)} className="login-btn">
-          //     Login
-          //   </button> :
-          //   <button onClick={(e) => {
-          //     localStorage.removeItem('habit token');
-          //     // console.log('removed');
-          //     setUser(null);
-          //     fetchUserData();
-          //   }} className="login-btn">
-          //     Log out
-          //   </button>
         }
       </div>
 

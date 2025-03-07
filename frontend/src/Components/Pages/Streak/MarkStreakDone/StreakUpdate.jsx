@@ -364,7 +364,7 @@ function StreakUpdate({ setHabitData, LastUpdate, LastDayForWeek, TargetDuration
   };
 
   return (
-    <div style={{ display: 'flex', gap: '13px' }}>
+    <div style={{ display: 'flex', gap: '13px', justifyContent: 'center' }}>
       <button
         className="StreakUpdate-button"
         onClick={(event) => handleMarkAsDone(event, index)}

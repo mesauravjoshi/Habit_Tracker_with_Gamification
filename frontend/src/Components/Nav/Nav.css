@@ -131,7 +131,7 @@
   margin: 0;
   padding: 7px;
   font-size: 15px;
-  color: #fff;
+  /* color: #fff; */
   cursor: pointer;
   border-radius: 6px;
   transition: background 0.2s ease-in-out;

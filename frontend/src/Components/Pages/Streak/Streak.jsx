@@ -84,38 +84,6 @@ function Streak() {
     };
   }, [user, archiveHabits, totalStreaXP]);
 
-  // Function to generate calendar data
-  // const generateCalendarData = (habitData) => {
-  //   const startDate = new Date(habitData.StartedDate);
-  //   const endDate = new Date(habitData.StreakRecord.LastUpdate); // Or use new Date() for current date
-  //   const calendarData = {};
-
-  //   let currentDate = new Date(startDate);
-
-  //   while (currentDate <= endDate) {
-  //     const formattedDate = currentDate.toISOString().split("T")[0]; // "YYYY-MM-DD"
-
-  //     // Logic to check if this date is in the streak
-  //     if (habitData.TotalDaysCompleted > 0) {
-  //       calendarData[formattedDate] = "green"; // Completed
-  //     } else {
-  //       calendarData[formattedDate] = "red"; // Missed
-  //     }
-
-  //     // Move to the next day
-  //     currentDate.setDate(currentDate.getDate() + 1);
-  //   }
-
-  //   return calendarData;
-  // };
-
-  // // Adding generated data to the object
-  // if (habitData.length>0) {
-  //   habitData[0].calendarDate = generateCalendarData(habitData[0]);
-  //   // console.log(habitData[0]);
-  // } else {
-  // }
-
   const handleHabitListCategory = (val) => {
     setHabitListCategory(val);
     const copy_inside = [...updatedStreakData];
@@ -128,8 +96,8 @@ function Streak() {
       setHabitData(copy_inside.filter(habit => (habit.Frequency == "Weekly")));
     } else if (val === "Silver Badge") {
       setHabitData(copy_inside.filter(habit => (habit.BadgeRecord.Badge == "🥈 Silver Badge")));
-    } else if (val === "Gold Badge") {
-      setHabitData(copy_inside.filter(habit => (habit.BadgeRecord.Badge == "🏆 Gold Badge")));
+    } else if (val === "Elite Badge") {
+      setHabitData(copy_inside.filter(habit => (habit.BadgeRecord.Badge == "⚜️ Elite Badge")));
     } else {
       setHabitData(copy_inside);
     }
@@ -151,6 +119,7 @@ function Streak() {
               <option value="Weekly">Weekly</option>
               <option value="Silver Badge">Silver Badge</option>
               <option value="Gold Badge">Gold Badge</option>
+              <option value="Elite Badge">Elite Badge</option>
             </select>
           </div>
           <TotalStreakAndXP />

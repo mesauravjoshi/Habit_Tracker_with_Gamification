@@ -101,11 +101,11 @@ function Habit() {
       }
 
       // Reset input fields
-      // setHabit('');
-      // setSelectedCategory('');
-      // setSelectedFrequency('');
-      // setTargetDuration('');
-      // setPriority(0);
+      setHabit('');
+      setSelectedCategory('');
+      setSelectedFrequency('');
+      setTargetDuration('');
+      setPriority(0);
     }
   };
 

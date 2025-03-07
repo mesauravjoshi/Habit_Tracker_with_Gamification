@@ -17,12 +17,13 @@
 }
 
 .month-title {
-    font-size: 1.5em;
+    font-size: 1.1em;
     font-weight: bold;
     /* margin-bottom: 10px; */
 }
 
 .weekdays {
+    font-size: 0.8em;
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     font-weight: bold;
@@ -59,13 +60,14 @@
 
 /* Green & Red based on CalendarData */
 .day[style*="background-color: green"] {
-    background-color: green !important;
-    color: white !important;
+    background-color: transparent !important;
+    font-weight: 700;
+    color: #2b86387d !important;
 }
 
 .day[style*="background-color: red"] {
-    background-color: red !important;
-    color: white !important;
+    background-color: transparent !important;
+    color: rgb(197, 47, 47) !important;
 }
 
 

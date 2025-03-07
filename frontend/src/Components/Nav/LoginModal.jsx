@@ -1,14 +1,15 @@
-import { useEffect, useState,useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { ShowPassword, HidePassword } from "../../assets/Icons/Icons";
 import { url } from '../../URL/Url';
 import SignUp from './SignUp'
 import "./LoginModal.css";
 import { AuthContext } from '../Context/AuthContext';
 import { StreaXPContext } from "../Context/Strea&XPContext";
 
-const LoginModal = ({ setLoginOpen,onClose }) => {
-  const {fetchUserData} = useContext(AuthContext); // Access user from context
+const LoginModal = ({ setLoginOpen, onClose }) => {
+  const { fetchUserData } = useContext(AuthContext); // Access user from context
   const { fetchStreaXPData } = useContext(StreaXPContext);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -79,7 +80,7 @@ const LoginModal = ({ setLoginOpen,onClose }) => {
       try {
         const response = await axios.post(`${url}/auth/login`, formData);
         // console.log('Success:', response.data.token);
-        localStorage.setItem('habit token',response.data.token);
+        localStorage.setItem('habit token', response.data.token);
         fetchUserData();
         fetchStreaXPData();
         setLoginOpen(false);
@@ -128,10 +129,8 @@ const LoginModal = ({ setLoginOpen,onClose }) => {
               />
               <div className="eye-open" onClick={() => setShowPassword(prev => !prev)}>
                 {showPassword ? (
-                  <span className="material-symbols-outlined">visibility_off</span>
-                ) : (
-                  <span className="material-symbols-outlined">visibility</span>
-                )}
+                 <HidePassword/>) : (
+                  <ShowPassword/> )}
               </div>
             </div>
             {passwordError && <p className={`error-message ${shakePassword ? "shake" : ""}`}>{passwordError}</p>}

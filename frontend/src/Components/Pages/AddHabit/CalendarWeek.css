@@ -50,13 +50,13 @@
 
 /* Override colors using CalendarData */
 .day[style*="background-color: green"] {
-    background-color: green !important;
-    color: white !important;
+    /* background-color: green !important; */
+    /* color: white !important; */
 }
 
 .day[style*="background-color: red"] {
-    background-color: red !important;
-    color: white !important;
+    /* background-color: red !important; */
+    /* color: white !important; */
 }
 
 /* Transparent for out-of-range dates */

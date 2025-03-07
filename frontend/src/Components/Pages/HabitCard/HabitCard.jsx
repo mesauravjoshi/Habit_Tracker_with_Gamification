@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef, useContext } from 'react';
 import './HabitCard.css'
-import { DotsIcon, ShareIcon, Archive, Unarchive, Delete, Visibility } from "./Icons";
+import { DotsIcon, ShareIcon, Archive, Unarchive, Delete, ViewCard } from "../../../assets/Icons/Icons";
 import { url } from '../../../URL/Url';
 import StreakUpdate from '../Streak/MarkStreakDone/StreakUpdate';
 import DeleteConfirmUI from '../Streak/DeleteUI/DeleteConfirmUI';
@@ -246,7 +246,7 @@ function Streak({ habitData, setHabitData, insideArchive, archivedHabit, setArch
                           }
                         </div>
                         <div onClick={() => setIsExpandVisible(true)} className='delete-icon'>
-                          <Visibility />
+                          <ViewCard />
                           <p>View</p>
                         </div>
                       </div>

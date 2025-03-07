@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { ShowPassword, HidePassword } from "../../assets/Icons/Icons";
 import axios from 'axios';
 import { url } from '../../URL/Url';
 import "./LoginModal.css";
@@ -7,7 +8,7 @@ const LoginModal = ({ setIsFlipBox }) => {
   const [name, setName] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  
+
   const [showPassword, setShowPassword] = useState(false);
 
   const [usernameError, setUsernameError] = useState('');
@@ -56,23 +57,23 @@ const LoginModal = ({ setIsFlipBox }) => {
     if (!isValid) return;
 
     const formData = {
-        name: name,
-        username: username,
-        password: password
+      name: name,
+      username: username,
+      password: password
     }
     const handleLogin = async () => {
       try {
         const response = await axios.post(`${url}/auth/signup`, formData);
         console.log('Success:', response.data);
       } catch (error) {
-          console.error('Error:', error.response ? error.response.data : error.message);
+        console.error('Error:', error.response ? error.response.data : error.message);
       }
-    };  
+    };
     handleLogin();
     setName('');
     setUsername('');
     setPassword('');
-};
+  };
 
   return (
     <>
@@ -81,7 +82,7 @@ const LoginModal = ({ setIsFlipBox }) => {
 
         {/* Name Input */}
         <input
-        //   style={{ border: usernameError ? '1px solid #ff4538' : '' }}
+          //   style={{ border: usernameError ? '1px solid #ff4538' : '' }}
           type="text"
           placeholder="Name"
           value={name}
@@ -118,10 +119,8 @@ const LoginModal = ({ setIsFlipBox }) => {
           />
           <div className="eye-open" onClick={() => setShowPassword(prev => !prev)}>
             {showPassword ? (
-              <span className="material-symbols-outlined">visibility_off</span>
-            ) : (
-              <span className="material-symbols-outlined">visibility</span>
-            )}
+              <HidePassword />) : (
+              <ShowPassword />)}
           </div>
         </div>
         {passwordError && <p className={`error-message ${shakePassword ? "shake" : ""}`}>{passwordError}</p>}
@@ -133,7 +132,7 @@ const LoginModal = ({ setIsFlipBox }) => {
         <p onClick={(e) => {
           e.stopPropagation()
           setIsFlipBox(false)
-          }} >LOGIN</p>
+        }} >LOGIN</p>
       </div>
     </>
 

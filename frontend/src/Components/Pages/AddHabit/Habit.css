@@ -83,6 +83,10 @@ input[type="date"]:focus {
     }
 }
 
+.Add-Habit ::placeholder {
+    color: #f19d2093;
+}
+
 .Category {
     select {
         border: 1px solid #f19c20;
