@@ -1,0 +1,83 @@
+.loading-Badge {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.loading-Badge-card {
+    width: 250px;
+    height: 199px;
+    border-radius: 10px;
+    padding: 10px;
+    background: transparent;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: relative;
+}
+
+/* Shimmer effect for loading elements */
+.loading-badge-header,
+.loading-badge-Frequency,
+.loading-badge-line,
+.loading-plus-text,
+.loading-XP-text {
+    background: linear-gradient(90deg, #5c5c6c, #51515f, #25252f);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite linear;
+    border-radius: 5px;
+}
+
+/* Header loading effect */
+.loading-badge-header {
+    width: 60%;
+    height: 14px;
+}
+
+/* Frequency label loading */
+.loading-badge-Frequency {
+    width: 40%;
+    height: 10px;
+    background: transparent;
+    border: 1px solid #51515f;
+}
+
+/* Badge details */
+.loading-badge-details {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.loading-badge-line {
+    width: 80%;
+    height: 12px;
+}
+
+/* Footer */
+.loading-badge-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: auto;
+}
+
+.loading-plus-text {
+    width: 40px;
+    height: 14px;
+}
+
+.loading-XP-text {
+    width: 30px;
+    height: 12px;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}

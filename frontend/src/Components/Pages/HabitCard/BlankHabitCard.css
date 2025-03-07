@@ -1,0 +1,74 @@
+.BlankHabitCard-Container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.Habit-Card-loading {
+    width: 100%;
+    display: grid;
+    grid-row-gap: 14px;
+    grid-template-columns: 6fr 3fr 0.6fr;
+    padding: 10px 8px 10px 17px;
+    margin: 0px 17px 14px 30px;
+    border-radius: 8px;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s;
+    border: 0.5px solid #5252605e;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.loading div {
+    border-radius: 10px;
+    height: 1.5em;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(90deg, #454553, #525260, #25252f);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite linear;
+    border-radius: 5px;
+}
+
+.loading-title {
+    width: 60%;
+    height: 14px;
+}
+
+.loading-streak {
+    width: 40%;
+    height: 10px;
+}
+
+.loading-options {
+    width: 80%;
+    height: 12px;
+}
+
+.loading-button {
+    width: 30%;
+    height: 14px;
+}
+
+.loading-days {
+    width: 100%;
+    height: 10px;
+}
+
+.loading-progress {
+    width: 90%;
+    height: 12px;
+}
+
+.loading-total-days {
+    width: 50%;
+    height: 10px;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+
+    100% {
+        background-position: 200% 0;
+    }
+}

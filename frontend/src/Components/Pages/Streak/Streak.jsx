@@ -1,7 +1,8 @@
 import { useEffect, useState, useRef, useContext } from 'react';
-import HabitCard from '../HabitCard/HabitCard'
+import HabitCard from '../HabitCard/HabitCard';
+import BlankHabitCard from '../HabitCard/BlankHabitCard';
 import { url } from '../../../URL/Url';
-import './Streak.css'
+import './Streak.css';
 import { AuthContext } from '../../Context/AuthContext';
 import { ArchiveContext } from '../../Context/ArchiveContext';
 import { StreaXPContext } from '../../Context/Strea&XPContext';
@@ -15,20 +16,22 @@ function Streak() {
   const [habitData, setHabitData] = useState([]);
   const [updatedStreakData, setUpdatedStreakData] = useState([]);
   const [habitListCategory, setHabitListCategory] = useState('');
+  const [loading, setLoading] = useState(true);
 
   const [handleViewOption, setHandleViewOption] = useState(false);
   const [selectedMenuCard, setSelectedMenuCard] = useState(null);
 
-  const menuRef = useRef(null); // Reference for the menu
+  const menuRef = useRef(null);
   if (!authContext) {
     console.log("AuthContext is not yet available.");
-    return null; // or return a loading indicator
+    return null; 
   }
 
   useEffect(() => {
     const fetchHabits = async () => {
       if (!token || user === null) {
         console.log("No token found, user is not logged in");
+        setLoading(false);
         return;
       }
       try {
@@ -48,14 +51,17 @@ function Streak() {
             localStorage.removeItem("habit token");
             setUser(null);
             setToken("");
+            setLoading(false);
             return;
           }
           console.log("Error from API:", data.error.message);
+          setLoading(false);
           return;
         }
 
         if (!Array.isArray(data)) {
           console.log("Unexpected response format", data);
+          setLoading(false);
           return;
         }
 
@@ -63,8 +69,10 @@ function Streak() {
 
         setHabitData(edit.reverse());
         setUpdatedStreakData(edit);
+        setLoading(false);
       } catch (error) {
         console.error('Error fetching habits:', error);
+        setLoading(false);
       }
     };
 
@@ -101,7 +109,7 @@ function Streak() {
     } else {
       setHabitData(copy_inside);
     }
-  }
+  };
 
   return (
     <>
@@ -113,7 +121,7 @@ function Streak() {
               onChange={(e) => handleHabitListCategory(e.target.value)}
               value={habitListCategory}
             >
-              <option >All</option>
+              <option>All</option>
               <option value="Not Completed">Not Completed</option>
               <option value="Daily">Daily</option>
               <option value="Weekly">Weekly</option>
@@ -125,21 +133,23 @@ function Streak() {
           <TotalStreakAndXP />
         </div>
         {
-          user ?
-            <div>
-              {
-                habitData.length > 0 ?
-                  < HabitCard
-                    habitData={habitData}
-                    setHabitData={setHabitData}
-                  /> : <h2>no habit added yet ...</h2>
-              }
-            </div>
-            : <p> Please login .........</p>
+          loading ?
+          <BlankHabitCard/>
+            : user ?
+              <div>
+                {
+                  habitData.length > 0 ?
+                    < HabitCard
+                      habitData={habitData}
+                      setHabitData={setHabitData}
+                    /> : <h2>No habit added yet ...</h2>
+                }
+              </div>
+              : <p> Please login .........</p>
         }
       </div>
     </>
-  )
+  );
 }
 
 export default Streak;

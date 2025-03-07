@@ -1,10 +1,32 @@
+import { useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import './Slider.css'
 import { Home, AddHabit, TrackHabit, Archive, Completed, Badges } from "./SliderIcon";
 function Slider({ isOpen, closeSlider }) {
 
+  const sliderRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (sliderRef.current && !sliderRef.current.contains(event.target)) {
+        closeSlider();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen, closeSlider]);
+
+
   return (
-    <div className={`Slider show-slider ${isOpen ? "show" : ""}`}>
+    <div ref={sliderRef} className={`Slider show-slider ${isOpen ? "show" : ""}`}>
 
       <div className="slider-header">
         <h3>TRACKER</h3>
