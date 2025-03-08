@@ -1,0 +1,102 @@
+.custom-select-container {
+    position: relative;
+    width: 250px;
+}
+
+.custom-select {    
+    width: 18em;
+    padding: 12px 15px;
+    /* background: #292931; */
+    border: 1px solid #f19c2042;
+    color: #f19c20;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    position: relative;
+}
+
+.custom-select:hover {
+    color: #292931c9;
+    background: linear-gradient(135deg, #f1a234, #d98714);
+
+    .arrow {
+        border-left: 2px solid #292931c9;
+        border-bottom: 2px solid #292931c9;
+    }
+}
+
+.arrow {
+    width: 10px;
+    height: 10px;
+    border-left: 2px solid #f19c20;
+    border-bottom: 2px solid #f19c20;
+    transform: rotate(-45deg);
+    transition: transform 0.3s;
+}
+
+/* .arrow :hover{
+    border-left: 2px solid #1d1a15;
+    border-bottom: 2px solid #13110e;
+} */
+
+.custom-select.open .arrow {
+    transform: rotate(135deg);
+}
+
+.dropdown {
+    height: 11em;
+    position: absolute;
+    top: 75px;
+    width: 18em;
+    background: #292931;
+    border: 1px solid #f19c2042;
+    border-radius: 8px;
+    overflow-x: auto;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+    z-index: 100;
+    scrollbar-width: thin; /* For Firefox */
+    scrollbar-color: rgba(241, 156, 32, 0.5) transparent; /* Subtle golden scrollbar */
+}
+
+/* Webkit-based browsers (Chrome, Edge, Safari) */
+.dropdown::-webkit-scrollbar {
+    width: 5px; /* Thin scrollbar */
+    height: 5px; /* Thin scrollbar for horizontal scrolling */
+}
+
+.dropdown::-webkit-scrollbar-track {
+    background: transparent; /* Fully transparent track */
+}
+
+.dropdown::-webkit-scrollbar-thumb {
+    background: rgba(241, 156, 32, 0.5); /* Soft golden scrollbar */
+    border-radius: 10px;
+}
+
+.dropdown::-webkit-scrollbar-thumb:hover {
+    background: rgba(241, 156, 32, 0.7); /* More visible on hover */
+}
+
+
+.dropdown-item {
+    border-bottom: 1px solid #d9871452;
+    padding: 10px 15px;
+    color: #ffebce;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.dropdown-item:hover {
+    color: #ffebce;
+    background: #c67c14;
+}
+
+.dropdown-item.selected {
+    color: #ffebce;
+    background: #d98714;
+}

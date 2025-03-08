@@ -87,31 +87,6 @@ input[type="date"]:focus {
     color: #f19d2093;
 }
 
-.Category {
-    select {
-        border: 1px solid #f19c20;
-        color: #f19c20;
-        background: transparent;
-        padding: 0 9px;
-        border-radius: 5px;
-        font-size: 17px;
-        width: 100%;
-        height: 1.6em;
-        text-align: left;
-    }
-
-    option {
-        border: 1px solid #f19c20;
-        color: #f19c20;
-        background: transparent;
-    }
-}
-
-.Frequency {
-    text-align: center;
-    font-size: 1.1rem;
-}
-
 /* priority ---------------------------- */
 
 .Priority-Level {
@@ -125,7 +100,7 @@ input[type="date"]:focus {
     -webkit-appearance: none;
     appearance: none;
     height: 8px;
-    background: linear-gradient(to right, #292931, #847d3a, #f44336, #cd1717);
+    background: linear-gradient(to right, #efcb98ba, #ec9c2d70, #b37c32, #f19c20);
     border-radius: 5px;
     outline: none;
     transition: 0.3s;

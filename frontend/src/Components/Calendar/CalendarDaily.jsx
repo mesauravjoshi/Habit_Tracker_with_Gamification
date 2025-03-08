@@ -1,5 +1,5 @@
 import React from "react";
-import "./Calendar.css";
+import "./CalendarDaily.css";
 import {
   format,
   startOfMonth,
@@ -11,7 +11,7 @@ import {
   isWithinInterval,
 } from "date-fns";
 
-const Calendar = ({ startDate, endDate, CalendarData }) => {
+const CalendarDaily = ({ startDate, endDate, CalendarData }) => {
   const start = new Date(startDate);
   const end = new Date(endDate);
 
@@ -73,4 +73,4 @@ const Calendar = ({ startDate, endDate, CalendarData }) => {
   );
 };
 
-export default Calendar;
+export default CalendarDaily;

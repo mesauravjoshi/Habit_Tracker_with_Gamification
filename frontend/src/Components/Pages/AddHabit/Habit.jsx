@@ -3,8 +3,8 @@ import './Habit.css';
 import { useEffect } from 'react';
 import { url } from '../../../URL/Url';
 import { AuthContext } from "../../Context/AuthContext";
-import Calendar from './Calendar';
-import CalendarWeek from './CalendarWeek';
+import Category from './Category';
+import Frequency from './Frequency';
 
 function Habit() {
   const { user, token } = useContext(AuthContext);
@@ -14,18 +14,15 @@ function Habit() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedFrequency, setSelectedFrequency] = useState("");
   const [targetDuration, setTargetDuration] = useState("");
+  const [minDate, setMinDate] = useState("");
   const [priority, setPriority] = useState(0);
 
   // Get today's date in YYYY-MM-DD format
   const getTodayDate = () => {
     const today = new Date();
-    return today.toISOString().split("T")[0]; // Extract YYYY-MM-DD
-  };
-
-  const handleFrequencyChange = (event) => {
-    if (event.target.name === "Frequency") {
-      setSelectedFrequency(event.target.value);
-    }
+    setMinDate(today.toISOString().split("T")[0]);
+    console.log( typeof today.toISOString().split("T")[0]);
+    // return today.toISOString().split("T")[0]; // Extract YYYY-MM-DD
   };
 
   const handleAddHabit = async () => {
@@ -63,9 +60,9 @@ function Habit() {
 
       if (selectedFrequency === 'Daily') {
         newHabit.TotalDaysCompleted = 0;
-        newHabit.CalendarData= {}
+        newHabit.CalendarData = {}
       } else if (selectedFrequency === 'Weekly') {
-        newHabit.CalendarData= [
+        newHabit.CalendarData = [
           {
             start: "",
             end: "",
@@ -116,6 +113,8 @@ function Habit() {
   }, [habits]);
 
   useEffect(() => {
+    const today = new Date();
+    setMinDate(today.toISOString().split("T")[0]);
     const savedHabitData = localStorage.getItem('Habit Track');
     if (savedHabitData) {
       setHabits(JSON.parse(savedHabitData)); // Parse the data and set it as initial state
@@ -134,46 +133,25 @@ function Habit() {
           />
         </div>
 
-        {/* 2. Category */}
-        <div id="borderr" className="Category">
-          <h2>Category</h2>
-          <select
-            onChange={(e) => setSelectedCategory(e.target.value)}
-            value={selectedCategory}>
-            <option > e.g.,Exercise, Coding, Meditation</option>
-            <option value="Coding"> Coding</option>
-            <option value="Reading"> Reading</option>
-            <option value="Workout"> Workout</option>
-          </select>
-        </div>
+        {/* 2.  Frequency */}
+        <Frequency selectedFrequency={selectedFrequency} setSelectedFrequency={setSelectedFrequency}  setMinDate={setMinDate}
+         />
 
         {/* 3. Target Duration */}
         <div id="borderr" className="Target-Duration">
           <h2>Target Duration</h2>
-          {/* <UseCalander/> */}
           <input
             type="date"
             value={targetDuration}
             onChange={(e) => setTargetDuration(e.target.value)}
-            min={getTodayDate()} // Restrict selection to dates after today
+            min={minDate} // Restrict selection to dates after today
           />
           <div className="call">
-            {/* <Calendar startDate="2025-01-31" endDate="2025-03-01" /> */}
           </div>
         </div>
 
-        {/* 4.  Frequency */}
-        <div id="borderr" className="Frequency" onChange={handleFrequencyChange}>
-          <h2>Frequency</h2>
-          <input type="radio" id="Daily" name="Frequency" value="Daily" checked={selectedFrequency === "Daily"} onChange={handleFrequencyChange} />
-          <label htmlFor="Daily">Daily</label>
-          <br />
-
-          <input type="radio" id="Weekly" name="Frequency" value="Weekly" checked={selectedFrequency === "Weekly"} onChange={handleFrequencyChange} />
-          <label htmlFor="Weekly">Weekly</label>
-          <br />
-
-        </div>
+        {/* 4. Category */}
+        <Category selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
 
         {/* 6.  Priority Level */}
         <div id="borderr" className="Priority-Level">

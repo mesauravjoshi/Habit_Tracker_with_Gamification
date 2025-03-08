@@ -9,7 +9,6 @@ import Nav from "./Components/Nav/Nav";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Completed from "./Components/Pages/Completed/Completed";
 import Badges from "./Components/Pages/Badges/Badges";
-import Calendar from "./Components/Pages/AddHabit/Calendar";
 
 function App() {
   const [isSliderOpen, setIsSliderOpen] = useState(false);
@@ -31,7 +30,6 @@ function App() {
               <Route path="/archive" element={<Archive />} />
               <Route path="/completed" element={<Completed />} />
               <Route path="/badges" element={<Badges />} />
-              <Route path="/Calendar" element={<Calendar    />} />
             </Routes>
         </Router>
 
