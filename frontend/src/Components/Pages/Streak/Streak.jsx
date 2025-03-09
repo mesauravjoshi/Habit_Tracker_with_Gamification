@@ -7,6 +7,7 @@ import { AuthContext } from '../../Context/AuthContext';
 import { ArchiveContext } from '../../Context/ArchiveContext';
 import { StreaXPContext } from '../../Context/Strea&XPContext';
 import TotalStreakAndXP from '../TotalStreak&XP/TotalStreak&XP';
+import Filter from './Filter';
 
 function Streak() {
   const authContext = useContext(AuthContext);
@@ -15,16 +16,22 @@ function Streak() {
   const { archiveHabits } = useContext(ArchiveContext);
   const [habitData, setHabitData] = useState([]);
   const [updatedStreakData, setUpdatedStreakData] = useState([]);
-  const [habitListCategory, setHabitListCategory] = useState('');
+
+  const [selectedFrequencies, setSelectedFrequencies] = useState([]);
+  const [selectedBadges, setSelectedBadges] = useState([]);
+
   const [loading, setLoading] = useState(true);
 
   const [handleViewOption, setHandleViewOption] = useState(false);
   const [selectedMenuCard, setSelectedMenuCard] = useState(null);
 
+  const [showFilter, setShowFilter] = useState(false);
+
   const menuRef = useRef(null);
+  
   if (!authContext) {
     console.log("AuthContext is not yet available.");
-    return null; 
+    return null;
   }
 
   useEffect(() => {
@@ -92,49 +99,32 @@ function Streak() {
     };
   }, [user, archiveHabits, totalStreaXP]);
 
-  const handleHabitListCategory = (val) => {
-    setHabitListCategory(val);
-    const copy_inside = [...updatedStreakData];
-
-    if (val === "Not Completed") {
-      setHabitData(copy_inside.filter(habit => (habit.IsCompleted == false)));
-    } else if (val === "Daily") {
-      setHabitData(copy_inside.filter(habit => (habit.Frequency == 'Daily')));
-    } else if (val === "Weekly") {
-      setHabitData(copy_inside.filter(habit => (habit.Frequency == "Weekly")));
-    } else if (val === "Silver Badge") {
-      setHabitData(copy_inside.filter(habit => (habit.BadgeRecord.Badge == "🥈 Silver Badge")));
-    } else if (val === "Elite Badge") {
-      setHabitData(copy_inside.filter(habit => (habit.BadgeRecord.Badge == "⚜️ Elite Badge")));
-    } else {
-      setHabitData(copy_inside);
-    }
-  };
-
   return (
     <>
       <div className='strek-container'>
         <div className='Habit-list'>
           <h1> Habit list  </h1>
-          <div className="filter-habit">
-            <select
-              onChange={(e) => handleHabitListCategory(e.target.value)}
-              value={habitListCategory}
-            >
-              <option>All</option>
-              <option value="Not Completed">Not Completed</option>
-              <option value="Daily">Daily</option>
-              <option value="Weekly">Weekly</option>
-              <option value="Silver Badge">Silver Badge</option>
-              <option value="Gold Badge">Gold Badge</option>
-              <option value="Elite Badge">Elite Badge</option>
-            </select>
-          </div>
+
+          <button onClick={() => setShowFilter(prev => !prev)} >
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="green"><path d="M400-240v-80h160v80H400ZM240-440v-80h480v80H240ZM120-640v-80h720v80H120Z" /></svg>
+            Filters
+          </button>
+
           <TotalStreakAndXP />
         </div>
+
+        {
+          showFilter &&
+          <Filter showFilter={showFilter} setShowFilter={setShowFilter} setHabitData={setHabitData} updatedStreakData={updatedStreakData}
+          selectedFrequencies={selectedFrequencies}
+          setSelectedFrequencies={setSelectedFrequencies}
+          selectedBadges={selectedBadges}
+          setSelectedBadges={setSelectedBadges} />
+        }
+
         {
           loading ?
-          <BlankHabitCard/>
+            <BlankHabitCard />
             : user ?
               <div>
                 {

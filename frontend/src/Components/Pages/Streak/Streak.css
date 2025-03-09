@@ -10,65 +10,52 @@
   font-size: 0.8em;
 }
 
-.filter-habit {
-  font-family: "Phudu", serif;
-}
-
-.filter-habit select {
-  background: transparent;
-  color: #ff483d;
-  padding: 6px 3px;
-  font-size: 16px;
-  letter-spacing: 5px;
+button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 18px;
+  font-size: 17px;
   font-weight: 600;
-  border-radius: 8px;
-  border: 1px solid #ff483d;
+  color: black;
+  background: linear-gradient(135deg, #d99292, #d99292);
+  border: none;
+  border-radius: 45px;
   cursor: pointer;
   transition: all 0.3sease-in-out;
-  outline: none;
+  /* box-shadow: 0 4px 10px rgba(255, 75, 43, 0.3); */
 }
 
-/* Hover effect */
-.filter-habit select:hover {
-  border-color: #ee433a;
+/* button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(255, 75, 43, 0.4);
+} */
+
+button:active {
+  transform: scale(0.98);
 }
 
-/* Focus effect */
-.filter-habit select:focus {
-  border-color: #ee433a;
+button svg {
+  transition: transform 0.3s ease-in-out;
 }
 
-/* Dropdown options styling */
-.filter-habit select option {
-  background: #5f102a;
-  /* Dark background for dropdown */
-  letter-spacing: 5px;
-  color: #9a888e;
-  padding: 10px;
+button:hover svg {
+  transform: rotate(180deg);
 }
 
-.filter-habit select option:hover {
-  background-color: yellow;
-}
-
-/* Highlight selected option */
-.filter-habit select option:checked {
-  background: #dc8a18;
-  color: black;
-}
 
 @media (max-width: 550px) {
   .strek-container {
-      overflow-y: hidden;
+    overflow-y: hidden;
   }
 
   .filter-habit select {
-      width: 5em;
-      letter-spacing: 0;
+    width: 5em;
+    letter-spacing: 0;
   }
 
   .display-streak-XPPoints {
-      font-size: 1.2em;
-      margin: 0;
+    font-size: 1.2em;
+    margin: 0;
   }
 }
