@@ -99,6 +99,7 @@ XP Earned  |  Badge Earn  |  (Daily) Streak | (Weekly) Streak |
 
 ### Backend
 
+```plaintext
 📦 HabitQuest (Backend)
  ┣ 📜 .env
  ┣ 📜 .gitignore
@@ -116,6 +117,7 @@ XP Earned  |  Badge Earn  |  (Daily) Streak | (Weekly) Streak |
      ┣ 📜 auth.js
      ┣ 📜 habit.js
      ┗ 📜 user.js
+```
 
 ### **📌 Explanation:**
 - **`index.js`** – Main entry point for the server.
