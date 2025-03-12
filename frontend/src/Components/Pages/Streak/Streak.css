@@ -18,7 +18,7 @@ button {
   font-size: 17px;
   font-weight: 600;
   color: black;
-  background: linear-gradient(135deg, #d99292, #d99292);
+  /* background: linear-gradient(135deg, #d99292, #d99292); */
   border: none;
   border-radius: 45px;
   cursor: pointer;
