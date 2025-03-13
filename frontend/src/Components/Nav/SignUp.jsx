@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ShowPassword, HidePassword } from "../../assets/Icons/Icons";
 import axios from 'axios';
 import { url } from '../../URL/Url';
@@ -15,6 +15,16 @@ const LoginModal = ({ setIsFlipBox }) => {
   const [passwordError, setPasswordError] = useState('');
   const [shakeUsername, setShakeUsername] = useState(false);
   const [shakePassword, setShakePassword] = useState(false);
+
+  const inputRef = useRef(null);
+  const inputRef2 = useRef(null);
+  const inputRef3 = useRef(null);
+
+  useEffect(() => {
+
+    inputRef.current.focus();
+  }, [])
+
 
   const validatePassword = (password) => {
     const hasUpperCase = /[A-Z]/.test(password);
@@ -81,8 +91,14 @@ const LoginModal = ({ setIsFlipBox }) => {
         <h2>SIGN UP</h2>
 
         {/* Name Input */}
-        <input
+        <input ref={inputRef}
           //   style={{ border: usernameError ? '1px solid #ff4538' : '' }}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              e.preventDefault(); // Prevents form submission if inside a <form>
+              inputRef2.current.focus(); // Move focus to next input
+            }
+          }}
           type="text"
           placeholder="Name"
           value={name}
@@ -93,7 +109,13 @@ const LoginModal = ({ setIsFlipBox }) => {
         />
 
         {/* Username Input */}
-        <input
+        <input ref={inputRef2}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              e.preventDefault(); // Prevents form submission if inside a <form>
+              inputRef3.current.focus(); // Move focus to next input
+            }
+          }}
           style={{ border: usernameError ? '1px solid #ff4538' : '' }}
           type="text"
           placeholder="Email"
@@ -107,7 +129,13 @@ const LoginModal = ({ setIsFlipBox }) => {
 
         {/* Password Input */}
         <div className="password-container">
-          <input
+          <input ref={inputRef3}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault(); // Prevents form submission if inside a <form>
+                handleSignUp()
+              }
+            }}
             style={{ border: passwordError ? '1px solid #ff4538' : '' }}
             type={showPassword ? "text" : "password"}
             placeholder="Password"

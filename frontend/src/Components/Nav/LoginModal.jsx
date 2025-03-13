@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useRef } from "react";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { ShowPassword, HidePassword } from "../../assets/Icons/Icons";
@@ -23,7 +23,14 @@ const LoginModal = ({ setLoginOpen, onClose }) => {
   const [isFlipBox, setIsFlipBox] = useState(false);
   const navigate = useNavigate();
 
+  const inputRef = useRef(null);
+  const inputRef2 = useRef(null);
+
+  // useEffect(() => {
+  // }, []);
+
   useEffect(() => {
+    inputRef.current.focus();
     const handleEsc = (event) => {
       if (event.key === "Escape") onClose();
     };
@@ -103,11 +110,24 @@ const LoginModal = ({ setLoginOpen, onClose }) => {
             <h2>Login</h2>
 
             {/* Username Input */}
-            <input
+            <input ref={inputRef}
               style={{ border: usernameError ? '1px solid #ff4538' : '' }}
               type="text"
               placeholder="Email"
               value={username}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault(); 
+                  console.log(username);
+                  if (username.trim() === '') {
+                    setUsernameError("Username cannot be empty.");
+                    setShakeUsername(true);
+                    setTimeout(() => setShakeUsername(false), 500);
+                    isValid = false;
+                  }
+                  inputRef2.current.focus(); // Move focus to next input
+                }
+              }}
               onChange={(e) => {
                 setUsername(e.target.value);
                 setUsernameError('');
@@ -117,8 +137,14 @@ const LoginModal = ({ setLoginOpen, onClose }) => {
 
             {/* Password Input */}
             <div className="password-container">
-              <input
+              <input ref={inputRef2}
                 style={{ border: passwordError ? '1px solid #ff4538' : '' }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault(); // Prevents form submission if inside a <form>
+                    handleLogin()
+                  }
+                }}
                 type={showPassword ? "text" : "password"}
                 placeholder="Password"
                 value={password}
@@ -129,8 +155,8 @@ const LoginModal = ({ setLoginOpen, onClose }) => {
               />
               <div className="eye-open" onClick={() => setShowPassword(prev => !prev)}>
                 {showPassword ? (
-                 <HidePassword/>) : (
-                  <ShowPassword/> )}
+                  <HidePassword />) : (
+                  <ShowPassword />)}
               </div>
             </div>
             {passwordError && <p className={`error-message ${shakePassword ? "shake" : ""}`}>{passwordError}</p>}
