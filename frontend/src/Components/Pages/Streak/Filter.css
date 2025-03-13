@@ -129,19 +129,22 @@
 }
 
 .dropdown-category {
-    height: 11em;
-    position: absolute;
-    top: 112px;
-    width: 100%;
+    max-height: 11em; /* Allow scrolling if needed */
+    min-height: auto; /* Let it shrink if few items */
+    overflow-y: auto;
     background: #292931;
     border: 1px solid #f19c2042;
     border-radius: 8px;
     overflow-x: auto;
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
-    z-index: 100;
     scrollbar-width: thin;
     scrollbar-color: rgba(241, 156, 32, 0.5) transparent;
 }
+
+/* Dynamically adjust height based on filteredCategories */
+/* .dropdown-category:has(.dropdown-item-category:nth-child(-n+3)) {
+    max-height: unset;
+} */
 
 /* Webkit-based browsers (Chrome, Edge, Safari) */
 .dropdown-category::-webkit-scrollbar {

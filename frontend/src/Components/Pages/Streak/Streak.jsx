@@ -19,6 +19,7 @@ function Streak() {
 
   const [selectedFrequencies, setSelectedFrequencies] = useState([]);
   const [selectedBadges, setSelectedBadges] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState([]);
 
   const [loading, setLoading] = useState(true);
 
@@ -119,7 +120,9 @@ function Streak() {
           selectedFrequencies={selectedFrequencies}
           setSelectedFrequencies={setSelectedFrequencies}
           selectedBadges={selectedBadges}
-          setSelectedBadges={setSelectedBadges} />
+          setSelectedBadges={setSelectedBadges}
+          selectedCategory={selectedCategory} 
+          setSelectedCategory={setSelectedCategory}  />
         }
 
         {

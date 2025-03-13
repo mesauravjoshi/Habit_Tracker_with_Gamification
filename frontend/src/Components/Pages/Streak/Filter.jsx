@@ -1,29 +1,32 @@
 import { useState } from 'react';
 import './Filter.css';
 
-function Filter({ setHabitData, updatedStreakData, showFilter, setShowFilter, selectedFrequencies, setSelectedFrequencies, selectedBadges, setSelectedBadges, }) {
+function Filter({ setHabitData, updatedStreakData, showFilter, setShowFilter, selectedFrequencies, setSelectedFrequencies, selectedBadges, setSelectedBadges, selectedCategory, setSelectedCategory}) {
 
-  const [selectedCategory, setSelectedCategory] = useState([]);
 
   const handleFilterHabit = () => {
 
     const copy_inside = [...updatedStreakData];
 
-    if (selectedFrequencies.length === 0 && selectedBadges.length === 0) {
+    if (selectedFrequencies.length === 0 && selectedBadges.length === 0 && selectedCategory.length === 0 ){
       console.log('empty');
     } else {
 
-      if (selectedFrequencies.length > 0 && selectedBadges.length > 0) {
-        // console.log('both');
+      if (selectedFrequencies.length > 0 && selectedBadges.length > 0 && selectedCategory.length > 0) {
+        console.log('both');
         setHabitData(copy_inside.filter(habit =>
           selectedFrequencies.includes(habit.Frequency) &&
-          selectedBadges.includes(habit.BadgeRecord.Badge)))
+          selectedBadges.includes(habit.BadgeRecord.Badge))) &&
+          selectedCategory.includes(habit.Category)
       } else if (selectedFrequencies.length > 0) {
-        // console.log('Frequency');
+        console.log('Frequency');
         setHabitData(copy_inside.filter(habit => selectedFrequencies.includes(habit.Frequency)));
       } else if (selectedBadges.length > 0) {
-        // console.log('Badge');
+        console.log('Badge');
         setHabitData(copy_inside.filter(habit => selectedBadges.includes(habit.BadgeRecord.Badge)));
+      } else if (selectedCategory.length > 0) {
+        console.log('Category');
+        setHabitData(copy_inside.filter(habit => selectedCategory.includes(habit.Category)));
       }
     }
   };
@@ -63,7 +66,7 @@ function Filter({ setHabitData, updatedStreakData, showFilter, setShowFilter, se
     "Hobbies & Creativity 🎨 ",
     "Self - Care & Well - being 🛁",
     "Custom ✏️"
-  ];
+  ]
 
   const handleCategoryChange = (event) => {
     const { value, checked } = event.target;
@@ -74,6 +77,21 @@ function Filter({ setHabitData, updatedStreakData, showFilter, setShowFilter, se
 
   const handleRemoveSelctedCat = (indexToRemove) => {
     setSelectedCategory(prev => prev.filter((_, index) => index !== indexToRemove));
+  };
+
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredCategories, setFilteredCategories] = useState(categories); // Store filtered results
+
+  const filterCategorySearch = (e) => {
+    const query = e.target.value.toLowerCase();
+    setSearchQuery(query);
+
+    if (query.length > 0) {
+      const searchResults = categories.filter(cat => cat.toLowerCase().includes(query));
+      setFilteredCategories(searchResults);
+    } else {
+      setFilteredCategories(categories); // Reset if input is empty
+    }
   };
 
   return (
@@ -89,7 +107,8 @@ function Filter({ setHabitData, updatedStreakData, showFilter, setShowFilter, se
                   {category.split(" ")[0]}
                   <span onClick={(event) => {
                     event.stopPropagation();
-                    handleRemoveSelctedCat(index)}} >X</span>
+                    handleRemoveSelctedCat(index)
+                  }} >X</span>
                 </div>
               })}
             </> : "Select a category"}</span>
@@ -98,21 +117,20 @@ function Filter({ setHabitData, updatedStreakData, showFilter, setShowFilter, se
           {isOpen && (
             <>
               <div className='filter-category-search'>
-                <input type="text" placeholder='Search .....' />
-              </div>
-              <div className="dropdown-category">
-                {categories.map((category, index) => (
-                  <div key={index} className={`dropdown-item-category ${selectedCategory === category ? "selected" : ""}`} >
-                    <label>
-                      <input type="checkbox" value={category}
-                        checked={selectedCategory.includes(category)}
-                        onChange={handleCategoryChange}
-                      />
-                      {category}
-                    </label>
-
-                  </div>
-                ))}
+                <input type="text" placeholder="Search ....." onChange={filterCategorySearch} value={searchQuery} />
+                <div className="dropdown-category">
+                  {filteredCategories.map((category, index) => (
+                    <div key={index} className={`dropdown-item-category ${selectedCategory.includes(category) ? "selected" : ""}`} >
+                      <label>
+                        <input type="checkbox" value={category}
+                          checked={selectedCategory.includes(category)}
+                          onChange={handleCategoryChange}
+                        />
+                        {category}
+                      </label>
+                    </div>
+                  ))}
+                </div>
               </div>
             </>
           )}
@@ -176,7 +194,7 @@ function Filter({ setHabitData, updatedStreakData, showFilter, setShowFilter, se
             handleFilterHabit();
             setShowFilter(false)
           }
-          } disabled={selectedFrequencies.length === 0 && selectedBadges.length === 0 && selectedCategory.length ===0 }> Apply </button>
+          } disabled={selectedFrequencies.length === 0 && selectedBadges.length === 0 && selectedCategory.length === 0}> Apply </button>
           <button onClick={() => handleFilterReset()} >Reset</button>
         </div>
 
