@@ -65,7 +65,7 @@ function Filter({ setHabitData, updatedStreakData, showFilter, setShowFilter, se
     "Finance & Budgeting ",
     "Hobbies & Creativity 🎨 ",
     "Self - Care & Well - being 🛁",
-    "Custom ✏️"
+    // "Custom ✏️"
   ]
 
   const handleCategoryChange = (event) => {

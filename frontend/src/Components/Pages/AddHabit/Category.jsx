@@ -15,7 +15,7 @@ function Category({ selectedCategory, setSelectedCategory }) {
     "Finance & Budgeting ",
     "Hobbies & Creativity 🎨 ",
     "Self - Care & Well - being 🛁",
-    "Custom ✏️"
+    // "Custom ✏️"
   ];
   /*
   Health & Fitness 🏋️‍♂️ (e.g., Exercise, Yoga, Running)

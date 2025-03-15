@@ -6,7 +6,7 @@ import Gold from '../../../assets/Icons/gold.svg';
 import './Badges.css';
 import TotalStreakAndXP from '../TotalStreak&XP/TotalStreak&XP';
 import BlankHabitCard from '../HabitCard/BlankHabitCard';
-import BlankBaadge from './BlackBaadge';
+import BlankBaadge from './BlankBaadge';
 
 function Badge() {
   const { user, token } = useContext(AuthContext);
@@ -61,7 +61,14 @@ function Badge() {
           },
         });
         const data = await response.json();
-        setAllBadges(data.filter((item) => item.BadgeRecord.Badge !== ''));
+        setAllBadges(data.filter((item) => item.BadgeRecord.Badge !== '')
+          .map(habit => {
+            delete habit.Priority;
+            delete habit.TargetDuration;
+            delete habit.TotalDaysCompleted;
+            return habit
+          })
+        );
       } catch (error) {
         console.error('Error fetching habits:', error);
       } finally {

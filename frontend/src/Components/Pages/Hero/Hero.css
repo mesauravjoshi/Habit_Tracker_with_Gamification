@@ -1,13 +1,189 @@
-.hero-title {
-    grid-column: 2 / 3;
-    grid-row: 2 / 3;
+/* Global Styles */
+/* body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #f4f4f9;
     display: flex;
-    height: 90vh;
-    grid-column-start: 2;
-    grid-column-end: 3;
-    margin: 0em 1em;
-    align-items: center;
-    flex-direction: column;
     justify-content: center;
-    overflow-y: auto;
+    align-items: center;
+    height: 100vh;
+  } */
+
+/* Hero Section */
+.hero {
+    width: 100%;
+    max-width: 1200px;
+    text-align: center;
+    padding: 3rem 2rem;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #15162099, #120b21ba);
+    color: #f19c20;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+
+    .nav-link {
+        text-decoration: none;
+        /* color: #dc8a18; */
+        font-size: 18px;
+        font-weight: 600;
+        padding: 10px;
+        margin: 0 1em 4px 0;
+        border-radius: 5px;
+        transition: all 0.3s ease-in-out;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+    }
+}
+
+/* Title */
+.hero h1 {
+    font-size: 2.8rem;
+    margin-bottom: 10px;
+}
+
+/* Tagline */
+.hero p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+/* CTA Button */
+.hero .cta-btn {
+    margin-top: 20px;
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #5A67D8;
+    background: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.hero .cta-btn:hover {
+    background: #e2e8f0;
+    transform: scale(1.05);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2.2rem;
+    }
+
+    .hero p {
+        font-size: 1rem;
+    }
+
+    .hero .cta-btn {
+        padding: 10px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero {
+        padding: 2rem 1.5rem;
+    }
+
+    .hero h1 {
+        font-size: 1.8rem;
+    }
+
+    .hero p {
+        font-size: 0.9rem;
+    }
+
+    .hero .cta-btn {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Dashboard Summary - Modern Responsive UI */
+.dashboard-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    background: #212329;
+    /* Light background */
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Individual summary cards */
+.summary-card {
+    flex: 1;
+    padding: 20px;
+    background: #292931;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+}
+
+.summary-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Headings inside cards */
+.summary-card h3 {
+    font-size: 1.2rem;
+    color: #cfcfe5bd;
+    margin-bottom: 10px;
+}
+
+/* XP & Streak values */
+.summary-card p {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #1e88e5;
+}
+
+/* Badges Container */
+.badges-container {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+/* Badge Styling */
+.badge {
+    background: #ffcc00;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-weight: bold;
+    color: #333;
+    font-size: 0.9rem;
+    display: inline-block;
+}
+
+/* View All Button */
+.view-all-btn {
+    margin-top: 12px;
+    padding: 8px 14px;
+    background: #1e88e5;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.3s ease;
+}
+
+.view-all-btn:hover {
+    background: #1565c0;
+}
+
+/* Responsive Design */
+@media (max-width: 850px) {
+    .dashboard-summary {
+        flex-direction: column;
+        align-items: stretch;
+    }
 }
