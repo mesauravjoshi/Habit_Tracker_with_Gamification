@@ -10,20 +10,30 @@ function Habit() {
   const { user, token } = useContext(AuthContext);
   const priorityLabels = ["Low", "Medium", "High", "Critical"];
   const [habits, setHabits] = useState([]);
-  const [habit, setHabit] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [selectedFrequency, setSelectedFrequency] = useState("");
-  const [targetDuration, setTargetDuration] = useState("");
   const [minDate, setMinDate] = useState("");
-  const [priority, setPriority] = useState(0);
+  const [formObject, setFormObject] = useState({
+    HabitName: '',
+    Category: '',
+    selectedFrequency: '',
+    TargetDuration: '',
+    Priority: 0,
+  });
 
   // Get today's date in YYYY-MM-DD format
   const getTodayDate = () => {
     const today = new Date();
     setMinDate(today.toISOString().split("T")[0]);
-    console.log( typeof today.toISOString().split("T")[0]);
+    console.log(typeof today.toISOString().split("T")[0]);
     // return today.toISOString().split("T")[0]; // Extract YYYY-MM-DD
   };
+
+  const handleFormChange = (e) => {
+    const { name, value } = e.target;
+    setFormObject((prev) => {
+      if (e.target.name === 'priority') return { ...prev, [name]: Number(value) }
+      else return { ...prev, [name]: value }
+    })
+  }
 
   const handleAddHabit = async () => {
     const lastDay = new Date();
@@ -32,17 +42,18 @@ function Habit() {
 
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    if (habit.trim() === '' || targetDuration === '' || selectedFrequency === '') {
+    if (formObject.HabitName.trim() === '' || formObject.TargetDuration === '' || formObject.Frequency === '') {  
       alert("All field required !")
     } else {
       // const user_id = user._id
+      // setFormObject((prev) => {
+      //   // console.log(prev);
+      //   return { ...prev, 'priority': priorityLabels[prev.priority] }
+      // })
       const newHabit = {
+        ...formObject,
+        Priority: priorityLabels[formObject.Priority],
         userId: user._id,// ✅ Attach user ID
-        HabitName: habit,
-        Category: selectedCategory,
-        Frequency: selectedFrequency,
-        Priority: priorityLabels[priority],
-        TargetDuration: targetDuration,
         StartedDate: today.toString(),
         StreakRecord: {
           LastUpdate: "",
@@ -56,12 +67,11 @@ function Habit() {
         },
         IsConmpleted: false,
       };
-      // console.log(newHabit);
 
-      if (selectedFrequency === 'Daily') {
+      if (formObject.Frequency === 'Daily') {
         newHabit.TotalDaysCompleted = 0;
         newHabit.CalendarData = {}
-      } else if (selectedFrequency === 'Weekly') {
+      } else if (formObject.Frequency === 'Weekly') {
         newHabit.CalendarData = [
           {
             start: "",
@@ -95,14 +105,13 @@ function Habit() {
         }
       } catch (error) {
         console.error('Error:', error);
+      } finally {
+        console.log('finally');
+        // Reset input fields
+        setFormObject((prev) => {
+          return { ...prev, HabitName: '', Priority: 0, TargetDuration: '', Category: '' ,Frequency: ''}
+        });
       }
-
-      // Reset input fields
-      setHabit('');
-      setSelectedCategory('');
-      setSelectedFrequency('');
-      setTargetDuration('');
-      setPriority(0);
     }
   };
 
@@ -128,22 +137,22 @@ function Habit() {
         <div id="borderr" className="Add-Habit">
           <h2>Add Yoor Habbit </h2>
           <input type="text" placeholder='Habit name...'
-            value={habit}
-            onChange={(e) => setHabit(e.target.value)}
+            value={formObject.HabitName} name='HabitName'
+            onChange={(e) => handleFormChange(e)}
           />
         </div>
 
         {/* 2.  Frequency */}
-        <Frequency selectedFrequency={selectedFrequency} setSelectedFrequency={setSelectedFrequency}  setMinDate={setMinDate}
-         />
+        <Frequency setMinDate={setMinDate} setFormObject={setFormObject} formObject={formObject}
+        />
 
         {/* 3. Target Duration */}
         <div id="borderr" className="Target-Duration">
           <h2>Target Duration</h2>
           <input
-            type="date"
-            value={targetDuration}
-            onChange={(e) => setTargetDuration(e.target.value)}
+            type="date" name='TargetDuration'
+            value={formObject.TargetDuration}
+            onChange={(e) => handleFormChange(e)}
             min={minDate} // Restrict selection to dates after today
           />
           <div className="call">
@@ -151,21 +160,21 @@ function Habit() {
         </div>
 
         {/* 4. Category */}
-        <Category selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
+        <Category setFormObject={setFormObject} formObject={formObject} />
 
         {/* 6.  Priority Level */}
         <div id="borderr" className="Priority-Level">
           <h2>Priority Level</h2>
           <input
-            type="range"
+            type="range" name='Priority'
             min="0"
             max="3"
             step="1"
-            value={priority}
-            onChange={(e) => setPriority(Number(e.target.value))}
+            value={formObject.Priority}
+            onChange={(e) => handleFormChange(e)}
             className="slider"
           />
-          <p className="priority-text">{priorityLabels[priority]}</p>
+          <p className="priority-text">{priorityLabels[formObject.Priority]}</p>
         </div>
 
         <div className="Add-Habit-Button">

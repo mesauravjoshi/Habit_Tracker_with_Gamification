@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext, useRef } from "react";
+import { useEffect, useState, useContext, useRef, useReducer, act } from "react";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { ShowPassword, HidePassword } from "../../assets/Icons/Icons";
@@ -11,23 +11,44 @@ import { StreaXPContext } from "../Context/Strea&XPContext";
 const LoginModal = ({ setLoginOpen, onClose }) => {
   const { fetchUserData } = useContext(AuthContext); // Access user from context
   const { fetchStreaXPData } = useContext(StreaXPContext);
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
 
-  const [usernameError, setUsernameError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-  const [shakeUsername, setShakeUsername] = useState(false);
-  const [shakePassword, setShakePassword] = useState(false);
+  const initialState = {
+    showPassword: false,
+    usernameError: '',
+    passwordError: '',
+    shakeUsername: false,
+    shakePassword: false
+  };
+
+  const reducer = (state, action) => {
+    switch (action.type) {
+      case "SHOW_PASSWORD":
+        return { ...state, showPassword: action.payload }
+      case "USERNAME_ERROR":
+        return { ...state, usernameError: action.payload }
+      case "PASSWORD_ERROR":
+        return { ...state, passwordError: action.payload }
+      case "SHAKE_USERNAME":
+        return { ...state, shakeUsername: action.payload }
+      case "SHAKE_PASSWORD":
+        return { ...state, shakePassword: action.payload }
+    }
+  }
+
+  const [formData, setFormData] = useState({
+    username: '',
+    password: ''
+  });
+  // console.log(state.usernameError);
+
+  const [state, dispatch] = useReducer(reducer, initialState);
+  // const { showPassword, usernameError } = state;  // Destructure from state
 
   const [isFlipBox, setIsFlipBox] = useState(false);
   const navigate = useNavigate();
 
   const inputRef = useRef(null);
   const inputRef2 = useRef(null);
-
-  // useEffect(() => {
-  // }, []);
 
   useEffect(() => {
     inputRef.current.focus();
@@ -54,52 +75,55 @@ const LoginModal = ({ setLoginOpen, onClose }) => {
     return "";
   };
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     let isValid = true;
 
-    if (username.trim() === '') {
-      setUsernameError("Username cannot be empty.");
-      setShakeUsername(true);
-      setTimeout(() => setShakeUsername(false), 500);
+    if (formData.username.trim() === '') {
+      dispatch({ type: "USERNAME_ERROR", payload: "Username cannot be empty." });
+      // dispatch({ type: "SHAKE_USERNAME", payload: true });
+      setShakeUsername(dispatch({ type: "SHAKE_USERNAME", payload: true }));
+      setTimeout(() => dispatch({ type: "SHAKE_USERNAME", payload: false }), 500);
       isValid = false;
     } else {
-      setUsernameError("");
+      dispatch({ type: "USERNAME_ERROR", payload: "" });
     }
 
-    const passwordValidationMessage = validatePassword(password);
+    const passwordValidationMessage = validatePassword(formData.password);
     if (passwordValidationMessage) {
-      setPasswordError(passwordValidationMessage);
-      setShakePassword(true);
-      setTimeout(() => setShakePassword(false), 500);
+      dispatch({ type: "PASSWORD_ERROR", payload: passwordValidationMessage });
+      // setPasswordError(passwordValidationMessage);
+      dispatch({ type: "SHAKE_PASSWORD", payload: true });
+      // setShakePassword(true);
+      setTimeout(() => dispatch({ type: "SHAKE_PASSWORD", payload: false }), 500);
       isValid = false;
     } else {
-      setPasswordError("");
+      dispatch({ type: "PASSWORD_ERROR", payload: "" });
     }
 
     if (!isValid) return;
 
-    const formData = {
-      username: username,
-      password: password
+    try {
+      const response = await axios.post(`${url}/auth/login`, formData);
+      // console.log('Success:', response.data.token);
+      localStorage.setItem('habit token', response.data.token);
+      fetchUserData();
+      fetchStreaXPData();
+      setLoginOpen(false);
+      navigate('/track-streak');
+    } catch (error) {
+      console.error('Error:', error.response ? error.response.data : error.message);
     }
-
-    const handleLogin = async () => {
-      try {
-        const response = await axios.post(`${url}/auth/login`, formData);
-        // console.log('Success:', response.data.token);
-        localStorage.setItem('habit token', response.data.token);
-        fetchUserData();
-        fetchStreaXPData();
-        setLoginOpen(false);
-        navigate('/track-streak');
-      } catch (error) {
-        console.error('Error:', error.response ? error.response.data : error.message);
-      }
-    };
-    handleLogin();
-    setUsername('');
-    setPassword('');
   };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev => {
+      return { ...prev, [name]: value }
+    }))
+    dispatch({ type: "USERNAME_ERROR", payload: "" });
+    dispatch({ type: "PASSWORD_ERROR", payload: "" });
+    // setPasswordError('');
+  }
 
   return (
     <div className="modal-overlay" onClick={onClose}>
@@ -111,55 +135,53 @@ const LoginModal = ({ setLoginOpen, onClose }) => {
 
             {/* Username Input */}
             <input ref={inputRef}
-              style={{ border: usernameError ? '1px solid #ff4538' : '' }}
-              type="text"
+              style={{ border: state.usernameError ? '1px solid #ff4538' : '' }}
+              type="text" name="username"
               placeholder="Email"
-              value={username}
+              value={formData.username}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
-                  e.preventDefault(); 
-                  console.log(username);
-                  if (username.trim() === '') {
-                    setUsernameError("Username cannot be empty.");
-                    setShakeUsername(true);
-                    setTimeout(() => setShakeUsername(false), 500);
+                  e.preventDefault();
+                  // console.log(username);
+                  if (formData.username.trim() === '') {
+                    dispatch({ type: "USERNAME_ERROR", payload: "Username cannot be empty." });
+                    dispatch({ type: "SHAKE_USERNAME", payload: true });
+                    setTimeout(() => dispatch({ type: "SHAKE_USERNAME", payload: false }), 500);
                     isValid = false;
                   }
                   inputRef2.current.focus(); // Move focus to next input
                 }
               }}
               onChange={(e) => {
-                setUsername(e.target.value);
-                setUsernameError('');
+                handleChange(e);
               }}
             />
-            {usernameError && <p className={`error-message ${shakeUsername ? "shake" : ""}`}>{usernameError}</p>}
+            {state.usernameError && <p className={`error-message ${state.shakeUsername ? "shake" : ""}`}>{state.usernameError}</p>}
 
             {/* Password Input */}
             <div className="password-container">
               <input ref={inputRef2}
-                style={{ border: passwordError ? '1px solid #ff4538' : '' }}
+                style={{ border: state.passwordError ? '1px solid #ff4538' : '' }}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') {
                     e.preventDefault(); // Prevents form submission if inside a <form>
                     handleLogin()
                   }
                 }}
-                type={showPassword ? "text" : "password"}
+                type={state.showPassword ? "text" : "password"} name="password"
                 placeholder="Password"
-                value={password}
+                value={formData.password}
                 onChange={(e) => {
-                  setPassword(e.target.value);
-                  setPasswordError('');
+                  handleChange(e);
                 }}
               />
-              <div className="eye-open" onClick={() => setShowPassword(prev => !prev)}>
-                {showPassword ? (
+              <div className="eye-open" onClick={() => dispatch({ type: 'SHOW_PASSWORD', payload: !state.showPassword })}>
+                {state.showPassword ? (
                   <HidePassword />) : (
                   <ShowPassword />)}
               </div>
             </div>
-            {passwordError && <p className={`error-message ${shakePassword ? "shake" : ""}`}>{passwordError}</p>}
+            {state.passwordError && <p className={`error-message ${state.shakePassword ? "shake" : ""}`}>{state.passwordError}</p>}
 
             <button onClick={handleLogin} className="login-btn">Login</button>
             <button className="close-btn" onClick={onClose}>Close</button>

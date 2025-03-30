@@ -6,7 +6,6 @@ import { StreaXPContext } from '../../Context/Strea&XPContext'
 const Hero = () => {
   const { totalStreaXP } = useContext(StreaXPContext);
   const sampleBadges = ["🥇 Gold", "🥈 Silver", "🔥 Elite Streaker", "🌟 Master"];
-  console.log(totalStreaXP);
 
   return (
     <div>

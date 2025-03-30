@@ -88,20 +88,56 @@ function StreakUpdate({ setHabitData, LastUpdate, LastDayForWeek, TargetDuration
     }
   };
 
+  // const calculateUpcommingDay = (today, dayFrom) => {
+  //   console.log(today);
+  //   console.log(dayFrom);
+
+  //   const startDayIndex = dayFrom.getDay();
+  //   console.log(startDayIndex);
+
+  //   const previousDayIndex = (startDayIndex - 1 + 7) % 7;
+  //   console.log(previousDayIndex);
+  //   // Find upcoming day from today
+  //   let upcomingDay = new Date(today);
+  //   upcomingDay.setDate(today.getDate() + ((previousDayIndex - today.getDay() + 7) % 7 || 7));
+
+  //   const previousDay = new Date(upcomingDay.setDate(today.getDate() + ((previousDayIndex - today.getDay() + 7) % 7 || 7)));
+
+  //   upcomingDay.setDate(upcomingDay.getDate() + 7);
+  //   upcomingDay.setHours(0, 0, 0, 0);
+  //   console.log(upcomingDay);
+  //   console.log(previousDay);
+  //   return { previousDay, upcomingDay };
+  // }
+
   const calculateUpcommingDay = (today, dayFrom) => {
+    console.log("Today:", today);
+    console.log("Day From:", dayFrom);
+
     const startDayIndex = dayFrom.getDay();
+    console.log("Start Day Index:", startDayIndex);
 
     const previousDayIndex = (startDayIndex - 1 + 7) % 7;
+    console.log("Previous Day Index:", previousDayIndex);
+
     // Find upcoming day from today
     let upcomingDay = new Date(today);
     upcomingDay.setDate(today.getDate() + ((previousDayIndex - today.getDay() + 7) % 7 || 7));
 
-    const previousDay = new Date(upcomingDay.setDate(today.getDate() + ((previousDayIndex - today.getDay() + 7) % 7 || 7)));
+    // Create a separate instance for previousDay to avoid modifying upcomingDay
+    let previousDay = new Date(upcomingDay);
+    previousDay.setDate(previousDay.getDate() - 7);
 
-    upcomingDay.setDate(upcomingDay.getDate() + 7);
+    // Adjust times to start of the day
     upcomingDay.setHours(0, 0, 0, 0);
+    previousDay.setHours(0, 0, 0, 0);
+
+    console.log("Fixed Previous Day:", previousDay);
+    console.log("Fixed Upcoming Day:", upcomingDay);
+
     return { previousDay, upcomingDay };
-  }
+  };
+
 
   const handleMarkAsDone = (event, index) => {
     event.stopPropagation();
@@ -174,7 +210,7 @@ function StreakUpdate({ setHabitData, LastUpdate, LastDayForWeek, TargetDuration
         const { previousDay, upcomingDay } = calculateUpcommingDay(today, dayFrom);
 
         if (today >= dayFrom && today <= endDate || LastUpdate == '') {
-          // console.log('between Start - end date', LastUpdate);
+          console.log('between Start - end date', LastUpdate);
           habit.StreakRecord.TotalStreak += 1;
           if (habit.StreakRecord.TotalStreak === 4) {
             habit.StreakRecord.XPPoints += 40;
@@ -211,7 +247,9 @@ function StreakUpdate({ setHabitData, LastUpdate, LastDayForWeek, TargetDuration
           }
         }
         else if (today > endDate) {
-          // console.log('2nd condition');
+          console.log('2nd condition');
+          console.log(StartedDate);
+          console.log(previousDay);
           habit.CalendarData = settingColorForPendingWeek(habit.CalendarData, StartedDate, previousDay)
           habit.CalendarData = settingColorForCal_week(habit.CalendarData, previousDay);
           // console.log(habit.CalendarData);
@@ -223,7 +261,7 @@ function StreakUpdate({ setHabitData, LastUpdate, LastDayForWeek, TargetDuration
         }
         habit.StreakRecord.LastUpdate = String(today);
         habit.StreakRecord.XPPoints += 10;
-        
+
         habit.StreakRecord.LastDayForWeek = String(upcomingDay);
         // console.log('upcoming: ', upcomingDay);
         habit.TotalWeeksCompleted = calculateWeekCompleted(today, StartedDate);
@@ -235,7 +273,7 @@ function StreakUpdate({ setHabitData, LastUpdate, LastDayForWeek, TargetDuration
       else {
         console.log('Frequency is neither daily nor weekly ')
       }
-      setHabitData(updatedStreakData);
+      setHabitData([updatedStreakData]);
       markAsDone(habit);
     }
   };
@@ -275,6 +313,9 @@ function StreakUpdate({ setHabitData, LastUpdate, LastDayForWeek, TargetDuration
         if (lastUpdate == '') {
           return false
         }
+        // console.log(dayFrom);
+        // console.log(today);
+        // console.log(endDate);
 
         if (today >= dayFrom && today <= endDate) {
           // console.log('between Start - end date',lastUpdate);

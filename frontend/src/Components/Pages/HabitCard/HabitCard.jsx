@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useContext } from 'react';
+import { useEffect, useState, useRef, useContext, useReducer } from 'react';
 import './HabitCard.css'
 import { DotsIcon, ShareIcon, Archive, Unarchive, Delete, ViewCard } from "../../../assets/Icons/Icons";
 import { url } from '../../../URL/Url';
@@ -8,39 +8,57 @@ import ExpandCard from '../Streak/ExpandHabitCard/ExpandCard';
 import { AuthContext } from '../../Context/AuthContext';
 import { ArchiveContext } from '../../Context/ArchiveContext';
 
+// ✅ Initial State
+const initialState = {
+  isExpandVisible: false,
+  selectedStreakHabitCard: null,
+  handleViewOption: false,
+  selectedMenuCard: null,
+  displayDelUI: false,
+  selectedStreakID: null,
+};
+
+// ✅ Reducer Function
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "TOGGLE_EXPAND":
+      return { ...state, isExpandVisible: action.payload };
+    case "SET_SELECTED_HABIT":
+      return { ...state, selectedStreakHabitCard: action.payload };
+    case "TOGGLE_MENU":
+      return {
+        ...state,
+        handleViewOption: action.payload.viewOption,
+        selectedMenuCard: action.payload.menuCard,
+      };
+    case "SHOW_DELETE_UI":
+      return { ...state, displayDelUI: true, selectedStreakID: action.payload };
+    case "HIDE_DELETE_UI":
+      return { ...state, displayDelUI: false, selectedStreakID: null };
+    default:
+      return state;
+  }
+};
+
 function Streak({ habitData, setHabitData, insideArchive, archivedHabit, setArchivedHabit }) {
   const authContext = useContext(AuthContext);
-
-  if (!authContext) {
-    console.log("AuthContext is not yet available.");
-    return null; // or return a loading indicator
-  }
-
+  const [state, dispatch] = useReducer(reducer, initialState);
   const { token } = useContext(AuthContext);
   const { archiveHabits, fetchArchivePData } = useContext(ArchiveContext);
+  const menuRef = useRef(null);
 
-  const [isExpandVisible, setIsExpandVisible] = useState(false);
-  const [selectedStreakHabitCard, setSelectedStreakHabitCard] = useState([]);
-
-  const [handleViewOption, setHandleViewOption] = useState(false);
-  const [selectedMenuCard, setSelectedMenuCard] = useState(null);
-
-  const [displayDelUI, setDisplayDelUI] = useState(false);
-  const [selectedStreakID, setSelectedStreakID] = useState(null);
-
-  const menuRef = useRef(null); 
   if (!authContext) {
     console.log("AuthContext is not yet available.");
-    return null; 
+    return null;
   }
+
   useEffect(() => {
     const handleClickOutside = (event) => {
-
       if (menuRef.current && !menuRef.current.contains(event.target)) {
-        setHandleViewOption(false);
-        setSelectedMenuCard(null);
+        dispatch({ type: "TOGGLE_MENU", payload: { viewOption: false, menuCard: null } });
       }
     };
+
     document.addEventListener("click", handleClickOutside);
     return () => {
       document.removeEventListener("click", handleClickOutside);
@@ -104,21 +122,17 @@ function Streak({ habitData, setHabitData, insideArchive, archivedHabit, setArch
   }
 
   const handleDelete = (event, streakID) => {
-    event.stopPropagation(); // Prevents event from bubbling up
-    setSelectedStreakID(String(streakID));
-    setDisplayDelUI(true);
+    event.stopPropagation();
+    dispatch({ type: "SHOW_DELETE_UI", payload: streakID });
   };
 
-  const handleSelectHabitCard = (streakID, daysLeft, Total_Target_Time) => {
-    const seleted = {
-      ...streakID,
-      timeLeft: daysLeft,
-      Total_Target_Time: Total_Target_Time,
-    }
-    // console.log('selected habit',seleted);
-    setSelectedStreakHabitCard(seleted);
-    // setHandleViewOption(false);
-    setIsExpandVisible(true);
+  // console.log("is handle view option:", state.handleViewOption);
+  const handleSelectHabitCard = (streak, daysLeft, Total_Target_Time) => {
+    dispatch({
+      type: "SET_SELECTED_HABIT",
+      payload: { ...streak, timeLeft: daysLeft, Total_Target_Time }
+    });
+    dispatch({ type: "TOGGLE_EXPAND", payload: true });
   };
 
   const handleArchiveHabit = async (streakID) => {
@@ -160,20 +174,20 @@ function Streak({ habitData, setHabitData, insideArchive, archivedHabit, setArch
 
   return (
     <>
-      {isExpandVisible &&
-        <ExpandCard streak={selectedStreakHabitCard}
+      {state.isExpandVisible &&
+        <ExpandCard streak={state.selectedStreakHabitCard}
           setHabitData={setHabitData}
-          setIsExpandVisible={setIsExpandVisible}
+          setIsExpandVisible={() => dispatch({ type: "TOGGLE_EXPAND", payload: false })}
           calculateTotalDays={calculateTotalDays}  // for calculating
           calculateTotalWeeks={calculateTotalWeeks} // for calculating
           insideArchive={insideArchive}
         />
       }
       {
-        displayDelUI &&
+        state.displayDelUI &&
         <DeleteConfirmUI
-          setDisplayDelUI={setDisplayDelUI}
-          streakID={selectedStreakID}
+          setDisplayDelUI={() => dispatch({ type: "HIDE_DELETE_UI" })}
+          streakID={state.selectedStreakID}
           habitData={habitData}
           setHabitData={setHabitData} />
       }
@@ -219,7 +233,7 @@ function Streak({ habitData, setHabitData, insideArchive, archivedHabit, setArch
 
                   {/* 3. Options [dot and share icon]  */}
                   <div className='HabitCard-options'>
-                    {selectedMenuCard === streak._id && handleViewOption && (
+                    {state.selectedMenuCard === streak._id && state.handleViewOption  && (
                       <div ref={menuRef} className="Options-details">
                         {/* <div>
                         </div> */}
@@ -244,17 +258,13 @@ function Streak({ habitData, setHabitData, insideArchive, archivedHabit, setArch
                               </>
                           }
                         </div>
-                        <div onClick={() => setIsExpandVisible(true)} className='delete-icon'>
+                        <div onClick={() => dispatch({ type: "TOGGLE_EXPAND", payload: true })} className='delete-icon'>
                           <ViewCard />
                           <p>View</p>
                         </div>
                       </div>
                     )}
-                    <div onClick={(event) => {
-                      event.stopPropagation();
-                      setSelectedMenuCard(selectedMenuCard === streak._id ? null : streak._id);
-                      setHandleViewOption(true);
-                    }} className='three-dot-elips'>
+                    <div onClick={(event) => { event.stopPropagation(); dispatch({ type: "TOGGLE_MENU", payload: { viewOption: true, menuCard: streak._id } }); }} className='three-dot-elips'>
                       <DotsIcon />
                     </div>
                     <div onClick={(event) => { event.stopPropagation(); }} className='share-arrow'>
@@ -289,7 +299,7 @@ function Streak({ habitData, setHabitData, insideArchive, archivedHabit, setArch
                     </div>
                     <p> {progress}%</p>
                   </div>
-                  
+
                   {/* 7. completed days/weeks  */}
                   <div className="TotalDaysCompleted">
                     {DayWeeksCompeted}
@@ -299,7 +309,6 @@ function Streak({ habitData, setHabitData, insideArchive, archivedHabit, setArch
             );
           })
         }
-        {/* <Calendar startDate={habitData[0].StartedDate} endDate={habitData[0].TargetDuration} CalendarData={habitData[0].CalendarData} /> */}
       </div>
     </>
   )

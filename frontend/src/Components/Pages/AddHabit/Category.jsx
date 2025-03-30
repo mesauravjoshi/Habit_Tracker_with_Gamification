@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Category.css'
 
-function Category({ selectedCategory, setSelectedCategory }) {
+function Category({ setFormObject, formObject }) {
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -30,7 +30,8 @@ function Category({ selectedCategory, setSelectedCategory }) {
   Custom ✏️ (Users can type their own category)
   */
   const handleSelect = (category) => {
-    setSelectedCategory(category);
+    setFormObject((prev) => { return { ...prev, 'Category': category } });
+    // setFormObject(category);
     // console.log(category);
     setIsOpen(false);
   };
@@ -39,7 +40,7 @@ function Category({ selectedCategory, setSelectedCategory }) {
     <div className="custom-select-container">
       <h2>Category</h2>
       <div className={`custom-select ${isOpen ? "open" : ""}`} onClick={() => setIsOpen(!isOpen)}>
-        <span>{selectedCategory || "Select a category"}</span>
+        <span>{formObject.Category || "Select a category"}</span>
         <div className="arrow"></div>
       </div>
       {isOpen && (
@@ -47,7 +48,7 @@ function Category({ selectedCategory, setSelectedCategory }) {
           {categories.map((category, index) => (
             <div
               key={index}
-              className={`dropdown-item ${selectedCategory === category ? "selected" : ""}`}
+              className={`dropdown-item ${formObject.Category === category ? "selected" : ""}`}
               onClick={() => handleSelect(category)}
             >
               {category}
