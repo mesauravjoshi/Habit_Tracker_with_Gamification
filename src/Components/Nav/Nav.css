@@ -30,3 +30,9 @@ button {
         display: block;
     }
 }
+
+@media (max-width: 850px) {
+    .nav-link {
+        padding: 10px 11px 9px 0px;
+    }
+}

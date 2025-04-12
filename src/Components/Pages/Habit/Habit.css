@@ -30,6 +30,49 @@
     grid-column: 1/ span 2;
 }
 
+/* Date Input Styles */
+input[type="date"] {
+    appearance: none;
+    background: linear-gradient(135deg, #f19c20, #f19c20);
+    /* Gradient Background */
+    color: white;
+    /* Text Color */
+    padding: 8px 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Placeholder & Selected Date Color */
+input[type="date"]::-webkit-datetime-edit {
+    color: #292931;
+}
+
+/* Remove Default Calendar Icon */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    /* Makes the default calendar icon white */
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Hover Effect */
+input[type="date"]:hover {
+    transform: scale(1.0);
+    box-shadow: 0px 4px 10px #f19c20;
+}
+
+/* Focus Effect */
+input[type="date"]:focus {
+    transform: scale(1.0);
+    box-shadow: 0px 6px 15px #e4a23f;
+}
+
+
+
 .Add-Habit {
     input {
         border: 1px solid #f19c20;
@@ -77,12 +120,13 @@
 }
 
 .slider {
-    width: 55%;
+    width: 77%;
     margin: 10px 0;
     -webkit-appearance: none;
     appearance: none;
     height: 8px;
-    background: linear-gradient(to right, #292931, #847d3a, #f44336, #cd1717);    border-radius: 5px;
+    background: linear-gradient(to right, #292931, #847d3a, #f44336, #cd1717);
+    border-radius: 5px;
     outline: none;
     transition: 0.3s;
 }
@@ -110,7 +154,7 @@
 
 .priority-text {
     font-size: 18px;
-    font-weight: bold;
+    /* font-weight: bold; */
     margin-top: 10px;
     /* color: #333; */
 }
@@ -123,4 +167,18 @@
     display: flex;
     grid-column: 1/ span 2;
     justify-content: center;
+}
+
+
+@media (max-width: 500px) {
+    .habbit{
+        display: flex;
+    }
+
+    .Target-Duration {
+        grid-column: 1 / span 2;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+    }
 }

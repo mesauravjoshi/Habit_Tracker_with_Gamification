@@ -69,7 +69,7 @@ function Streak() {
 
     const totalDays = Math.floor((targetDateMidnight - startDateMidnight) / (1000 * 60 * 60 * 24)) + 1;
     // console.log('line 71: ',Math.ceil(totalDays/7));
-    return Math.ceil(totalDays/7);
+    return Math.ceil(totalDays / 7);
   }
 
   return (
@@ -106,7 +106,7 @@ function Streak() {
                   100
                 );
                 // console.log(progress);
-                
+
                 DayWeeksCompeted = `Total Weeks Completed: ${streak.TotalWeeksCompleted}`;
               }
 

@@ -14,6 +14,12 @@ function Habit() {
   const [targetDuration, setTargetDuration] = useState("");
   const [priority, setPriority] = useState(0);
 
+  // Get today's date in YYYY-MM-DD format
+  const getTodayDate = () => {
+    const today = new Date();
+    return today.toISOString().split("T")[0]; // Extract YYYY-MM-DD
+  };
+
   const handleFrequencyChange = (event) => {
     if (event.target.name === "Frequency") {
       setSelectedFrequency(event.target.value);
@@ -24,10 +30,10 @@ function Habit() {
     const lastDay = new Date();
     lastDay.setDate(lastDay.getDate() + 6);
     lastDay.setHours(0, 0, 0, 0);
-  
+
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-  
+
     const newHabit = {
       Habit: habit,
       Category: selectedCategory,
@@ -40,7 +46,7 @@ function Habit() {
         TotalStreak: 0
       }
     };
-  
+
     if (selectedFrequency === 'Daily') {
       newHabit.TotalDaysCompleted = 0;
     } else if (selectedFrequency === 'Weekly') {
@@ -50,10 +56,10 @@ function Habit() {
       console.log('nothing is selected');
       return;  // Exit if no valid frequency is selected
     }
-  
+
     const newHabits = [...habits, newHabit];
     setHabits(newHabits);
-  
+
     // Reset input fields
     setHabit('');
     setSelectedCategory('');
@@ -77,8 +83,6 @@ function Habit() {
 
   return (
     <>
-      {/* <Slider/>
-    <Nav/> */}
       <div className='habbit'>
         {/* 1. Add-Habit */}
         <div id='borderr' className="Add-Habit">
@@ -103,9 +107,15 @@ function Habit() {
         </div>
 
         {/* 3. Target Duration */}
-        <div id='borderr' className="Target-Duration">
+        <div id="borderr" className="Target-Duration">
           <h2>Target Duration</h2>
-          <input type="date" value={targetDuration} onChange={(e) => setTargetDuration(e.target.value)} />
+          {/* <UseCalander/> */}
+          <input
+            type="date"
+            value={targetDuration}
+            onChange={(e) => setTargetDuration(e.target.value)}
+            min={getTodayDate()} // Restrict selection to dates after today
+          />
         </div>
 
         {/* 4.  Frequency */}

@@ -64,7 +64,7 @@
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
-    position: relative;
+    /* position: relative; */
     overflow: hidden;
 }
 
@@ -81,7 +81,7 @@
 
 /* Disabled Button */
 .StreakUpdate-button:disabled {
-    z-index: 0;
+    /* z-index: 0; */
     color: black;
     background: #d99292;
     cursor: not-allowed;

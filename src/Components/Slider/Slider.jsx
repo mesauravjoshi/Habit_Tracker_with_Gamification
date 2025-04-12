@@ -6,9 +6,11 @@ function Slider({ isOpen, closeSlider }) {
     <div className={`Slider show-slider ${isOpen ? "show" : ""}`}>
 
     {/* <div className={`Slider ${isOpen ? "show-slider" : ""}`}> */}
+    <div className="close-container">
       <div className="close-icon" onClick={closeSlider}>
         ✖ {/* Close button */}
       </div>
+    </div>
       <div className='logo'>
         <h3>
           <center>

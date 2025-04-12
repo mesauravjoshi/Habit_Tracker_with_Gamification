@@ -30,7 +30,7 @@ li {
     text-decoration: none;
     color: #dc8a18;
     font-size: 18px;
-    font-weight: bold;
+    font-weight: 600;
     padding: 10px;
     margin: 0 1em 4px 0;
     border-radius: 5px;
@@ -52,7 +52,7 @@ li {
     position: absolute;
     width: 100%;
     height: 100%;
-    background: linear-gradient(45deg, #e7994945, #c88f3c);
+    background: linear-gradient(45deg, #d38b4345, #c88f3c);
     top: 0;
     left: -100%;
     transition: all 0.3s ease-in-out;
@@ -70,14 +70,20 @@ li {
 
 .nav-link:active {
     transform: scale(0.95);
-    background: #ff4b2b;
+    background: transparent;
 }
 
 /* Close (X) Button */
+.close-container{
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 12px;
+}
+
 .close-icon {
     display: none;
     font-size: 24px;
-    color: white;
+    color: #f19c20;
     cursor: pointer;
 }
 
@@ -86,7 +92,6 @@ li {
         display: none;
     }
 
-    /* When show-slider is applied, animate its appearance */
     .show-slider {
         position: fixed;
         width: 12em;
@@ -102,10 +107,11 @@ li {
     /* When it appears, slide in */
     .show-slider.show {
         z-index: 1;
+        box-shadow: 5px 1px 20px 20px #2c2c37;
         transform: translateX(0);
     }
 
     .close-icon {
-        display: block;
+        display: inline-block;
     }
 }
