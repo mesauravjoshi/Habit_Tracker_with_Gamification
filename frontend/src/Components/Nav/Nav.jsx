@@ -4,6 +4,7 @@ import LoginModal from "./LoginModal";
 import LogOutPopUp from "./LogOutPopUp";
 import "./Nav.css";
 import { AuthContext } from "../Context/AuthContext";
+import { useNavigate } from 'react-router-dom';
 
 function Nav({ toggleSlider }) {
   const { user } = useContext(AuthContext); // Access user from context
@@ -11,6 +12,7 @@ function Nav({ toggleSlider }) {
   const [profileDropDown, setProfileDropDown] = useState(false);
   const [isLogOutPopUpOpen, setIsLogOutPopUpOpen] = useState(false);
 
+  const navigate = useNavigate();
   const dropdownRef = useRef(null);
 
   useEffect(() => {
@@ -43,7 +45,10 @@ function Nav({ toggleSlider }) {
             <div onClick={() => setProfileDropDown(prev => !prev)} className="profile-logo">
               <p>{user.username.toUpperCase().slice(0, 1)}</p>
             </div> :
-            <button onClick={() => setLoginOpen(true)} className="login-btn">
+            <button onClick={() => {
+              navigate('/login');
+              // setLoginOpen(true)
+            }} className="login-btn">
               Login
             </button>
         }

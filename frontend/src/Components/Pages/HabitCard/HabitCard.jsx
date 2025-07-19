@@ -145,13 +145,13 @@ function Streak({ habitData, setHabitData, insideArchive, archivedHabit, setArch
         }
       });
       const data = await response.json();
-      // console.log(data.data.habitId);
+      console.log(data.data.habitId);
       const archivedHabitId = data.data.habitId;
       const filterArchived = habitData.filter(item => (item._id != archivedHabitId));
       setHabitData(filterArchived);
       fetchArchivePData();
     } catch (error) {
-      console.error('Error deleting habits:', error);
+      console.error('Error save archive habit:', error);
     }
   }
 

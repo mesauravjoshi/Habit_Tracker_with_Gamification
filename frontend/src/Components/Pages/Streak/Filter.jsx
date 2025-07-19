@@ -1,15 +1,15 @@
 import { useState } from 'react';
 import './Filter.css';
 
-function Filter({ setHabitData, updatedStreakData, showFilter, setShowFilter, selectedFrequencies, setSelectedFrequencies, selectedBadges, setSelectedBadges, selectedCategory, setSelectedCategory}) {
-
+function Filter({ setHabitData, updatedStreakData, showFilter, setShowFilter, selectedFrequencies, setSelectedFrequencies, selectedBadges, setSelectedBadges, selectedCategory, setSelectedCategory }) {
 
   const handleFilterHabit = () => {
 
     const copy_inside = [...updatedStreakData];
 
-    if (selectedFrequencies.length === 0 && selectedBadges.length === 0 && selectedCategory.length === 0 ){
-      console.log('empty');
+    if (selectedFrequencies.length === 0 && selectedBadges.length === 0 && selectedCategory.length === 0) {
+      // console.log('empty');
+      return
     } else {
 
       if (selectedFrequencies.length > 0 && selectedBadges.length > 0 && selectedCategory.length > 0) {
@@ -29,6 +29,7 @@ function Filter({ setHabitData, updatedStreakData, showFilter, setShowFilter, se
         setHabitData(copy_inside.filter(habit => selectedCategory.includes(habit.Category)));
       }
     }
+    setShowFilter(false)
   };
 
   const handleFilterReset = () => {
@@ -190,11 +191,9 @@ function Filter({ setHabitData, updatedStreakData, showFilter, setShowFilter, se
         </div>
 
         <div className="filter-button-box">
-          <button onClick={() => {
-            handleFilterHabit();
-            setShowFilter(false)
-          }
-          } disabled={selectedFrequencies.length === 0 && selectedBadges.length === 0 && selectedCategory.length === 0}> Apply </button>
+          <button onClick={() => { handleFilterHabit(); }}
+          // disabled={selectedFrequencies.length === 0 && selectedBadges.length === 0 && selectedCategory.length === 0}
+          > Apply </button>
           <button onClick={() => handleFilterReset()} >Reset</button>
         </div>
 

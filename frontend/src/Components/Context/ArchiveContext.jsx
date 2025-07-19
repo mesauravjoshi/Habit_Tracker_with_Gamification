@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect } from "react";
 import { url } from '../../URL/Url'
-
+import axios from "axios";
 export const ArchiveContext = createContext();
 
 export const ArchiveProvider = ({ children }) => {
@@ -9,17 +9,26 @@ export const ArchiveProvider = ({ children }) => {
   const fetchArchivePData = async () => {
     const token = localStorage.getItem("habit token");
     try {
-      const response = await fetch(`${url}/archive/archive`, {
-        method: 'GET',
+      // const response = await fetch(`${url}/archive/archive`, {
+      //   method: 'GET',
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //     "Authorization": `Bearer ${token}`
+      //   }
+      // });
+      // const data = await response.json();
+      const res = await axios.get(`${url}/archive/archive`, {
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`
         }
       });
-      const data = await response.json();
-      setArchiveHabits(data.map(habit => habit.habitId));
+      if (res.data) {
+        setArchiveHabits(res.data.map(habit => habit.habitId));
+      }
+      console.log(res);
     } catch (error) {
-      console.error('Error deleting habits:', error);
+      console.error('Error Fetching Archive habits:', error.message);
     }
   };
   useEffect(() => {

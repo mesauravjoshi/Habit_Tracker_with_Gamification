@@ -16,7 +16,6 @@ function Streak() {
   const { archiveHabits } = useContext(ArchiveContext);
   const [habitData, setHabitData] = useState([]);
   const [updatedStreakData, setUpdatedStreakData] = useState([]);
-
   const [selectedFrequencies, setSelectedFrequencies] = useState([]);
   const [selectedBadges, setSelectedBadges] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState([]);
