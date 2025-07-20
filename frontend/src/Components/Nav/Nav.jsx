@@ -1,16 +1,20 @@
-import { useState, useContext, useEffect, useRef } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import { ProfileIcon, SettingIcon, SignoutIcon, SigninIcon } from "../../assets/Icons/Icons";
 import LoginModal from "./LoginModal";
 import LogOutPopUp from "./LogOutPopUp";
 import "./Nav.css";
 import { AuthContext } from "../Context/AuthContext";
 import { useNavigate } from 'react-router-dom';
+import TestModalJoshi from "../Pages/Hero/TestModalJoshi";
+import { Link } from "react-router-dom";
 
 function Nav({ toggleSlider }) {
   const { user } = useContext(AuthContext); // Access user from context
   const [isLoginOpen, setLoginOpen] = useState(false);
   const [profileDropDown, setProfileDropDown] = useState(false);
   const [isLogOutPopUpOpen, setIsLogOutPopUpOpen] = useState(false);
+  // mui modal 
+  const [open, setOpen] = React.useState(false);
 
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
@@ -48,15 +52,21 @@ function Nav({ toggleSlider }) {
             <button onClick={() => {
               navigate('/login');
               // setLoginOpen(true)
+              setOpen(true)
             }} className="login-btn">
               Login
             </button>
         }
+        <TestModalJoshi
+          open={open} setOpen={setOpen}
+        />
 
         {profileDropDown && (
           <div ref={dropdownRef} className="User-Profile-Dropdown show">
             <p> <ProfileIcon /> &nbsp; &nbsp; View Profile</p>
-            <p> <SettingIcon />  &nbsp; &nbsp; Settings</p>
+            <Link to={'/setting'}>
+              <p> <SettingIcon />  &nbsp; &nbsp; Settings</p>
+            </Link>
             <p onClick={(e) => {
               // console.log('removed');
               // localStorage.removeItem('habit token');
@@ -75,7 +85,7 @@ function Nav({ toggleSlider }) {
       </div>
 
       {/* Login Modal */}
-      {isLoginOpen && <LoginModal setLoginOpen={setLoginOpen} onClose={() => setLoginOpen(false)} />}
+      {/* {isLoginOpen && <LoginModal setLoginOpen={setLoginOpen} onClose={() => setLoginOpen(false)} />} */}
     </div>
   );
 }

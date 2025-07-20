@@ -1,64 +1,50 @@
-import { useState, useContext } from "react";
-import "./App.css";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { AuthContext } from './Components/Context/AuthContext';
+import MainLayout from './Layouts/MainLayout';
+import PlainLayout from './Layouts/PlainLayout';
+import Home from './Components/Pages/Home/Home';
+import Setting from './Components/Setting/Seting';
+import {useContext } from "react";
+
 import Habit from "./Components/Pages/AddHabit/Habit";
-import Home from "./Components/Pages/Home/Home";
 import Streak from "./Components/Pages/Streak/Streak";
 import Archive from "./Components/Pages/Archive/Archive";
-import Slider from "./Components/Slider/Slider";
-import Nav from "./Components/Nav/Nav";
-import { BrowserRouter as Router, Routes, Route, Outlet, Navigate } from "react-router-dom";
 import Completed from "./Components/Pages/Completed/Completed";
 import Badges from "./Components/Pages/Badges/Badges";
-import { AuthContext } from './Components/Context/AuthContext';
-import LoginModal from "./Components/Nav/LoginModal";
+import { Outlet } from "react-router-dom";
 
 function App() {
-  const [isSliderOpen, setIsSliderOpen] = useState(false);
   const { token } = useContext(AuthContext);
 
-  const toggleSlider = () => {
-    setIsSliderOpen(!isSliderOpen);
+  const PrivateRoutes = () => {
+    return token ? <Outlet /> : <Navigate to="/home" />;
   };
 
-  const PrivateRoutes = () => {
-    // Authenticate token first 
-    if (token) {
-      console.log('outlet');
-      return <Outlet />
-    } else {
-      console.log('nav /home');
-      return <Navigate to="/home" />
-    }
-    // return token ? <Outlet /> : <Navigate to="/home" />;
-  }
-
   return (
-    <>
-      <div className="track-app">
-        <Router>
-          <Slider isOpen={isSliderOpen} closeSlider={toggleSlider} />
-          <Nav toggleSlider={toggleSlider} />
+    <Routes>
+      {/* Public Routes (MainLayout) */}
+      <Route element={<MainLayout />}>
+        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
+        
+        {/* Protected Routes (MainLayout) */}
+        <Route element={<PrivateRoutes />}>
+          <Route path="/habit" element={<Habit />} />
+          <Route path="/track-streak" element={<Streak />} />
+          <Route path="/archive" element={<Archive />} />
+          <Route path="/completed" element={<Completed />} />
+          <Route path="/badges" element={<Badges />} />
+        </Route>
+      </Route>
 
-          <Routes >
-            <Route path="/" element={<Home />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/login" element={<LoginModal />} />
+      {/* Routes with PlainLayout (No Slider/Nav) */}
+      <Route element={<PlainLayout />}>
+        <Route path="/setting" element={<Setting />} />
+      </Route>
 
-            {/* 🔁 Catch-all route to handle undefined paths */}
-            <Route path="*" element={<Navigate to="/home" />} />
-
-            <Route element={<PrivateRoutes />} >
-              <Route path="/habit" element={<Habit />} />
-              <Route path="/track-streak" element={<Streak />} />
-              <Route path="/archive" element={<Archive />} />
-              <Route path="/completed" element={<Completed />} />
-              <Route path="/badges" element={<Badges />} />
-            </Route>
-          </Routes>
-        </Router>
-
-      </div>
-    </>
+      {/* Catch-all */}
+      <Route path="*" element={<Navigate to="/home" />} />
+    </Routes>
   );
 }
 

@@ -28,7 +28,7 @@ function Streak() {
   const [showFilter, setShowFilter] = useState(false);
 
   const menuRef = useRef(null);
-  
+
   if (!authContext) {
     console.log("AuthContext is not yet available.");
     return null;
@@ -61,7 +61,7 @@ function Streak() {
             setLoading(false);
             return;
           }
-          console.log("Error from API:", data.error.message);
+          console.log("Error from API:", data.error);
           setLoading(false);
           return;
         }
@@ -116,12 +116,12 @@ function Streak() {
         {
           showFilter &&
           <Filter showFilter={showFilter} setShowFilter={setShowFilter} setHabitData={setHabitData} updatedStreakData={updatedStreakData}
-          selectedFrequencies={selectedFrequencies}
-          setSelectedFrequencies={setSelectedFrequencies}
-          selectedBadges={selectedBadges}
-          setSelectedBadges={setSelectedBadges}
-          selectedCategory={selectedCategory} 
-          setSelectedCategory={setSelectedCategory}  />
+            selectedFrequencies={selectedFrequencies}
+            setSelectedFrequencies={setSelectedFrequencies}
+            selectedBadges={selectedBadges}
+            setSelectedBadges={setSelectedBadges}
+            selectedCategory={selectedCategory}
+            setSelectedCategory={setSelectedCategory} />
         }
 
         {

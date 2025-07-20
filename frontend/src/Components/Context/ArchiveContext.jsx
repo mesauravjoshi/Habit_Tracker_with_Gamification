@@ -26,11 +26,12 @@ export const ArchiveProvider = ({ children }) => {
       if (res.data) {
         setArchiveHabits(res.data.map(habit => habit.habitId));
       }
-      console.log(res);
+      // console.log(res);
     } catch (error) {
       console.error('Error Fetching Archive habits:', error.message);
     }
   };
+
   useEffect(() => {
     fetchArchivePData();
   }, []);
