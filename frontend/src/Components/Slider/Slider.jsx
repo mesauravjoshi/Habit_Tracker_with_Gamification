@@ -24,7 +24,6 @@ function Slider({ isOpen, closeSlider }) {
     };
   }, [isOpen, closeSlider]);
 
-
   return (
     <div ref={sliderRef} className={`Slider show-slider ${isOpen ? "show" : ""}`}>
 

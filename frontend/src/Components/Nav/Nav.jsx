@@ -85,7 +85,7 @@ function Nav({ toggleSlider }) {
       </div>
 
       {/* Login Modal */}
-      {/* {isLoginOpen && <LoginModal setLoginOpen={setLoginOpen} onClose={() => setLoginOpen(false)} />} */}
+      {isLoginOpen && <LoginModal setLoginOpen={setLoginOpen} onClose={() => setLoginOpen(false)} />}
     </div>
   );
 }

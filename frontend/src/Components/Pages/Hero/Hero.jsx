@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
-import "./Hero.css"; // Import the CSS file
+import "./Hero.css";
 import { StreaXPContext } from '../../Context/Strea&XPContext'
 
 const Hero = () => {

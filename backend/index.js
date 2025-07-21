@@ -15,11 +15,13 @@ const authRoutes = require('./routes/auth');
 const habit = require('./routes/habit');
 const user = require('./routes/user');
 const archiveHabit = require('./routes/archive');
+const profile = require('./routes/profile');
 
 app.use('/auth', authRoutes);
 app.use('/habit', habit);
 app.use('/user', user);
 app.use('/archive', archiveHabit);
+app.use('/profile', profile);
 
 const PORT = process.env.PORT || 3000;
 // console.log(PORT);
