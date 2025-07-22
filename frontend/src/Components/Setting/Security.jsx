@@ -4,30 +4,14 @@ import { AuthContext } from "../Context/AuthContext";
 import axios from "axios";
 import { url } from "../../URL/Url";
 
-export default function Profile() {
-  const { user, token } = useContext(AuthContext);
+export default function Security() {
+  const { token } = useContext(AuthContext);
   const [formData, setFormData] = useState({
-    name: "",
-    username: ""
+    currentPassword: "",
+    newPassword: "",
+    confirmPassword: ""
   });
 
-  useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        // const token = localStorage.getItem('token'); // or use context if stored there
-        const res = await axios.get(`${url}/profile/profile`, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
-        if (res.data) setFormData(res.data)
-        // console.log(res.data);
-      } catch (err) {
-        console.error(err);
-      }
-    }
-    fetchProfile()
-  }, [])
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -39,14 +23,14 @@ export default function Profile() {
 
   const updateProfile = async () => {
     try {
-      const res = await axios.patch(`${url}/profile/profile`, formData, {
+      const res = await axios.patch(`${url}/profile/chnagePassword`, formData, {
         headers: {
           Authorization: `Bearer ${token}`
         }
       });
 
       if (res.data) setFormData(res.data)
-      // console.log(res.data);
+      console.log(res.data);
     } catch (err) {
       console.error(err);
     }
@@ -63,34 +47,47 @@ export default function Profile() {
       className="space-y-4 max-w-md text-white"
     >
       <div>
-        <label className="block mb-1 text-sm">Name</label>
+        <label className="block mb-1 text-sm">Current Pasoword</label>
         <input
           type="text"
-          name="name"
-          value={formData.name}
+          name="currentPassword"
+          value={formData.currentPassword}
           onChange={handleChange}
           className="w-full p-2 rounded-md bg-zinc-800 text-yellow-400 border border-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-600"
-          placeholder="Enter your name"
+          placeholder="Current Pasoword"
         />
       </div>
 
       <div>
-        <label className="block mb-1 text-sm">Email</label>
+        <label className="block mb-1 text-sm">New Passoword</label>
         <input
-          type="text"
-          name="username"
-          value={formData.username}
+          type="password"
+          name="newPassword"
+          value={formData.newPassword}
           onChange={handleChange}
           className="w-full p-2 rounded-md bg-zinc-800 text-yellow-400 border border-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-600"
-          placeholder="Enter your username"
+          placeholder="New Passoword"
+        />
+      </div>
+
+      <div>
+        <label className="block mb-1 text-sm">Confirm Passoword</label>
+        <input
+          type="text"
+          name="confirmPassword"
+          value={formData.confirmPassword}
+          onChange={handleChange}
+          className="w-full p-2 rounded-md bg-zinc-800 text-yellow-400 border border-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-600"
+          placeholder="Confirm Passoword"
         />
       </div>
 
       <button
         type="submit"
         className="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded-md"
+      // onClick={() => handleUpateProfile()}
       >
-        Update
+        Change Passowrd
       </button>
     </form>
   );

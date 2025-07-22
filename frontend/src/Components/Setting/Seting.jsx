@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Nav from "../Nav/Nav";
 import Profile from "./Profile";
+import Security from "./Security";
 
 const tabs = [
   { id: "profile", label: "Profile Settings" },
@@ -17,7 +18,7 @@ export default function Setting() {
       case "profile":
         return <Profile />
       case "security":
-        return <div>Change your password and 2FA preferences.</div>;
+        return <Security />
       case "notifications":
         return <div>Manage your email and push notifications.</div>;
       case "deleteAccount":

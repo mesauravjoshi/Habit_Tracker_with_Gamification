@@ -13,7 +13,6 @@ function Nav({ toggleSlider }) {
   const [isLoginOpen, setLoginOpen] = useState(false);
   const [profileDropDown, setProfileDropDown] = useState(false);
   const [isLogOutPopUpOpen, setIsLogOutPopUpOpen] = useState(false);
-  // mui modal 
   const [open, setOpen] = React.useState(false);
 
   const navigate = useNavigate();
@@ -50,16 +49,16 @@ function Nav({ toggleSlider }) {
               <p>{user.username.toUpperCase().slice(0, 1)}</p>
             </div> :
             <button onClick={() => {
-              navigate('/login');
-              // setLoginOpen(true)
-              setOpen(true)
+              // navigate('/login');
+              setLoginOpen(true)
+              // setOpen(true)
             }} className="login-btn">
               Login
             </button>
         }
-        <TestModalJoshi
+        {/* <TestModalJoshi
           open={open} setOpen={setOpen}
-        />
+        /> */}
 
         {profileDropDown && (
           <div ref={dropdownRef} className="User-Profile-Dropdown show">
