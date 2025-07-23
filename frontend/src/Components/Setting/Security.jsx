@@ -12,7 +12,6 @@ export default function Security() {
     confirmPassword: ""
   });
 
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -30,7 +29,7 @@ export default function Security() {
       });
 
       if (res.data) setFormData(res.data)
-      console.log(res.data);
+      // console.log(res.data);
     } catch (err) {
       console.error(err);
     }

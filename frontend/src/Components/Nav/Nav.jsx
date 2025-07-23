@@ -61,21 +61,40 @@ function Nav({ toggleSlider }) {
         /> */}
 
         {profileDropDown && (
-          <div ref={dropdownRef} className="User-Profile-Dropdown show">
-            <p> <ProfileIcon /> &nbsp; &nbsp; View Profile</p>
-            <Link to={'/setting'}>
-              <p> <SettingIcon />  &nbsp; &nbsp; Settings</p>
+          <div
+            ref={dropdownRef}
+            className={`absolute right-4 top-12 z-10 bg-[rgba(40,40,50,0.9)] backdrop-blur-md p-1 rounded-xl w-[170px] shadow-[0_8px_24px_rgba(0,0,0,0.2)] transform transition-all duration-300 ${profileDropDown ? 'scale-100 opacity-100 pointer-events-auto' : 'scale-90 opacity-0 pointer-events-none'
+              } before:content-[''] before:absolute before:-top-2 before:right-3 before:w-3 before:h-3 before:bg-[rgba(40,40,50,0.9)] before:rotate-45`}
+          >
+            <p className="flex items-center gap-3 text-sm p-2 rounded-md text-white hover:bg-white/10 cursor-pointer">
+              <ProfileIcon />
+              View Profile
+            </p>
+            <Link to="/setting">
+              <p className="flex items-center gap-3 text-sm p-2 rounded-md text-white hover:bg-white/10 cursor-pointer">
+                <SettingIcon />
+                Settings
+              </p>
             </Link>
-            <p onClick={(e) => {
-              // console.log('removed');
-              // localStorage.removeItem('habit token');
-              // setUser(null);
-              // fetchUserData();
-              setProfileDropDown(prev => !prev)
-              setIsLogOutPopUpOpen(true);
-            }}  ><SignoutIcon /> &nbsp; &nbsp; Log out</p>
-            <p onClick={() => setLoginOpen(true)} > <SigninIcon /> &nbsp; &nbsp; Sign In</p>
+            <p
+              onClick={() => {
+                setProfileDropDown(prev => !prev);
+                setIsLogOutPopUpOpen(true);
+              }}
+              className="flex items-center gap-3 text-sm p-2 rounded-md text-white hover:bg-white/10 cursor-pointer"
+            >
+              <SignoutIcon />
+              Log out
+            </p>
+            <p
+              onClick={() => setLoginOpen(true)}
+              className="flex items-center gap-3 text-sm p-2 rounded-md text-white hover:bg-white/10 cursor-pointer"
+            >
+              <SigninIcon />
+              Sign In
+            </p>
           </div>
+
         )}
         {
           isLogOutPopUpOpen &&

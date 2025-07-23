@@ -104,9 +104,20 @@ function Streak() {
       <div className='strek-container'>
         <div className='Habit-list'>
           <h1> Habit list  </h1>
-
-          <button onClick={() => setShowFilter(prev => !prev)} >
-            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="green"><path d="M400-240v-80h160v80H400ZM240-440v-80h480v80H240ZM120-640v-80h720v80H120Z" /></svg>
+          <button
+            onClick={() => setShowFilter(prev => !prev)}
+            className="flex items-center gap-2 bg-yellow-700 px-3 py-2 font-semibold text-white rounded-full cursor-pointer transition-all duration-300 active:scale-95 hover:shadow-md"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="24px"
+              viewBox="0 -960 960 960"
+              width="24px"
+              fill="white"
+              className="transition-transform duration-300 group-hover:rotate-180"
+            >
+              <path d="M400-240v-80h160v80H400ZM240-440v-80h480v80H240ZM120-640v-80h720v80H120Z" />
+            </svg>
             Filters
           </button>
 

@@ -116,7 +116,7 @@
   opacity: 0;
   transform: scale(0.9);
   transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-  pointer-events: none; /* Prevent clicks when hidden */
+  pointer-events: none; 
 }
 
 /* Show Dropdown */

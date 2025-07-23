@@ -10,40 +10,6 @@
   font-size: 0.8em;
 }
 
-button {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 7px 18px;
-  font-size: 17px;
-  font-weight: 600;
-  color: black;
-  /* background: linear-gradient(135deg, #d99292, #d99292); */
-  border: none;
-  border-radius: 45px;
-  cursor: pointer;
-  transition: all 0.3sease-in-out;
-  /* box-shadow: 0 4px 10px rgba(255, 75, 43, 0.3); */
-}
-
-/* button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 14px rgba(255, 75, 43, 0.4);
-} */
-
-button:active {
-  transform: scale(0.98);
-}
-
-button svg {
-  transition: transform 0.3s ease-in-out;
-}
-
-button:hover svg {
-  transform: rotate(180deg);
-}
-
-
 @media (max-width: 550px) {
   .strek-container {
     overflow-y: hidden;
