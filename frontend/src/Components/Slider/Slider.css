@@ -13,13 +13,15 @@
 .slider-header {
     display: flex;
     align-items: center;
-    justify-content: space-between; /* Pushes content apart */
+    justify-content: space-between;
+    /* Pushes content apart */
     padding: 10px;
     font-family: "Phudu", serif;
     letter-spacing: 4px;
     font-weight: 427;
     font-style: oblique;
     margin-bottom: 0.6em;
+
     /* color: white; */
     h3 {
         font-size: 1.4em;
@@ -34,24 +36,10 @@
     transition: transform 0.2s ease-in-out;
 }
 
-.close-icon:hover {
-    transform: scale(1.2);
-}
 
-
-li {
+/* li {
     padding: 0.7em 0.3em;
-}
-
-.slider-list {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    padding: 20px;
-    background: #1e1e2f;
-    border-radius: 10px;
-    width: 200px;
-}
+} */
 
 .nav-link {
     text-decoration: none;
@@ -86,34 +74,13 @@ li {
     border-radius: 5px;
 }
 
-.nav-link:hover::before {
-    left: 0;
-}
-
-.nav-link:hover {
-    transform: scale(1.05);
-    color: #c88f3c;
-    margin: 0 1em 4px 17px;
-}
-
-/* Remove hover effect if the link is active */
-.nav-link.active:hover::before {
-    left: -100%;
-}
-
-.nav-link.active:hover {
-    transform: none;
-    color: inherit; /* Keep the active color unchanged */
-}
-
 .nav-link.active {
-    background: linear-gradient(45deg, #d38b4345, #d38b4345);
+    background: #5b3c1029;
     color: #e8951b;
-    /* transform: scale(1.05); */
 }
 
 /* Close (X) Button */
-.close-container{
+.close-container {
     display: flex;
     justify-content: flex-end;
     padding: 0 12px;
@@ -140,7 +107,8 @@ li {
         padding: 8px 2px;
         background: linear-gradient(272deg, #2b2b33, #212329);
         transition: transform 0.4s ease-in-out;
-        transform: translateX(-100%); /* Start off-screen */
+        transform: translateX(-100%);
+        /* Start off-screen */
     }
 
     /* When it appears, slide in */
@@ -156,5 +124,5 @@ li {
 
     .nav-link {
         padding: 10px;
-      }
+    }
 }

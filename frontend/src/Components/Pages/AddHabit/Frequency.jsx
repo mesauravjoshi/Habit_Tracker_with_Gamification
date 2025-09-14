@@ -23,7 +23,6 @@ function Frequency({ setMinDate, setFormObject, formObject }) {
 
   return (
     <div id="borderr" className="Frequency" onChange={handleFrequencyChange}>
-      <h2>Frequency</h2>
       <div className="custom-toggle">
         <input type="radio" id="Daily" name="Frequency" value="Daily" checked={formObject.Frequency === "Daily"}
           onChange={handleFrequencyChange} />

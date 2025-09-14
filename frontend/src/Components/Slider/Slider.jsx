@@ -2,6 +2,40 @@ import { useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import './Slider.css'
 import { Home, AddHabit, TrackHabit, Archive, Completed, Badges } from "./SliderIcon";
+
+const navigation = [
+  {
+    name: "Home",
+    to: "/",
+    icon: Home,
+  },
+  {
+    name: "Add Habit",
+    to: "/habit",
+    icon: AddHabit,
+  },
+  {
+    name: "Track Streak",
+    to: "/track-streak",
+    icon: TrackHabit,
+  },
+  {
+    name: "Archive",
+    to: "/archive",
+    icon: Archive,
+  },
+  {
+    name: "Completed",
+    to: "/completed",
+    icon: Completed,
+  },
+  {
+    name: "Badges",
+    to: "/badges",
+    icon: Badges,
+  },
+];
+
 function Slider({ isOpen, closeSlider }) {
 
   const sliderRef = useRef(null);
@@ -34,42 +68,17 @@ function Slider({ isOpen, closeSlider }) {
         </div>
       </div>
 
-      <div className="Slider-list">
-        {/* 1. Home  */}
-        <NavLink to="/" className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}>
-          <Home />
-          <li>Home</li>
-        </NavLink>
-
-        {/* 2. Add Habits  */}
-        <NavLink to="/habit" className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}>
-          <AddHabit />
-          <li>Add Habit</li>
-        </NavLink>
-
-        {/* 3. Track Streak  */}
-        <NavLink to="/track-streak" className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}>
-          <TrackHabit />
-          <li>Track Streak</li>
-        </NavLink>
-
-        {/* 4. Archive  */}
-        <NavLink to="/archive" className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}>
-          <Archive />
-          <li>Archive</li>
-        </NavLink>
-
-        {/* 5. Completed  */}
-        <NavLink to="/completed" className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}>
-          <Completed />
-          <li>Completed</li>
-        </NavLink>
-
-        {/* 6. Badges  */}
-        <NavLink to="/badges" className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}>
-          <Badges />
-          <li>Badges</li>
-        </NavLink>
+      <div className="">
+        {navigation.map((item) => (
+          <NavLink
+            key={item.to}
+            to={item.to}
+            className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}
+          >
+            <item.icon />
+            <li>{item.name}</li>
+          </NavLink>
+        ))}
       </div>
     </div>
   )

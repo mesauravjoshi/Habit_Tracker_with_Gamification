@@ -68,21 +68,6 @@ input[type="date"]:focus {
     box-shadow: 0px 6px 15px #e4a23f;
 }
 
-.Add-Habit {
-    input {
-        outline-style: none;
-        border: 1px solid #f19c20;
-        color: #f19c20;
-        background: transparent;
-        padding: 0 9px;
-        border-radius: 5px;
-        font-size: 16px;
-        width: 100%;
-        height: 1.9em;
-        text-align: left;
-    }
-}
-
 .Add-Habit ::placeholder {
     color: #f19d2093;
 }
@@ -135,42 +120,6 @@ input[type="date"]:focus {
 }
 
 /* priority ---------------------------- */
-
-.Add-Habit-Button {
-    display: flex;
-    grid-column: 1/ span 2;
-    justify-content: center;
-}
-
-.Add-Habit-Button button {
-    height: 2.9em;
-    background: linear-gradient(135deg, #f1a234, #d98714);
-    color: white;
-    font-size: 18px;
-    font-weight: 600;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-    box-shadow: 0px 4px 10px rgba(241, 156, 32, 0.3);
-    position: relative;
-    overflow: hidden;
-}
-
-/* Cool Hover Effect */
-.Add-Habit-Button button:hover {
-    /* transform: translateY(-1px); */
-    background: linear-gradient(135deg, #ffb144, #c8760c);
-    box-shadow: 0px 6px 10px rgba(241, 156, 32, 0.5);
-}
-
-/* Button Pressed Effect */
-.Add-Habit-Button button:active {
-    transform: translateY(2px);
-    box-shadow: 0px 2px 5px rgba(241, 156, 32, 0.3);
-}
-
 
 @media (max-width: 500px) {
     .habbit {

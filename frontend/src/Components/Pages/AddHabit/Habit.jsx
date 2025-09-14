@@ -5,6 +5,17 @@ import { url } from '../../../URL/Url';
 import { AuthContext } from "../../Context/AuthContext";
 import Category from './Category';
 import Frequency from './Frequency';
+import { categories } from './Category'
+import {
+  Dialog,
+  DialogBackdrop,
+  DialogPanel,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuItems,
+  TransitionChild,
+} from '@headlessui/react'
 
 function Habit() {
   const { user, token } = useContext(AuthContext);
@@ -18,6 +29,7 @@ function Habit() {
     TargetDuration: '',
     Priority: 0,
   });
+  const [isOpen, setIsOpen] = useState(false);
 
   // Get today's date in YYYY-MM-DD format
   const getTodayDate = () => {
@@ -35,6 +47,13 @@ function Habit() {
     })
   }
 
+  const handleSelect = (category) => {
+    setFormObject((prev) => { return { ...prev, 'Category': category } });
+    // setFormObject(category);
+    // console.log(category);
+    setIsOpen(false);
+  };
+
   const handleAddHabit = async () => {
     const lastDay = new Date();
     lastDay.setDate(lastDay.getDate() + 6);
@@ -42,76 +61,74 @@ function Habit() {
 
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    if (formObject.HabitName.trim() === '' || formObject.TargetDuration === '' || formObject.Frequency === '') {  
-      alert("All field required !")
-    } else {
-      // const user_id = user._id
-      // setFormObject((prev) => {
-      //   // console.log(prev);
-      //   return { ...prev, 'priority': priorityLabels[prev.priority] }
-      // })
-      const newHabit = {
-        ...formObject,
-        Priority: priorityLabels[formObject.Priority],
-        userId: user._id,// ✅ Attach user ID
-        StartedDate: today.toString(),
-        StreakRecord: {
-          LastUpdate: "",
-          TotalStreak: 0,
-          XPPoints: 0
-        },
-        BadgeRecord: {
-          AchievedOn: "",
-          Badge: "",
-          StreakDuration: ""
-        },
-        IsConmpleted: false,
-      };
+    console.log(formObject);
 
-      if (formObject.Frequency === 'Daily') {
-        newHabit.TotalDaysCompleted = 0;
-        newHabit.CalendarData = {}
-      } else if (formObject.Frequency === 'Weekly') {
-        newHabit.CalendarData = [
-          {
-            start: "",
-            end: "",
-            status: "",
-          }
-        ],
-          newHabit.StreakRecord.LastDayForWeek = lastDay.toString();
-        newHabit.TotalWeeksCompleted = 0;
-      } else {
-        console.log('nothing is selected');
-        return;
-      }
+    if (formObject.HabitName.trim() === '' || !formObject.TargetDuration || !formObject.Frequency === '') {
+      alert("All field required !");
+      return
+    }
 
-      try {
-        const response = await fetch(`${url}/habit/add_habit`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',  // Make sure the server understands the data format
-            "Authorization": `Bearer ${token}` // Include JWT token
-          },
-          body: JSON.stringify(newHabit),  // Send data as JSON
-        });
-
-        if (response.ok) {
-          const result = await response.json();
-          // console.log(result);
-        } else {
-          const errorResponse = await response.json();
-          console.error('Error:', errorResponse);
+    const newHabit = {
+      ...formObject,
+      Priority: priorityLabels[formObject.Priority],
+      userId: user._id,
+      StartedDate: today.toString(),
+      StreakRecord: {
+        LastUpdate: "",
+        TotalStreak: 0,
+        XPPoints: 0
+      },
+      BadgeRecord: {
+        AchievedOn: "",
+        Badge: "",
+        StreakDuration: ""
+      },
+      IsConmpleted: false,
+    };
+    // console.log(newHabit);
+    // return
+    if (formObject.Frequency === 'Daily') {
+      newHabit.TotalDaysCompleted = 0;
+      newHabit.CalendarData = {}
+    } else if (formObject.Frequency === 'Weekly') {
+      newHabit.CalendarData = [
+        {
+          start: "",
+          end: "",
+          status: "",
         }
-      } catch (error) {
-        console.error('Error:', error);
-      } finally {
-        console.log('finally');
-        // Reset input fields
-        setFormObject((prev) => {
-          return { ...prev, HabitName: '', Priority: 0, TargetDuration: '', Category: '' ,Frequency: ''}
-        });
+      ],
+        newHabit.StreakRecord.LastDayForWeek = lastDay.toString();
+      newHabit.TotalWeeksCompleted = 0;
+    } else {
+      return;
+    }
+
+    try {
+      const response = await fetch(`${url}/habit/add_habit`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify(newHabit),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        // console.log(result);
+      } else {
+        const errorResponse = await response.json();
+        console.error('Error:', errorResponse);
       }
+    } catch (error) {
+      console.error('Error:', error);
+    } finally {
+      console.log('finally');
+      // Reset input fields
+      setFormObject((prev) => {
+        return { ...prev, HabitName: '', Priority: 0, TargetDuration: '', Category: '', Frequency: '' }
+      });
     }
   };
 
@@ -132,53 +149,96 @@ function Habit() {
 
   return (
     <>
-      <div className='habbit'>
-        {/* 1. Add-Habit */}
-        <div id="borderr" className="Add-Habit">
-          <h2>Add Yoor Habbit </h2>
-          <input type="text" placeholder='Habit name...'
-            value={formObject.HabitName} name='HabitName'
-            onChange={(e) => handleFormChange(e)}
-          />
-        </div>
-
-        {/* 2.  Frequency */}
-        <Frequency setMinDate={setMinDate} setFormObject={setFormObject} formObject={formObject}
-        />
-
-        {/* 3. Target Duration */}
-        <div id="borderr" className="Target-Duration">
-          <h2>Target Duration</h2>
-          <input
-            type="date" name='TargetDuration'
-            value={formObject.TargetDuration}
-            onChange={(e) => handleFormChange(e)}
-            min={minDate} // Restrict selection to dates after today
-          />
-          <div className="call">
+      <div className='m-8 bg-[#292931] outline -outline-offset-1 outline-white/1 sm:rounded-xl p-4'>
+        <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 md:col-span-2 mb-4">
+          <div className="sm:col-span-3">
+            <label htmlFor="My-Habit" className="block text-sm/6 font-medium text-amber-400">
+              My Habit
+            </label>
+            <div className="mt-2">
+              <input
+                id="My-Habit"
+                name="HabitName"
+                type="text"
+                value={formObject.HabitName}
+                onChange={(e) => handleFormChange(e)}
+                className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
+              // className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-amber-400 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-amber-500 sm:text-sm/6"
+              />
+            </div>
           </div>
+          <div className="sm:col-span-3">
+            <label htmlFor="last-name" className="block text-sm/6 font-medium text-amber-400">
+              Frequency
+            </label>
+            <Frequency setMinDate={setMinDate} setFormObject={setFormObject} formObject=
+            {formObject} />
+          </div>
+
+          <div className="sm:col-span-4">
+            <label htmlFor="target-duration" className="block text-sm/6 font-medium text-amber-400">
+              Target Duration
+            </label>
+            <div className="mt-2">
+              <input
+                id="target-duration"
+                type="date" name='TargetDuration'
+                value={formObject.TargetDuration}
+                onChange={(e) => handleFormChange(e)}
+                min={minDate}
+              />
+            </div>
+          </div>
+
+          <div className="sm:col-span-3">
+            <label htmlFor="Category" className="block text-sm/6 font-medium text-amber-400">
+              Category
+            </label>
+            <div className={`custom-select ${isOpen ? "open" : ""}`} onClick={() => setIsOpen(!isOpen)}>
+              <span>{formObject.Category || "Select a category"}</span>
+              <div className="arrow"></div>
+            </div>
+            {isOpen && (
+              <div className="dropdown">
+                {categories.map((category, index) => (
+                  <div
+                    key={index}
+                    className={`dropdown-item ${formObject.Category === category ? "selected" : ""}`}
+                    onClick={() => handleSelect(category)}
+                  >
+                    {category}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+          <div className="sm:col-span-3">
+            <label htmlFor="Priority-Level" className="block text-sm/6 font-medium text-amber-400">
+              Priority Level
+            </label>
+            <input
+              type="range" name='Priority'
+              min="0"
+              max="3"
+              step="1"
+              value={formObject.Priority}
+              onChange={(e) => handleFormChange(e)}
+              className="slider"
+            />
+            <p className="priority-text">{priorityLabels[formObject.Priority]}</p>
+          </div>
+
         </div>
-
-        {/* 4. Category */}
-        <Category setFormObject={setFormObject} formObject={formObject} />
-
-        {/* 6.  Priority Level */}
-        <div id="borderr" className="Priority-Level">
-          <h2>Priority Level</h2>
-          <input
-            type="range" name='Priority'
-            min="0"
-            max="3"
-            step="1"
-            value={formObject.Priority}
-            onChange={(e) => handleFormChange(e)}
-            className="slider"
-          />
-          <p className="priority-text">{priorityLabels[formObject.Priority]}</p>
-        </div>
-
-        <div className="Add-Habit-Button">
-          <button onClick={handleAddHabit}>Add Habit</button>
+        <div className="flex items-center justify-end gap-x-6 border-t border-white/10 px-4 py-4 sm:px-8">
+          <button type="button" className="text-sm/6 font-semibold text-white">
+            Reset
+          </button>
+          <button
+            type="submit"
+            onClick={handleAddHabit}
+            className="rounded-md bg-amber-500/20 px-3.5 py-2.5 text-sm font-semibold text-amber-400 hover:bg-amber-500/30"          >
+            Add
+          </button>
         </div>
       </div>
     </>

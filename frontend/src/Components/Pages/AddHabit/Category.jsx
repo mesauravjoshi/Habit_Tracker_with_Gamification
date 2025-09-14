@@ -1,22 +1,23 @@
 import React, { useState } from 'react';
 import './Category.css'
 
+export const categories = [
+  "Health & Fitness 🏋️‍♂️",
+  "Productivity & Work 📑",
+  "Mindfulness & Mental Health 🧘‍♂️",
+  "Diet & Nutrition 🥗",
+  "Personal Growth 📖",
+  "Social & Relationships 💬",
+  "Finance & Budgeting ",
+  "Hobbies & Creativity 🎨 ",
+  "Self - Care & Well - being 🛁",
+  // "Custom ✏️"
+];
+
 function Category({ setFormObject, formObject }) {
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const categories = [
-    "Health & Fitness 🏋️‍♂️",
-    "Productivity & Work 📑",
-    "Mindfulness & Mental Health 🧘‍♂️",
-    "Diet & Nutrition 🥗",
-    "Personal Growth 📖",
-    "Social & Relationships 💬",
-    "Finance & Budgeting ",
-    "Hobbies & Creativity 🎨 ",
-    "Self - Care & Well - being 🛁",
-    // "Custom ✏️"
-  ];
   /*
   Health & Fitness 🏋️‍♂️ (e.g., Exercise, Yoga, Running)
   Productivity & Work 📑 (e.g., Study, Deep Work, Learning)
