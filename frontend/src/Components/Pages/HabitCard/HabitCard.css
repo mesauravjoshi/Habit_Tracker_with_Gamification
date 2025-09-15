@@ -121,7 +121,8 @@
   grid-row-gap: 14px;
   grid-template-columns: 6fr 3fr 0.6fr;
   padding: 10px 8px 10px 17px;
-  margin: 0px 17px 14px 30px;
+  margin-bottom: 12px;
+  /* margin: 0px 17px 14px 30px; */
   border-radius: 8px;
   /* font-weight: bold; */
   transition: transform 0.3s ease-in-out, box-shadow 0.3s;
