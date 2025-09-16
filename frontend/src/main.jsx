@@ -4,17 +4,20 @@ import App from './App.jsx'
 import { AuthProvider } from './Components/Context/AuthContext.jsx'
 import { ArchiveProvider } from './Components/Context/ArchiveContext'
 import { StreaXPProvider } from './Components/Context/Strea&XPContext.jsx'
+import { ThemeProvider } from './Components/Context/ThemeProvider.jsx'
 import { BrowserRouter } from 'react-router-dom'
 import './index.css';
 
 createRoot(document.getElementById('root')).render(
-  <BrowserRouter> 
-    <AuthProvider>
-      <ArchiveProvider>
-        <StreaXPProvider>
-          <App />
-        </StreaXPProvider>
-      </ArchiveProvider>
-    </AuthProvider>
+  <BrowserRouter>
+    <ThemeProvider>
+      <AuthProvider>
+        <ArchiveProvider>
+          <StreaXPProvider>
+            <App />
+          </StreaXPProvider>
+        </ArchiveProvider>
+      </AuthProvider>
+    </ThemeProvider>
   </BrowserRouter>
 )

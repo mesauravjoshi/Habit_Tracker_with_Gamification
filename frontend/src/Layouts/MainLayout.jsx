@@ -14,17 +14,9 @@ import {
   TransitionChild,
 } from '@headlessui/react'
 import { Link, NavLink } from "react-router-dom";
+import { useTheme } from "@/Components/Context/ThemeProvider";
 
-// const navigation = [
-//   { name: 'Dashboard', href: '#', current: true },
-//   { name: 'Team', href: '#', current: false },
-//   { name: 'Projects', href: '#', current: false },
-//   { name: 'Calendar', href: '#', current: false },
-//   { name: 'Documents', href: '#', current: false },
-//   { name: 'Reports', href: '#', current: false },
-// ]
-Bars3Icon
-import { Home, AddHabit, TrackHabit, Archive, Completed, Badges, Setting, Bars3Icon, ChevronDownIcon, SunIcon, MagnifyingGlassIcon } from "@/Components/Slider/SliderIcon";
+import { Home, AddHabit, TrackHabit, Archive, Completed, Badges, Setting, Bars3Icon, ChevronDownIcon, SunIcon, MoonIcon, MagnifyingGlassIcon } from "@/Components/Slider/SliderIcon";
 
 const navigation = [
   { name: "Home", to: "/", icon: Home },
@@ -40,6 +32,7 @@ const teams = [
   { id: 2, name: 'Tailwind Labs', href: '#', initial: 'T', current: false },
   { id: 3, name: 'Workcation', href: '#', initial: 'W', current: false },
 ]
+
 const userNavigation = [
   { name: 'Your profile', href: '#' },
   { name: 'Sign out', href: '#' },
@@ -56,6 +49,7 @@ export default function MainLayout() {
   const toggleSlider = () => {
     setIsSliderOpen(!isSliderOpen);
   };
+  const { theme, toggleTheme } = useTheme();
   return (
     <div>
       <Dialog open={sidebarOpen} onClose={setSidebarOpen} className="relative z-50 lg:hidden">
@@ -79,7 +73,7 @@ export default function MainLayout() {
             </TransitionChild>
 
             {/* Sidebar component, swap this element with another sidebar if you like */}
-            <div className="relative flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6 pb-4 ring-1 ring-white/10">
+            <div className="relative flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6 pb-4 ring-1 ring-white/10 dark:before:pointer-events-none dark:before:absolute dark:before:inset-0 dark:before:bg-black/10">
               <div className="relative flex h-16 shrink-0 items-center">
                 <img
                   alt="Your Company"
@@ -112,27 +106,7 @@ export default function MainLayout() {
                     </ul>
                   </li>
                   <li>
-                    {/* <div className="text-xs/6 font-semibold text-gray-400">Your teams</div> */}
-                    {/* <ul role="list" className="-mx-2 mt-2 space-y-1">
-                         {teams.map((team) => (
-                           <li key={team.name}>
-                             <a
-                               href={team.href}
-                               className={classNames(
-                                 team.current
-                                   ? 'bg-white/5 text-white'
-                                   : 'text-gray-400 hover:bg-white/5 hover:text-white',
-                                 'group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold',
-                               )}
-                             >
-                               <span className="flex size-6 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-[0.625rem] font-medium text-gray-400 group-hover:border-white/20 group-hover:text-white">
-                                 {team.initial}
-                               </span>
-                               <span className="truncate">{team.name}</span>
-                             </a>
-                           </li>
-                         ))}
-                       </ul> */}
+
                   </li>
                   <li className="mt-auto">
                     <NavLink
@@ -153,7 +127,7 @@ export default function MainLayout() {
       {/* Static sidebar for desktop */}
       <div className="hidden bg-gray-900 ring-1 ring-white/10 lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
         {/* Sidebar component, swap this element with another sidebar if you like */}
-        <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-black/10 px-6 pb-4">
+        <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-50 dark:bg-black/10 px-6 pb-4">
           <div className="flex h-16 shrink-0 items-center">
             <img
               alt="Your Company"
@@ -186,25 +160,7 @@ export default function MainLayout() {
                 </ul>
               </li>
               <li>
-                {/* <div className="text-xs/6 font-semibold text-gray-400">Your teams</div> */}
-                {/* <ul role="list" className="-mx-2 mt-2 space-y-1">
-                     {teams.map((team) => (
-                       <li key={team.name}>
-                         <a
-                           href={team.href}
-                           className={classNames(
-                             team.current ? 'bg-white/5 text-white' : 'text-gray-400 hover:bg-white/5 hover:text-white',
-                             'group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold',
-                           )}
-                         >
-                           <span className="flex size-6 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-[0.625rem] font-medium text-gray-400 group-hover:border-white/20 group-hover:text-white">
-                             {team.initial}
-                           </span>
-                           <span className="truncate">{team.name}</span>
-                         </a>
-                       </li>
-                     ))}
-                   </ul> */}
+
               </li>
               <li className="mt-auto">
                 <NavLink
@@ -221,11 +177,11 @@ export default function MainLayout() {
       </div>
 
       <div className="lg:pl-72">
-        <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-700 bg-gray-900 px-4 shadow-xs sm:gap-x-6 sm:px-6 lg:px-8">
+        <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-gray-50 px-4 shadow-xs sm:gap-x-6 sm:px-6 lg:px-8 dark:border-white/10 dark:bg-gray-900">
           <button
             type="button"
             onClick={() => setSidebarOpen(true)}
-            className="-m-2.5 p-2.5 text-gray-700 hover:text-gray-900 lg:hidden"
+            className="-m-2.5 p-2.5 text-gray-700 hover:text-gray-900 lg:hidden dark:text-gray-400 dark:hover:text-white"
           >
             <span className="sr-only">Open sidebar</span>
             <Bars3Icon aria-hidden="true" className="" />
@@ -240,7 +196,7 @@ export default function MainLayout() {
                 name="search"
                 placeholder="Search"
                 aria-label="Search"
-                className="col-start-1 row-start-1 block size-full bg-gray-900 pl-8 text-base text-amber-900 outline-hidden placeholder:text-gray-400 sm:text-sm/6"
+                className="col-start-1 row-start-1 block size-full bg-gray-50 pl-8 text-base text-gray-900 outline-hidden placeholder:text-gray-400 sm:text-sm/6 dark:bg-gray-900 dark:text-white dark:placeholder:text-gray-500"
               />
               {/* <MagnifyingGlassIcon
                 aria-hidden="true"
@@ -248,9 +204,14 @@ export default function MainLayout() {
               /> */}
             </form>
             <div className="flex items-center gap-x-4 lg:gap-x-6">
-              <button type="button" className=" text-gray-400 hover:text-gray-500">
+              <button type="button" className=" text-gray-400 hover:text-gray-500"
+                onClick={toggleTheme}>
                 <span className="sr-only">View notifications</span>
-                <SunIcon aria-hidden="true" className="size-6" />
+                {theme === "dark" ?
+                  <MoonIcon aria-hidden="true" className="size-6" />
+                  :
+                  <SunIcon aria-hidden="true" className="size-6" />
+                }
               </button>
 
               {/* Separator */}
@@ -267,7 +228,7 @@ export default function MainLayout() {
                     className="size-8 rounded-full bg-gray-50 outline -outline-offset-1 outline-black/5"
                   />
                   <span className="hidden lg:flex lg:items-center">
-                    <span aria-hidden="true" className="ml-4 text-sm/6 font-semibold text-amber-400">
+                    <span aria-hidden="true" className="ml-4 text-sm/6 font-semibold text-gray-900 dark:text-amber-500">
                       Tom Cook
                     </span>
                     <ChevronDownIcon aria-hidden="true" className="ml-2 size-5 text-gray-400" />
@@ -275,16 +236,17 @@ export default function MainLayout() {
                 </MenuButton>
                 <MenuItems
                   transition
-                  className="absolute right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg outline outline-gray-900/5 transition data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
+                  className="absolute right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md bg-gray-50 py-2 shadow-lg outline outline-gray-900/5 transition data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in dark:bg-gray-800 dark:shadow-none dark:-outline-offset-1 dark:outline-white/10"
+
                 >
                   {userNavigation.map((item) => (
                     <MenuItem key={item.name}>
-                      <NavLink
-                        to={item.href}
-                        className="block px-3 py-1 text-sm/6 text-gray-900 data-focus:bg-gray-50 data-focus:outline-hidden"
+                      <a
+                        href={item.href}
+                        className="block px-3 py-1 text-sm/6 text-gray-900 data-focus:bg-amber-50 data-focus:outline-hidden dark:text-amber-500 dark:data-focus:bg-amber-100"
                       >
                         {item.name}
-                      </NavLink>
+                      </a>
                     </MenuItem>
                   ))}
                 </MenuItems>
