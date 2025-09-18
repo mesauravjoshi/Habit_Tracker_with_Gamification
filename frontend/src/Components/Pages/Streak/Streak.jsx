@@ -102,7 +102,7 @@ function Streak() {
   return (
     <>
       <div className='strek-container'>
-        <div className='Habit-list'>
+        {/* <div className='Habit-list'>
           <h1> Habit list  </h1>
           <button
             onClick={() => setShowFilter(prev => !prev)}
@@ -119,10 +119,10 @@ function Streak() {
               <path d="M400-240v-80h160v80H400ZM240-440v-80h480v80H240ZM120-640v-80h720v80H120Z" />
             </svg>
             Filters
-          </button>
+          </button> */}
 
-          <TotalStreakAndXP />
-        </div>
+          <TotalStreakAndXP heading={'Habit list'} />
+        {/* </div> */}
 
         {
           showFilter &&

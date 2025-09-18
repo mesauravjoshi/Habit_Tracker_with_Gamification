@@ -51,7 +51,7 @@ export default function MainLayout() {
   };
   const { theme, toggleTheme } = useTheme();
   return (
-    <div>
+    <div className="bg-gray-50 dark:bg-gray-900">
       <Dialog open={sidebarOpen} onClose={setSidebarOpen} className="relative z-50 lg:hidden">
         <DialogBackdrop
           transition

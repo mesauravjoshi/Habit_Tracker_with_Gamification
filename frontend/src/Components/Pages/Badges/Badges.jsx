@@ -80,10 +80,10 @@ function Badge() {
 
   return (
     <div className="Badge">
-      <div className="Habit-list">
+      {/* <div className="Habit-list">
         <h1>Badges</h1>
-        <TotalStreakAndXP />
-      </div>
+      </div> */}
+      <TotalStreakAndXP heading={'Badges'} />
       {user ? (
         loading ? (
           <div className="Badge-container">

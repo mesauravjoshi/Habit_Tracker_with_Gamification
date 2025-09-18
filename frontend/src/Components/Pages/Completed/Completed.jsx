@@ -39,11 +39,12 @@ function Completed() {
   }, [user]);
 
   return (
-    <div className='Complete-streak' style={{ overflowY: 'auto' }}>
-      <div className='Habit-list'>
+    // <div className='Complete-streak' style={{ overflowY: 'auto' }}>
+    <div className='Complete-streak'>
+      {/* <div className='Habit-list'>
         <h1>Completed Habits</h1>
-        <TotalStreakAndXP />
-      </div>
+      </div> */}
+        <TotalStreakAndXP heading={'Completed Habits'}/>
       {user ? (
         loading ? (
           <BlankHabitCard/>
