@@ -1,19 +1,5 @@
-.strek-container {
-  overflow-y: auto;
-}
-
-.Habit-list {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 0 2em;
-  font-size: 0.8em;
-}
-
+/* 
 @media (max-width: 550px) {
-  .strek-container {
-    overflow-y: hidden;
-  }
 
   .filter-habit select {
     width: 5em;
@@ -24,4 +10,4 @@
     font-size: 1.2em;
     margin: 0;
   }
-}
+} */

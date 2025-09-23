@@ -237,7 +237,6 @@ export default function MainLayout() {
                 <MenuItems
                   transition
                   className="absolute right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md bg-gray-50 py-2 shadow-lg outline outline-gray-900/5 transition data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in dark:bg-gray-800 dark:shadow-none dark:-outline-offset-1 dark:outline-white/10"
-
                 >
                   {userNavigation.map((item) => (
                     <MenuItem key={item.name}>
