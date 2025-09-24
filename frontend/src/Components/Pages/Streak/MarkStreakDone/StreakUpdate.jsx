@@ -341,11 +341,13 @@ function StreakUpdate({ setHabitData, LastUpdate, LastDayForWeek, TargetDuration
   return (
     <div style={{ display: 'flex', gap: '13px', justifyContent: 'center' }}>
       <button
-        className="StreakUpdate-button"
+        type="button"
         onClick={(event) => handleMarkAsDone(event, index)}
         disabled={isMarkedToday(LastUpdate, LastDayForWeek, TargetDuration, StartedDate)}
+        className="cursor-pointer rounded-md bg-[#ff416c] px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs hover:bg-[#fa4a73] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-600 disabled:bg-[#d99292] disabled:cursor-not-allowed"
       >
-        ✅ Mark as Done</button>
+        ✅ Mark as Done
+      </button>
     </div>
   );
 }

@@ -46,25 +46,24 @@ function Streak({ habitData, setHabitData, insideArchive, archivedHabit, setArch
   const [state, dispatch] = useReducer(reducer, initialState);
   const { token } = useContext(AuthContext);
   const { archiveHabits, fetchArchivePData } = useContext(ArchiveContext);
-  const menuRef = useRef(null);
 
   if (!authContext) {
     console.log("AuthContext is not yet available.");
     return null;
   }
 
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (menuRef.current && !menuRef.current.contains(event.target)) {
-        dispatch({ type: "TOGGLE_MENU", payload: { viewOption: false, menuCard: null } });
-      }
-    };
+  // useEffect(() => {
+  //   const handleClickOutside = (event) => {
+  //     if (menuRef.current && !menuRef.current.contains(event.target)) {
+  //       dispatch({ type: "TOGGLE_MENU", payload: { viewOption: false, menuCard: null } });
+  //     }
+  //   };
 
-    document.addEventListener("click", handleClickOutside);
-    return () => {
-      document.removeEventListener("click", handleClickOutside);
-    };
-  }, [archiveHabits])
+  //   document.addEventListener("click", handleClickOutside);
+  //   return () => {
+  //     document.removeEventListener("click", handleClickOutside);
+  //   };
+  // }, [archiveHabits])
 
   // ✅ Function to Calculate Day Left
   const calculateDayLeft = (TargetDuration) => {
@@ -247,62 +246,7 @@ function Streak({ habitData, setHabitData, insideArchive, archivedHabit, setArch
 
                   {/* 3. Options */}
                   <div className="HabitCard-options relative col-start-3 row-span-4 justify-start py-0.5">
-                    {/* {state.selectedMenuCard === streak._id && state.handleViewOption && (
-                      <div
-                        ref={menuRef}
-                        className="
-                     absolute left-[-5em] top-[43px] flex flex-col justify-start
-                    rounded-lg bg-[#4d454580] backdrop-blur-sm
-                    text-[#d1b5b5] px-1 py-1 z-10
-                  "
-                      >
-                        <div
-                          onClick={(event) => handleDelete(event, streak._id)}
-                          className="flex items-center gap-4 px-3 py-1 hover:bg-[#464650] transition duration-300"
-                        >
-                          <Delete />
-                          <p>Delete</p>
-                        </div>
-                        <div
-                          onClick={(event) => {
-                            event.stopPropagation();
-                            insideArchive ? handleUnarchive(streak._id) : handleArchiveHabit(streak._id);
-                          }}
-                          className="flex items-center gap-4 px-3 py-1 hover:bg-[#464650] transition duration-300"
-                        >
-                          {insideArchive ? (
-                            <>
-                              <Unarchive />
-                              <p>Unarchive</p>
-                            </>
-                          ) : (
-                            <>
-                              <Archive />
-                              <p>Archive</p>
-                            </>
-                          )}
-                        </div>
-                        <div
-                          onClick={() => dispatch({ type: 'TOGGLE_EXPAND', payload: true })}
-                          className="flex items-center gap-4 px-3 py-1 hover:bg-[#464650] transition duration-300"
-                        >
-                          <ViewCard />
-                          <p>View</p>
-                        </div>
-                      </div>
-                    )} */}
-                    {/* <div
-                      onClick={(event) => {
-                        event.stopPropagation();
-                        dispatch({
-                          type: 'TOGGLE_MENU',
-                          payload: { viewOption: true, menuCard: streak._id },
-                        });
-                      }}
-                      className="three-dot-elips relative flex items-center justify-center rounded-lg bg-[#35353d] px-2 py-1 m-1 cursor-pointer overflow-hidden"
-                    >
-                      <DotsIcon />
-                    </div> */}
+
                     <Menu as="div" className="relative inline-block">
                       <MenuButton className="flex items-center rounded-full text-gray-400 hover:text-gray-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
                         <div
@@ -373,7 +317,7 @@ function Streak({ habitData, setHabitData, insideArchive, archivedHabit, setArch
                   {/* 4. Streak update button */}
                   <div className="flex">
                     {insideArchive ? (
-                      <button className="" disabled>
+                      <button className="rounded-md px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs bg-[#d99292] cursor-not-allowed" disabled>
                         Archived
                       </button>
                     ) : (
