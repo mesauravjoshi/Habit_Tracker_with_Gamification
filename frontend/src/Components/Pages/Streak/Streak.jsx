@@ -8,6 +8,7 @@ import { ArchiveContext } from '../../Context/ArchiveContext';
 import { StreaXPContext } from '../../Context/Strea&XPContext';
 import TotalStreakAndXP from '../TotalStreak&XP/TotalStreak&XP';
 import Filter from './Filter';
+import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 
 function Streak() {
   const authContext = useContext(AuthContext);

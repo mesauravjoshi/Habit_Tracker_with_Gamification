@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useContext, useReducer } from 'react';
+import { useEffect, useRef, useContext, useReducer } from 'react';
 import './HabitCard.css'
 import { DotsIcon, ShareIcon, Archive, Unarchive, Delete, ViewCard } from "../../../assets/Icons/Icons";
 import { url } from '../../../URL/Url';
@@ -7,6 +7,7 @@ import DeleteConfirmUI from '../Streak/DeleteUI/DeleteConfirmUI';
 import ExpandCard from '../Streak/ExpandHabitCard/ExpandCard';
 import { AuthContext } from '../../Context/AuthContext';
 import { ArchiveContext } from '../../Context/ArchiveContext';
+import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 
 // ✅ Initial State
 const initialState = {
@@ -191,9 +192,8 @@ function Streak({ habitData, setHabitData, insideArchive, archivedHabit, setArch
           habitData={habitData}
           setHabitData={setHabitData} />
       }
-      <div className="Streak">
-        {
-          habitData &&
+      <div className=" flex flex-col">
+        {habitData &&
           habitData.map((streak, index) => {
             let daysLeft_cal = 0;
             let progress = 0;
@@ -201,115 +201,230 @@ function Streak({ habitData, setHabitData, insideArchive, archivedHabit, setArch
             let streakUI = '';
             let DayWeeksCompeted = 0;
             const Total_Target_Time = calculateTotalDays(streak.TargetDuration, streak.StartedDate);
+
             if (streak.Frequency === 'Daily') {
               daysLeft_cal = calculateDayLeft(streak.TargetDuration);
-              daysLeft = `No of days left: ${daysLeft_cal}`
-              streakUI = `🔥 Streak: ${streak.StreakRecord.TotalStreak} Days`
+              daysLeft = `No of days left: ${daysLeft_cal}`;
+              streakUI = `🔥 Streak: ${streak.StreakRecord.TotalStreak} Days`;
               progress = Math.min(
-                Math.round((streak.TotalDaysCompleted / calculateTotalDays(streak.TargetDuration, streak.StartedDate)) * 100),
+                Math.round(
+                  (streak.TotalDaysCompleted /
+                    calculateTotalDays(streak.TargetDuration, streak.StartedDate)) *
+                  100
+                ),
                 100
               );
               DayWeeksCompeted = `Total Days Completed: ${streak.TotalDaysCompleted}`;
-            } else if (streak.Frequency === "Weekly") {
+            } else if (streak.Frequency === 'Weekly') {
               daysLeft_cal = calculateWeekLeft(streak.TargetDuration);
               daysLeft = `No of Weeks left: ${daysLeft_cal}`;
               streakUI = `🔥 Streak: ${streak.StreakRecord.TotalStreak} Weeks`;
               progress = Math.min(
-                Math.round((streak.TotalWeeksCompleted / calculateTotalWeeks(streak.TargetDuration, streak.StartedDate)) * 100),
+                Math.round(
+                  (streak.TotalWeeksCompleted /
+                    calculateTotalWeeks(streak.TargetDuration, streak.StartedDate)) *
+                  100
+                ),
                 100
               );
-
               DayWeeksCompeted = `Total Weeks Completed: ${streak.TotalWeeksCompleted}`;
             }
 
             return (
-              <div className="HabitCard-Container" key={streak.HabitName}>
-                <div onClick={() => handleSelectHabitCard(streak, daysLeft, Total_Target_Time)} className="Habit-Card">
-                  {/* 1. habit name  */}
-                  <h3>{streak.HabitName} ({streak.Frequency}) {streak.BadgeRecord.Badge} </h3>
+              <div className="flex w-full flex-row justify-center" key={streak.HabitName}>
+                <div
+                  onClick={() => handleSelectHabitCard(streak, daysLeft, Total_Target_Time)}
+                  // className="grid grid-cols-[6fr_3fr_0.6fr] gap-y-3 w-full rounded-lg border border-red-500/80 text-pink-600 px-4 py-2"
+                  className='grid grid-cols-[6fr_3fr_0.6fr] gap-y-3 w-full rounded-lg border-1 border-pink-500/80 text-pink-600 px-4 py-2 mb-3'
+                >
+                  {/* 1. Habit Name */}
+                  <h3 className="text-lg font-semibold">
+                    {streak.HabitName} ({streak.Frequency}) {streak.BadgeRecord.Badge}
+                  </h3>
 
-                  {/* 2 .🔥 Streak */}
+                  {/* 2. 🔥 Streak */}
                   <p>{streakUI}</p>
 
-                  {/* 3. Options [dot and share icon]  */}
-                  <div className='HabitCard-options'>
-                    {state.selectedMenuCard === streak._id && state.handleViewOption  && (
-                      <div ref={menuRef} className="Options-details">
-                        {/* <div>
-                        </div> */}
-                        <div onClick={(event) => handleDelete(event, streak._id)} className='delete-icon'>
+                  {/* 3. Options */}
+                  <div className="HabitCard-options relative col-start-3 row-span-4 justify-start py-0.5">
+                    {/* {state.selectedMenuCard === streak._id && state.handleViewOption && (
+                      <div
+                        ref={menuRef}
+                        className="
+                     absolute left-[-5em] top-[43px] flex flex-col justify-start
+                    rounded-lg bg-[#4d454580] backdrop-blur-sm
+                    text-[#d1b5b5] px-1 py-1 z-10
+                  "
+                      >
+                        <div
+                          onClick={(event) => handleDelete(event, streak._id)}
+                          className="flex items-center gap-4 px-3 py-1 hover:bg-[#464650] transition duration-300"
+                        >
                           <Delete />
                           <p>Delete</p>
                         </div>
-                        <div onClick={(event) => {
-                          event.stopPropagation();
-                          { insideArchive ? handleUnarchive(streak._id) : handleArchiveHabit(streak._id) }
-                          // setHandleViewOption(false);
-                        }} className='delete-icon'>
-                          {
-                            insideArchive ?
-                              <>
-                                <Unarchive />
-                                <p>Unarchive</p>
-                              </> :
-                              <>
-                                <Archive />
-                                <p>Archive</p>
-                              </>
-                          }
+                        <div
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            insideArchive ? handleUnarchive(streak._id) : handleArchiveHabit(streak._id);
+                          }}
+                          className="flex items-center gap-4 px-3 py-1 hover:bg-[#464650] transition duration-300"
+                        >
+                          {insideArchive ? (
+                            <>
+                              <Unarchive />
+                              <p>Unarchive</p>
+                            </>
+                          ) : (
+                            <>
+                              <Archive />
+                              <p>Archive</p>
+                            </>
+                          )}
                         </div>
-                        <div onClick={() => dispatch({ type: "TOGGLE_EXPAND", payload: true })} className='delete-icon'>
+                        <div
+                          onClick={() => dispatch({ type: 'TOGGLE_EXPAND', payload: true })}
+                          className="flex items-center gap-4 px-3 py-1 hover:bg-[#464650] transition duration-300"
+                        >
                           <ViewCard />
                           <p>View</p>
                         </div>
                       </div>
-                    )}
-                    <div onClick={(event) => { event.stopPropagation(); dispatch({ type: "TOGGLE_MENU", payload: { viewOption: true, menuCard: streak._id } }); }} className='three-dot-elips'>
+                    )} */}
+                    {/* <div
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        dispatch({
+                          type: 'TOGGLE_MENU',
+                          payload: { viewOption: true, menuCard: streak._id },
+                        });
+                      }}
+                      className="three-dot-elips relative flex items-center justify-center rounded-lg bg-[#35353d] px-2 py-1 m-1 cursor-pointer overflow-hidden"
+                    >
                       <DotsIcon />
-                    </div>
-                    <div onClick={(event) => { event.stopPropagation(); }} className='share-arrow'>
+                    </div> */}
+                    <Menu as="div" className="relative inline-block">
+                      <MenuButton className="flex items-center rounded-full text-gray-400 hover:text-gray-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
+                        <div
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            dispatch({
+                              type: 'TOGGLE_MENU',
+                              payload: { viewOption: true, menuCard: streak._id },
+                            });
+                          }}
+                          className="three-dot-elips relative flex items-center justify-center rounded-lg bg-[#e5e5ed7b] dark:bg-[#35353d] px-2 py-1 m-1 cursor-pointer overflow-hidden"
+                        >
+                          <DotsIcon />
+                        </div>
+                      </MenuButton>
+
+                      <MenuItems
+                        transition
+                        className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-gray-200 dark:bg-gray-800 outline-1 -outline-offset-1 outline-white/10 transition data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
+                      >
+                        <div className="py-1">
+                          <div className="">
+                            <div
+                              onClick={(event) => handleDelete(event, streak._id)}
+                              className="flex items-center gap-4 px-3 py-1 hover:bg-[#464650] transition duration-300"
+                            >
+                              <Delete />
+                              <p>Delete</p>
+                            </div>
+                            <div
+                              onClick={(event) => {
+                                event.stopPropagation();
+                                insideArchive ? handleUnarchive(streak._id) : handleArchiveHabit(streak._id);
+                              }}
+                              className="flex items-center gap-4 px-3 py-1 hover:bg-[#464650] transition duration-300"
+                            >
+                              {insideArchive ? (
+                                <>
+                                  <Unarchive />
+                                  <p>Unarchive</p>
+                                </>
+                              ) : (
+                                <>
+                                  <Archive />
+                                  <p>Archive</p>
+                                </>
+                              )}
+                            </div>
+                            <div
+                              onClick={() => dispatch({ type: 'TOGGLE_EXPAND', payload: true })}
+                              className="flex items-center gap-4 px-3 py-1 hover:bg-[#464650] transition duration-300"
+                            >
+                              <ViewCard />
+                              <p>View</p>
+                            </div>
+                          </div>
+                        </div>
+                      </MenuItems>
+                    </Menu>
+                    <div
+                      onClick={(event) => event.stopPropagation()}
+                      className="relative flex items-center justify-center rounded-lg bg-[#35353d] px-2 py-1 m-1 cursor-pointer overflow-hidden"
+                    >
                       <ShareIcon />
                     </div>
                   </div>
 
-                  {/* 4. Streak update Button  */}
-                  <div style={{ display: 'flex' }}>
-                    {
-                      insideArchive ? <button className='StreakUpdate-button' disabled={true}>Archived</button> :
-                        <StreakUpdate
-                          setHabitData={setHabitData}
-                          Frequency={streak.Frequency}
-                          LastDayForWeek={streak.StreakRecord.LastDayForWeek}
-                          LastUpdate={streak.StreakRecord.LastUpdate}
-                          TargetDuration={streak.TargetDuration}
-                          StartedDate={streak.StartedDate}
-                          index={index}
-                          habitData={habitData}
-                        />
-                    }
+                  {/* 4. Streak update button */}
+                  <div className="flex">
+                    {insideArchive ? (
+                      <button className="" disabled>
+                        Archived
+                      </button>
+                    ) : (
+                      <StreakUpdate
+                        setHabitData={setHabitData}
+                        Frequency={streak.Frequency}
+                        LastDayForWeek={streak.StreakRecord.LastDayForWeek}
+                        LastUpdate={streak.StreakRecord.LastUpdate}
+                        TargetDuration={streak.TargetDuration}
+                        StartedDate={streak.StartedDate}
+                        index={index}
+                        habitData={habitData}
+                      />
+                    )}
                   </div>
 
-                  {/* 5. No of days left */}
+                  {/* 5. Days left */}
                   <p>{daysLeft}</p>
 
                   {/* 6. Progress Bar */}
-                  <div className='progress-outer'>
-                    <div className="progress-container" style={{ "--progress": `${progress}%` }}>
-                      <div className="progress-bar"></div>
+                  <div className="progress-outer flex items-center gap-2 mr-2">
+                    <div
+                      className="
+                  progress-container relative w-[85%] rounded-lg bg-[#222] p-1
+                  shadow-[0px_4px_10px_rgba(255,65,108,0.3)]
+                  overflow-hidden
+                "
+                      style={{ '--progress': `${progress}%` }}
+                    >
+                      <div
+                        className="
+                    progress-bar h-5 w-0 rounded-lg bg-gradient-to-r from-[#ff416c] to-[#ff4b2b]
+                    text-white font-bold flex items-center justify-center
+                  "
+                        style={{
+                          width: `${progress}%`,
+                          transition: 'width 2s ease-in-out',
+                        }}
+                      ></div>
                     </div>
-                    <p> {progress}%</p>
+                    <p>{progress}%</p>
                   </div>
 
-                  {/* 7. completed days/weeks  */}
-                  <div className="TotalDaysCompleted">
-                    {DayWeeksCompeted}
-                  </div>
+                  {/* 7. Completed Days/Weeks */}
+                  <div className="flex">{DayWeeksCompeted}</div>
                 </div>
               </div>
             );
-          })
-        }
-      </div>
+          })}
+      </div >
+
     </>
   )
 }
