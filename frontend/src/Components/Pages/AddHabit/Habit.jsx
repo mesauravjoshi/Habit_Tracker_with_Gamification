@@ -1,5 +1,4 @@
 import React, { useState, useContext } from 'react'
-import './Habit.css';
 import { useEffect } from 'react';
 import { url } from '../../../URL/Url';
 import { AuthContext } from "../../Context/AuthContext";

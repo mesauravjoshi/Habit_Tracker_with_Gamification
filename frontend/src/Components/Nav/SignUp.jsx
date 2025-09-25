@@ -122,6 +122,7 @@ const SignUpModal = ({ setIsFlipBox }) => {
 
     // API Request
     try {
+      console.log(state.formData);
       const response = await axios.post(`${url}/auth/signup`, state.formData);
       console.log('Success:', response.data);
 

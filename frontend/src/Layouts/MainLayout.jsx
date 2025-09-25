@@ -1,7 +1,5 @@
 import { useState, useContext } from "react";
 import { Outlet } from "react-router-dom";
-import Slider from "../Components/Slider/Slider";
-import Nav from "../Components/Nav/Nav";
 import "../App.css";
 import {
   Dialog,
@@ -26,12 +24,6 @@ const navigation = [
   { name: "Completed", to: "/completed", icon: Completed },
   { name: "Badges", to: "/badges", icon: Badges },
 ];
-
-const teams = [
-  { id: 1, name: 'Heroicons', href: '#', initial: 'H', current: false },
-  { id: 2, name: 'Tailwind Labs', href: '#', initial: 'T', current: false },
-  { id: 3, name: 'Workcation', href: '#', initial: 'W', current: false },
-]
 
 const userNavigation = [
   { name: 'Your profile', href: '#' },

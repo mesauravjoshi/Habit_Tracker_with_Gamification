@@ -3,8 +3,9 @@ import { AuthContext } from './Components/Context/AuthContext';
 import MainLayout from './Layouts/MainLayout';
 import PlainLayout from './Layouts/PlainLayout';
 import Home from './Components/Pages/Home/Home';
+import Login from './Components/Nav/Login';
 import Setting from './Components/Setting/Seting';
-import {useContext } from "react";
+import { useContext } from "react";
 
 import Habit from "./Components/Pages/AddHabit/Habit";
 import Streak from "./Components/Pages/Streak/Streak";
@@ -25,8 +26,9 @@ function App() {
       {/* Public Routes (MainLayout) */}
       <Route element={<MainLayout />}>
         <Route path="/" element={<Home />} />
+        <Route path="/auth" element={<Login />} />
         <Route path="/home" element={<Home />} />
-        
+
         {/* Protected Routes (MainLayout) */}
         <Route element={<PrivateRoutes />}>
           <Route path="/habit" element={<Habit />} />
@@ -34,12 +36,12 @@ function App() {
           <Route path="/archive" element={<Archive />} />
           <Route path="/completed" element={<Completed />} />
           <Route path="/badges" element={<Badges />} />
+          <Route path="/setting" element={<Setting />} />
         </Route>
       </Route>
 
       {/* Routes with PlainLayout (No Slider/Nav) */}
       <Route element={<PlainLayout />}>
-        <Route path="/setting" element={<Setting />} />
       </Route>
 
       {/* Catch-all */}
