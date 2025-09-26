@@ -4,7 +4,6 @@ import { url } from '../../../URL/Url';
 import { AuthContext } from "../../Context/AuthContext";
 import Category from './Category';
 import Frequency from './Frequency';
-import { categories } from './Category'
 
 function Habit() {
   const { user, token } = useContext(AuthContext);
@@ -14,7 +13,7 @@ function Habit() {
   const [formObject, setFormObject] = useState({
     HabitName: '',
     Category: '',
-    selectedFrequency: '',
+    Frequency: 'Daily',
     TargetDuration: '',
     Priority: 0,
   });
@@ -153,15 +152,13 @@ function Habit() {
                 onChange={(e) => handleFormChange(e)}
                 placeholder='Your Habit'
                 className="block w-full rounded-md bg-gray-900/5 dark:bg-white/5 px-3 py-1.5 text-base outline-1 -outline-offset-1 outline-amber-900/5 dark:outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-amber-500 sm:text-sm/6"
-              // className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-amber-400 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-amber-500 sm:text-sm/6"
               />
             </div>
           </div>
-          <div className="sm:col-span-3">
+          {/* <div className="sm:col-span-3">
             <label htmlFor="last-name" className="block text-sm/6 font-medium ">
               Frequency
             </label>
-            {/* <Frequency setMinDate={setMinDate} setFormObject={setFormObject} formObject={formObject} /> */}
             <div className="group relative inline-flex w-11 shrink-0 rounded-full bg-white/5 p-0.5 inset-ring inset-ring-white/10 outline-offset-2 outline-indigo-500 transition-colors duration-200 ease-in-out has-checked:bg-indigo-500 has-focus-visible:outline-2">
               <span className="size-5 rounded-full bg-white shadow-xs ring-1 ring-gray-900/5 transition-transform duration-200 ease-in-out group-has-checked:translate-x-5" />
               <input
@@ -171,7 +168,12 @@ function Habit() {
                 className="absolute inset-0 appearance-none focus:outline-hidden"
               />
             </div>
-          </div>
+          </div> */}
+          <Frequency
+            setMinDate={setMinDate}
+            setFormObject={setFormObject}
+            formObject={formObject}
+          />
 
           <div className="sm:col-span-4">
             <label htmlFor="target-duration" className="block text-sm/6 font-medium ">
@@ -188,7 +190,7 @@ function Habit() {
             </div>
           </div>
 
-          <div className="sm:col-span-3">
+          {/* <div className="sm:col-span-3">
             <label htmlFor="Category" className="block text-sm/6 font-medium ">
               Category
             </label>
@@ -209,7 +211,7 @@ function Habit() {
                 ))}
               </div>
             )}
-          </div>
+          </div> */}
           <div className="sm:col-span-3">
             <label htmlFor="Priority-Level" className="block text-sm/6 font-medium ">
               Priority Level

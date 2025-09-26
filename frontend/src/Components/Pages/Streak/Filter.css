@@ -212,8 +212,7 @@
     gap: 0.5rem;
     cursor: pointer;
 }
-
-/* Hide default checkbox */
+/* 
 input[type="checkbox"] {
     appearance: none;
     width: 20px;
@@ -227,7 +226,6 @@ input[type="checkbox"] {
     transition: all 0.1s ease-in-out;
 }
 
-/* Add custom checkmark */
 input[type="checkbox"]::before {
     content: "✔";
     font-size: 16px;
@@ -239,7 +237,6 @@ input[type="checkbox"]::before {
     transition: all 0.1s ease-in-out;
 }
 
-/* When checked */
 input[type="checkbox"]:checked {
     background-color: #d03665;
     border-color: #d03665;
@@ -247,9 +244,8 @@ input[type="checkbox"]:checked {
 
 input[type="checkbox"]:checked::before {
     transform: translate(-50%, -50%) scale(1);
-}
+} */
 
-/* Buttons */
 .filter-button-box {
     display: flex;
     flex-direction: column;
@@ -267,7 +263,6 @@ input[type="checkbox"]:checked::before {
     transition: 0.3s ease;
 }
 
-/* Apply button */
 .filter-button-box button:first-child {
     background: #007bff;
     color: white;

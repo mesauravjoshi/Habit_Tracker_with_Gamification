@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './Frequency.css'
 
 function Frequency({ setMinDate, setFormObject, formObject }) {
 
@@ -22,19 +21,84 @@ function Frequency({ setMinDate, setFormObject, formObject }) {
   };
 
   return (
-    <div id="borderr" className="Frequency" onChange={handleFrequencyChange}>
-      <div className="custom-toggle">
-        <input type="radio" id="Daily" name="Frequency" value="Daily" checked={formObject.Frequency === "Daily"}
-          onChange={handleFrequencyChange} />
-        <label htmlFor="Daily" className="option">Days</label>
+    <>
+      <div className="flex gap-6">
+        <div htmlFor="My-Habit" className="block text-sm/6 font-medium">
+          Frequency
+        </div>
+        {/* Daily */}
+        <label className="flex items-center gap-2 cursor-pointer">
+          <input
+            type="radio"
+            name="frequency"
+            value="Daily"
+            checked={formObject.Frequency === "Daily"}
+            onChange={(e) =>
+              setFormObject({ ...formObject, Frequency: e.target.value })
+            }
+            className="h-4 w-4 text-amber-600 focus:ring-amber-500 border-gray-300"
+          />
+          <span className="text-gray-800">Daily</span>
+        </label>
 
-        <input type="radio" id="Weekly" name="Frequency" value="Weekly" checked={formObject.Frequency === "Weekly"}
-          onChange={handleFrequencyChange} />
-        <label htmlFor="Weekly" className="option">Weeks</label>
-
-        <span className="Frequency-slider"></span>
+        {/* Weekly */}
+        <label className="flex items-center gap-2 cursor-pointer">
+          <input
+            type="radio"
+            name="frequency"
+            value="Weekly"
+            checked={formObject.Frequency === "Weekly"}
+            onChange={(e) =>
+              setFormObject({ ...formObject, Frequency: e.target.value })
+            }
+            className="h-4 w-4 text-amber-600 focus:ring-amber-500 border-gray-300"
+          />
+          <span className="text-gray-800">Weekly</span>
+        </label>
       </div>
-    </div>
+    </>
+    // <div id="borderr" className="Frequency" onChange={handleFrequencyChange}>
+    //   <div className="flex flex-col items-center justify-center text-center text-[1.1rem]">
+    //     <div className="relative flex w-[160px] h-[50px] bg-[#22232e] rounded-full p-1 shadow-md">
+    //       <input
+    //         type="radio"
+    //         id="Daily"
+    //         name="Frequency"
+    //         value="Daily"
+    //         checked={formObject.Frequency === "Daily"}
+    //         onChange={handleFrequencyChange}
+    //         className="hidden peer/daily"
+    //       />
+    //       <label
+    //         htmlFor="Daily"
+    //         className="flex-1 text-center leading-[42px] text-[16px] font-bold cursor-pointer transition-colors duration-300 text-[#e8e2d99e] peer-checked/daily:text-[#22232e]"
+    //       >
+    //         Days
+    //       </label>
+
+    //       <input
+    //         type="radio"
+    //         id="Weekly"
+    //         name="Frequency"
+    //         value="Weekly"
+    //         checked={formObject.Frequency === "Weekly"}
+    //         onChange={handleFrequencyChange}
+    //         className="hidden peer/weekly"
+    //       />
+    //       <label
+    //         htmlFor="Weekly"
+    //         className="flex-1 text-center leading-[42px] text-[16px] font-bold cursor-pointer transition-colors duration-300 text-[#e8e2d99e] peer-checked/weekly:text-[#22232e]"
+    //       >
+    //         Weeks
+    //       </label>
+
+    //       <span
+    //         className={`absolute top-[5px] w-[75px] h-[40px] rounded-full bg-gradient-to-br from-[#ee9e2f] to-[#c99955] transition-all duration-300 ${formObject.Frequency === "Daily" ? "left-[5px]" : "left-[80px]"
+    //           }`}
+    //       />
+    //     </div>
+    //   </div>
+    // </div>
   );
 }
 
