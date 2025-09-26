@@ -4,6 +4,7 @@ import { url } from '@/URL/Url';
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from '@/Components/Context/AuthContext';
 import { StreaXPContext } from "@/Components/Context/Strea&XPContext";
+import { Link } from "react-router-dom";
 // Single-file React component using TailwindCSS (mobile-first).
 // Copy this file into your project (e.g. src/components/AuthCard.jsx).
 // Make sure your project is configured for Tailwind and dark mode (class strategy is recommended).
@@ -75,12 +76,15 @@ export default function AuthCard() {
 
           {/* Illustration/Header */}
           <div className="px-6 pt-8 pb-6 text-center">
-            <div className="mx-auto w-20 h-20 flex items-center justify-center rounded-full bg-gradient-to-br from-emerald-400 to-sky-500 shadow-md">
-              {/* simple dumbbell + heart icon */}
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" className="w-10 h-10">
-                <path d="M3 10.5A1.5 1.5 0 0 1 4.5 9H6v6H4.5A1.5 1.5 0 0 1 3 13.5v-3zM18 9h1.5A1.5 1.5 0 0 1 21 10.5v3A1.5 1.5 0 0 1 19.5 15H18V9zM8 9h8v6H8V9zM6 6.75A1.75 1.75 0 0 1 7.75 5h8.5A1.75 1.75 0 0 1 18 6.75V17.25A1.75 1.75 0 0 1 16.25 19h-8.5A1.75 1.75 0 0 1 6 17.25V6.75z" />
-              </svg>
-            </div>
+            <Link to={'/home'}>
+              <div className="mx-auto w-20 h-20 flex items-center justify-center rounded-full bg-gradient-to-br from-emerald-400 to-sky-500 shadow-md">
+                {/* simple dumbbell + heart icon */}
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" className="w-10 h-10">
+                  <path d="M3 10.5A1.5 1.5 0 0 1 4.5 9H6v6H4.5A1.5 1.5 0 0 1 3 13.5v-3zM18 9h1.5A1.5 1.5 0 0 1 21 10.5v3A1.5 1.5 0 0 1 19.5 15H18V9zM8 9h8v6H8V9zM6 6.75A1.75 1.75 0 0 1 7.75 5h8.5A1.75 1.75 0 0 1 18 6.75V17.25A1.75 1.75 0 0 1 16.25 19h-8.5A1.75 1.75 0 0 1 6 17.25V6.75z" />
+                </svg>
+              </div>
+            </Link>
+
             <h1 className="mt-4 text-2xl font-semibold text-slate-900 dark:text-slate-100">{mode === "signup" ? "Start Building Better Habits" : "Welcome Back to HabitQuest"}</h1>
             <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">A simple place to track progress and build consistency.</p>
           </div>

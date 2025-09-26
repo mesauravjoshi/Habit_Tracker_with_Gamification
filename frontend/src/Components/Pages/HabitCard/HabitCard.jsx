@@ -257,7 +257,7 @@ function Streak({ habitData, setHabitData, insideArchive, archivedHabit, setArch
                               payload: { viewOption: true, menuCard: streak._id },
                             });
                           }}
-                          className="three-dot-elips relative flex items-center justify-center rounded-lg bg-[#e5e5ed7b] dark:bg-[#35353d] px-2 py-1 m-1 cursor-pointer overflow-hidden"
+                          className="three-dot-elips relative flex items-center justify-center rounded-lg px-2 py-1 m-1 cursor-pointer overflow-hidden"
                         >
                           <DotsIcon />
                         </div>
@@ -308,7 +308,7 @@ function Streak({ habitData, setHabitData, insideArchive, archivedHabit, setArch
                     </Menu>
                     <div
                       onClick={(event) => event.stopPropagation()}
-                      className="relative flex items-center justify-center rounded-lg bg-[#35353d] px-2 py-1 m-1 cursor-pointer overflow-hidden"
+                      className="relative flex items-center justify-center rounded-lg px-2 py-1 m-1 cursor-pointer overflow-hidden"
                     >
                       <ShareIcon />
                     </div>

@@ -29,7 +29,7 @@ const userNavigation = [
   { name: 'Your profile', href: '#' },
   { name: 'Sign out', href: '#' },
   { name: 'Setting', href: '/setting' },
-  { name: 'Sign In', href: '#' },
+  { name: 'Sign In', href: 'auth' },
 ]
 
 function classNames(...classes) {
@@ -232,12 +232,12 @@ export default function MainLayout() {
                 >
                   {userNavigation.map((item) => (
                     <MenuItem key={item.name}>
-                      <a
-                        href={item.href}
+                      <Link
+                        to={item.href}
                         className="block px-3 py-1 text-sm/6 text-gray-900 data-focus:bg-amber-50 data-focus:outline-hidden dark:text-amber-500 dark:data-focus:bg-amber-100"
                       >
                         {item.name}
-                      </a>
+                      </Link>
                     </MenuItem>
                   ))}
                 </MenuItems>

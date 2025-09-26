@@ -56,90 +56,115 @@ function ExpandCard({ streak, setHabitData, setIsExpandVisible, calculateTotalDa
   }
 
   return (
-    <div className="expandHabitCard-overlay" >
+    <div className="expandHabitCard-overlay fixed inset-0 w-full h-full backdrop-blur-sm flex flex-col justify-center items-center z-[1000] animate-fadeIn">
 
-      <div onClick={() => handleClose_expandHabitCard()} className="close-expandHabitCard">
+      {/* Close button */}
+      <div
+        onClick={() => handleClose_expandHabitCard()}
+        className="text-xl cursor-pointer"
+      >
         ✖
       </div>
+
       <div
-        // onClick={(e) => e.stopPropagation()} // Prevent clicks inside from closing
         ref={expandRef}
-        className="expandHabitCard">
-        {/* <svg xmlns="http://www.w3.org/2000/svg" height="100%" viewBox="0 -960 960 960" width="100%" fill="#9657bd"><path d="M600-160q-134 0-227-93t-93-227q0-133 93-226.5T600-800q133 0 226.5 93.5T920-480q0 134-93.5 227T600-160Zm0-80q100 0 170-70t70-170q0-100-70-170t-170-70q-100 0-170 70t-70 170q0 100 70 170t170 70Zm91-91 57-57-108-108v-144h-80v177l131 132ZM80-600v-80h160v80H80ZM40-440v-80h200v80H40Zm40 160v-80h160v80H80Zm520-200Z" /></svg> */}
-        <div className="expandHabitCard-heading">
-          <h2>Habit: {streak.HabitName}  <span>({streak.Frequency}) </span> </h2>
-          <p>Started: {streak.StartedDate.slice(0, 15)} </p>
-          <p>End : {String(new Date(streak.TargetDuration)).slice(0, 15)} </p>
-        </div>
+        className="expandHabitCard bg-slate-50 dark:bg-gray-900 w-[78vw] h-[97vh] overflow-y-auto grid grid-cols-2 gap-x-[4vw] gap-y-[25px] rounded-lg border border-[#ff416d5e] text-[#db386f] p-[20px_5px_20px_13px] m-4 shadow-lg text-center animate-fadeIn scrollbar-thin scrollbar-thumb-[#e4942332] scrollbar-track-transparent"
+      >
+        {/* Top details */}
         <div>
-          <p>🔥 Streak: {streak.StreakRecord.TotalStreak} </p>
-          <p> XP Points: +{streak.StreakRecord.XPPoints} </p>
+          <h2>
+            Habit: {streak.HabitName} <span>({streak.Frequency})</span>
+          </h2>
+          <p>Started: {streak.StartedDate.slice(0, 15)}</p>
+          <p>End : {String(new Date(streak.TargetDuration)).slice(0, 15)}</p>
+        </div>
+
+        <div>
+          <p>🔥 Streak: {streak.StreakRecord.TotalStreak}</p>
+          <p>XP Points: +{streak.StreakRecord.XPPoints}</p>
         </div>
 
         {/* Progress Bar */}
         <div>
           <CircularProgressBar progress={calculateProgress()} />
-          {
-            insideArchive ? <button className='StreakUpdate-button' disabled={true}>Archived</button> :
-              <StreakUpdate
-                setHabitData={setHabitData}
-                Frequency={streak.Frequency}
-                LastDayForWeek={streak.StreakRecord.LastDayForWeek}
-                LastUpdate={streak.StreakRecord.LastUpdate}
-                TargetDuration={streak.TargetDuration}
-                StartedDate={streak.StartedDate}
-                index={0}
-                habitData={[streak]}
-              />
-          }
+          {insideArchive ? (
+            <button className="StreakUpdate-button" disabled>
+              Archived
+            </button>
+          ) : (
+            <StreakUpdate
+              setHabitData={setHabitData}
+              Frequency={streak.Frequency}
+              LastDayForWeek={streak.StreakRecord.LastDayForWeek}
+              LastUpdate={streak.StreakRecord.LastUpdate}
+              TargetDuration={streak.TargetDuration}
+              StartedDate={streak.StartedDate}
+              index={0}
+              habitData={[streak]}
+            />
+          )}
         </div>
 
+        {/* Target Info */}
         <p>
-          {
-            streak.Frequency == "Daily" ?
-              `Target: ${streak.Total_Target_Time} Days` :
-              `Target: ${streak.Total_Target_Time} Weeks`
-          }
+          {streak.Frequency === "Daily"
+            ? `Target: ${streak.Total_Target_Time} Days`
+            : `Target: ${streak.Total_Target_Time} Weeks`}
           <br />
-          {
-            streak.Frequency == "Daily" ?
-              `Days Conpleted ${streak.TotalDaysCompleted} Days` :
-              `Weeks Conpleted ${streak.TotalWeeksCompleted} Weeks`
-          } <br />
+          {streak.Frequency === "Daily"
+            ? `Days Completed ${streak.TotalDaysCompleted} Days`
+            : `Weeks Completed ${streak.TotalWeeksCompleted} Weeks`}
+          <br />
           {streak.timeLeft}
         </p>
 
+        {/* Calendar Details */}
+        <div className="calendar-detail-container col-span-2">
+          <hr className="hr-expandCard w-[90%] m-0" />
+          <h2 className="mb-[15px]">Streak Tracking Summary</h2>
 
-        <div className="calendar-detail-container">
-          <hr className="hr-expandCard" />
-          <h2>Streak Tracking Summary</h2>
-          <div className="color-identiy">
-            <div id="Categorical-Color"> <div className="color-box1" ></div> <p> Selected Habit </p> </div>
-            <div id="Categorical-Color"> <div className="color-box2" ></div> <p> Marked</p> </div>
-            <div id="Categorical-Color"> <div className="color-box3" ></div> <p> Not marked</p> </div>
+          <div className="color-identiy flex gap-1 justify-evenly">
+            <div id="Categorical-Color" className="flex items-center">
+              <div className="color-box1 mr-[9px] w-[15px] h-[15px] rounded bg-[#86612b7d]"></div>
+              <p>Selected Habit</p>
+            </div>
+            <div id="Categorical-Color" className="flex items-center">
+              <div className="color-box2 mr-[9px] w-[15px] h-[15px] rounded bg-[seagreen]"></div>
+              <p>Marked</p>
+            </div>
+            <div id="Categorical-Color" className="flex items-center">
+              <div className="color-box3 mr-[9px] w-[15px] h-[15px] rounded bg-[#c52f2f]"></div>
+              <p>Not marked</p>
+            </div>
           </div>
-          <div className="calendar-detail">
-            {
-              streak.Frequency == "Daily" ?
-                <CalendarDaily startDate={streak.StartedDate} endDate={streak.TargetDuration} CalendarData={streak.CalendarData} />
-                :
-                <CalendarWeek
-                  startDate={streak.StartedDate} endDate={streak.TargetDuration} CalendarData={streak.CalendarData} />
-            }
-          </div>
-          <hr className="hr-expandCard" />
 
+          <div className="calendar-detail col-span-2 mb-[18px] flex justify-start gap-[20px] w-full h-[18em] overflow-y-scroll scrollbar-thin scrollbar-thumb-[rgba(255,255,255,0.2)] hover:scrollbar-thumb-[rgba(255,255,255,0.4)] scrollbar-track-transparent">
+            {streak.Frequency === "Daily" ? (
+              <CalendarDaily
+                startDate={streak.StartedDate}
+                endDate={streak.TargetDuration}
+                CalendarData={streak.CalendarData}
+              />
+            ) : (
+              <CalendarWeek
+                startDate={streak.StartedDate}
+                endDate={streak.TargetDuration}
+                CalendarData={streak.CalendarData}
+              />
+            )}
+          </div>
+
+          <hr className="hr-expandCard w-[90%] m-0" />
         </div>
 
+        {/* Badge Details */}
         <div className="expandHabitCard-badge-details">
           <h2>Badge Details</h2>
-          <h5>Badge Earned: {streak.BadgeRecord.Badge} </h5>
+          <h5>Badge Earned: {streak.BadgeRecord.Badge}</h5>
           <h5>XP Points Earn: +{plusPointCalculate(streak.BadgeRecord.Badge)}</h5>
-          <h5>Achieved On: {streak.BadgeRecord.AchievedOn.slice(0, 15)} </h5>
+          <h5>Achieved On: {streak.BadgeRecord.AchievedOn.slice(0, 15)}</h5>
         </div>
-
       </div>
-      {/* </div> */}
     </div>
   );
 }

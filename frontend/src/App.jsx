@@ -24,9 +24,9 @@ function App() {
   return (
     <Routes>
       {/* Public Routes (MainLayout) */}
+      <Route path="/auth" element={<Login />} />
       <Route element={<MainLayout />}>
         <Route path="/" element={<Home />} />
-        <Route path="/auth" element={<Login />} />
         <Route path="/home" element={<Home />} />
 
         {/* Protected Routes (MainLayout) */}
