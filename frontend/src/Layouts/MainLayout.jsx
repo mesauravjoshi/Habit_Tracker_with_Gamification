@@ -15,6 +15,7 @@ import { Link, NavLink } from "react-router-dom";
 import { useTheme } from "@/Components/Context/ThemeProvider";
 
 import { Home, AddHabit, TrackHabit, Archive, Completed, Badges, Setting, Bars3Icon, ChevronDownIcon, SunIcon, MoonIcon, MagnifyingGlassIcon } from "@/Components/Slider/SliderIcon";
+import { Toaster } from 'react-hot-toast';
 
 const navigation = [
   { name: "Home", to: "/", icon: Home },
@@ -43,6 +44,8 @@ export default function MainLayout() {
   };
   const { theme, toggleTheme } = useTheme();
   return (
+    <>
+    <Toaster />
     <div className="bg-gray-50 dark:bg-gray-900">
       <Dialog open={sidebarOpen} onClose={setSidebarOpen} className="relative z-50 lg:hidden">
         <DialogBackdrop
@@ -251,5 +254,6 @@ export default function MainLayout() {
         </main>
       </div>
     </div>
+    </>
   );
 }

@@ -38,7 +38,7 @@ function Frequency({ setMinDate, setFormObject, formObject }) {
             }
             className="h-4 w-4 text-amber-600 focus:ring-amber-500 border-gray-300"
           />
-          <span className="text-gray-800">Daily</span>
+          <span className="">Daily</span>
         </label>
 
         {/* Weekly */}
@@ -53,7 +53,7 @@ function Frequency({ setMinDate, setFormObject, formObject }) {
             }
             className="h-4 w-4 text-amber-600 focus:ring-amber-500 border-gray-300"
           />
-          <span className="text-gray-800">Weekly</span>
+          <span className="">Weekly</span>
         </label>
       </div>
     </>

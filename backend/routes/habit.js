@@ -7,7 +7,7 @@ const { jwtAuthMiddleware } = require('../jwt');
 
 router.post('/add_habit', jwtAuthMiddleware, async (req, res) => {
     try {
-        const { HabitName, Category, CalendarData , Frequency, Priority, TargetDuration, StartedDate, StreakRecord } = req.body;
+        const { HabitName, Category, CalendarData, Frequency, Priority, TargetDuration, StartedDate, StreakRecord } = req.body;
         const userId = req.user.id; // Get user ID from JWT middleware
 
         if (!userId) {
@@ -31,7 +31,7 @@ router.post('/add_habit', jwtAuthMiddleware, async (req, res) => {
             IsCompleted: false,
         };
         // console.log('newHabit',newHabit);
-        
+
         // Add extra fields based on Frequency
         if (Frequency === 'Daily') {
             newHabit.TotalDaysCompleted = 0;
@@ -45,10 +45,10 @@ router.post('/add_habit', jwtAuthMiddleware, async (req, res) => {
 
         // const habit = new Habit(newHabit);
         const habit = new Habit(newHabit);
-        // console.log('newHabit line 50: ',habit);
+        // console.log('newHabit line 50: ', habit);
         await habit.save();
 
-        res.json({ message: "Habit saved successfully", data: habit });
+        res.json({ message: "Habit saved!" });
     } catch (error) {
         res.status(500).send({ error: 'Failed to save habit' });
     }
@@ -131,7 +131,7 @@ router.get('/totalStreaXP', jwtAuthMiddleware, async (req, res) => {
                 : 0;
 
             res.json({ totalStreaAndXP: { totalStreak, totalxPPoints } });
-        }else {
+        } else {
             const totalStreak = 0;
             const totalxPPoints = 0;
             res.json({ totalStreaAndXP: { totalStreak, totalxPPoints } });

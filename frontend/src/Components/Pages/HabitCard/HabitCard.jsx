@@ -238,7 +238,7 @@ function Streak({ habitData, setHabitData, insideArchive, archivedHabit, setArch
                 >
                   {/* 1. Habit Name */}
                   <h3 className="text-lg font-semibold">
-                    {streak.HabitName} ({streak.Frequency}) {streak.BadgeRecord.Badge}
+                    {streak.HabitName} ({streak.Frequency}) {streak?.BadgeRecord?.Badge}
                   </h3>
 
                   {/* 2. 🔥 Streak */}

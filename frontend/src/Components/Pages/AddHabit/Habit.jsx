@@ -4,8 +4,12 @@ import { url } from '../../../URL/Url';
 import { AuthContext } from "../../Context/AuthContext";
 import Category from './Category';
 import Frequency from './Frequency';
+import { Transition } from '@headlessui/react'
+import axios from 'axios'
+import toast, { Toaster } from 'react-hot-toast';
 
 function Habit() {
+  // const { showToast } = useToast();
   const { user, token } = useContext(AuthContext);
   const priorityLabels = ["Low", "Medium", "High", "Critical"];
   const [habits, setHabits] = useState([]);
@@ -18,6 +22,10 @@ function Habit() {
     Priority: 0,
   });
   const [isOpen, setIsOpen] = useState(false);
+
+  const notify = (message) => {
+    toast.success(`${message}`)
+  }
 
   // Get today's date in YYYY-MM-DD format
   const getTodayDate = () => {
@@ -56,10 +64,10 @@ function Habit() {
       return
     }
 
-    const newHabit = {
+    const udpatedHabit = {
       ...formObject,
       Priority: priorityLabels[formObject.Priority],
-      userId: user._id,
+      userId: user.id,
       StartedDate: today.toString(),
       StreakRecord: {
         LastUpdate: "",
@@ -73,50 +81,44 @@ function Habit() {
       },
       IsConmpleted: false,
     };
-    // console.log(newHabit);
+    // console.log(udpatedHabit);
     // return
     if (formObject.Frequency === 'Daily') {
-      newHabit.TotalDaysCompleted = 0;
-      newHabit.CalendarData = {}
+      udpatedHabit.TotalDaysCompleted = 0;
+      udpatedHabit.CalendarData = {}
     } else if (formObject.Frequency === 'Weekly') {
-      newHabit.CalendarData = [
+      udpatedHabit.CalendarData = [
         {
           start: "",
           end: "",
           status: "",
         }
       ],
-        newHabit.StreakRecord.LastDayForWeek = lastDay.toString();
-      newHabit.TotalWeeksCompleted = 0;
+        udpatedHabit.StreakRecord.LastDayForWeek = lastDay.toString();
+      udpatedHabit.TotalWeeksCompleted = 0;
     } else {
       return;
     }
-
+    console.log(udpatedHabit);
+    // return;
     try {
-      const response = await fetch(`${url}/habit/add_habit`, {
-        method: 'POST',
+      const response = await axios.post(`${url}/habit/add_habit`, udpatedHabit, {
         headers: {
-          'Content-Type': 'application/json',
-          "Authorization": `Bearer ${token}`
-        },
-        body: JSON.stringify(newHabit),
+          Authorization: `Bearer ${token}`
+        }
       });
-
-      if (response.ok) {
-        const result = await response.json();
-        // console.log(result);
-      } else {
-        const errorResponse = await response.json();
-        console.error('Error:', errorResponse);
+      if (response) {
+        notify(response.data.message)
       }
+      console.log(response);
     } catch (error) {
       console.error('Error:', error);
     } finally {
       console.log('finally');
       // Reset input fields
-      setFormObject((prev) => {
-        return { ...prev, HabitName: '', Priority: 0, TargetDuration: '', Category: '', Frequency: '' }
-      });
+      // setFormObject((prev) => {
+      //   return { ...prev, HabitName: '', Priority: 0, TargetDuration: '', Category: '', Frequency: '' }
+      // });
     }
   };
 
@@ -137,6 +139,10 @@ function Habit() {
 
   return (
     <>
+      <div>
+        <button onClick={() => notify(p)}>Make me a toast</button>
+        {/* <Toaster /> */}
+      </div>
       <div className="bg-gray-50/0 dark:bg-gray-800/50 outline -outline-offset-1 outline-gray-900/5 dark:outline-gray-700/10 sm:rounded-xl md:col-span-2">
         <div className="px-4 py-6 sm:p-8 grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 md:col-span-2 mb-4">
           <div className="sm:col-span-3">
