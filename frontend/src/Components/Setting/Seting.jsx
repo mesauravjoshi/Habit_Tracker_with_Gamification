@@ -31,11 +31,11 @@ export default function Setting() {
 
   return (
     <>
-      <Nav />
-      <div className="min-h-screen bg-zinc-900 p-4 flex items-start justify-center">
+      {/* <Nav /> */}
+      <div className="min-h-screen flex items-start justify-center">
         <div className="shadow-md rounded-lg w-full max-w-5xl flex">
           {/* Left Sidebar */}
-          <div className="w-1/4 border-r border-amber-900 p-4">
+          <div className="w-1/4 border-r border-amber-900 px-2">
             <h2 className="text-xl font-semibold mb-4">Settings</h2>
             <ul className="space-y-2">
               {tabs.map((tab) => (
