@@ -1,9 +1,9 @@
 import { useEffect, useState, useContext } from 'react';
-import HabitCard from '../HabitCard/HabitCard';
+import HabitCard from '../../Components/HabitCard/HabitCard';
 import { url } from '@/URL/Url';
 import { AuthContext } from "@/Context/AuthContext";
-import TotalStreakAndXP from '../TotalStreak&XP/TotalStreak&XP';
-import BlankHabitCard from '../HabitCard/BlankHabitCard';
+import TotalStreakAndXP from '@/Components/TotalStreak&XP/TotalStreak&XP';
+import BlankHabitCard from '../../Components/HabitCard/BlankHabitCard';
 // import HabitCardSkeleton from '../HabitCard/HabitCardSkeleton'; // Import skeleton loader
 
 function Completed() {

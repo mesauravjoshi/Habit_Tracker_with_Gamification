@@ -1,12 +1,12 @@
 import { useEffect, useState, useRef, useContext } from 'react';
-import HabitCard from '../HabitCard/HabitCard';
-import BlankHabitCard from '../HabitCard/BlankHabitCard';
+import HabitCard from '../../Components/HabitCard/HabitCard';
+import BlankHabitCard from '../../Components/HabitCard/BlankHabitCard';
 import { url } from '@/URL/Url';
 import './Streak.css';
 import { AuthContext } from "@/Context/AuthContext";
 import { ArchiveContext } from '@/Context/ArchiveContext';
 import { StreaXPContext } from '@/Context/Strea&XPContext';
-import TotalStreakAndXP from '../TotalStreak&XP/TotalStreak&XP';
+import TotalStreakAndXP from '@/Components/TotalStreak&XP/TotalStreak&XP';
 import Filter from './Filter';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 

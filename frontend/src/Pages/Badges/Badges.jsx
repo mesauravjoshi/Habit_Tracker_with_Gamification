@@ -4,8 +4,8 @@ import { AuthContext } from "@/Context/AuthContext";
 import Silver from '@/assets/Icons/Silver';
 import Gold from '@/assets/Icons/gold.svg';
 import './Badges.css';
-import TotalStreakAndXP from '../TotalStreak&XP/TotalStreak&XP';
-import BlankHabitCard from '../HabitCard/BlankHabitCard';
+import TotalStreakAndXP from '@/Components/TotalStreak&XP/TotalStreak&XP';
+import BlankHabitCard from '../../Components/HabitCard/BlankHabitCard';
 import BlankBaadge from './BlankBaadge';
 
 function Badge() {

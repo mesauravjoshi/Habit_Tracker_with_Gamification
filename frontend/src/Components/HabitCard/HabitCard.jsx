@@ -2,9 +2,9 @@ import { useEffect, useRef, useContext, useReducer } from 'react';
 import './HabitCard.css'
 import { DotsIcon, ShareIcon, Archive, Unarchive, Delete, ViewCard } from "@/assets/Icons/Icons";
 import { url } from '@/URL/Url';
-import StreakUpdate from '../Streak/MarkStreakDone/StreakUpdate';
-import DeleteConfirmUI from '../Streak/DeleteUI/DeleteConfirmUI';
-import ExpandCard from '../Streak/ExpandHabitCard/ExpandCard';
+import StreakUpdate from '@/Components//Streak/MarkStreakDone/StreakUpdate';
+import DeleteConfirmUI from '@/Components/Streak/DeleteUI/DeleteConfirmUI';
+import ExpandCard from '@/Components/Streak/ExpandHabitCard/ExpandCard';
 import { AuthContext } from "@/Context/AuthContext";
 import { ArchiveContext } from '@/Context/ArchiveContext';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';

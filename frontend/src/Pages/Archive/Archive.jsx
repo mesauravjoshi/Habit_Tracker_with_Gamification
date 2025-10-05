@@ -1,10 +1,10 @@
 import { useEffect, useState, useContext } from 'react';
-import HabitCard from '@/Pages/HabitCard/HabitCard';
-import BlankHabitCard from '@/Pages/HabitCard/BlankHabitCard';
+import HabitCard from '@/Components/HabitCard/HabitCard';
+import BlankHabitCard from '@/Components/HabitCard/BlankHabitCard';
 import { url } from '@/URL/Url'
 import { AuthContext } from '@/Context/AuthContext';
 import { ArchiveContext } from '@/Context/ArchiveContext';
-import TotalStreakAndXP from '@/Pages/TotalStreak&XP/TotalStreak&XP';
+import TotalStreakAndXP from '@/Components/TotalStreak&XP/TotalStreak&XP';
 
 function Archive() {
   const { user, token } = useContext(AuthContext);

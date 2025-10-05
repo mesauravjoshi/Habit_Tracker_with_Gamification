@@ -14,14 +14,15 @@ import {
 import { Link, NavLink } from "react-router-dom";
 import { useTheme } from "@/Context/ThemeProvider";
 
-import { Home, AddHabit, TrackHabit, Archive, Completed, Badges, Setting, Bars3Icon, ChevronDownIcon, SunIcon, MoonIcon, MagnifyingGlassIcon } from "@/Components/Slider/SliderIcon";
+import { Home, AddHabit, TrackHabit, Archive, Completed, Badges, Setting, Bars3Icon, SunIcon, MoonIcon } from "@/Components/Slider/SliderIcon";
 import { Toaster } from 'react-hot-toast';
-import LogOutPopUp from "../Components/Nav/LogOutPopUp";
+import LogOutPopUp from "@/Components/Nav/LogOutPopUp";
 import { AuthContext } from "@/Context/AuthContext";
 import axios from "axios";
+import ProfileDropDown from "@/Components/ProfileDropDown";
 
 const navigation = [
-  { name: "Home", to: "/", icon: Home },
+  // { name: "Home", to: "/", icon: Home },
   { name: "Add Habit", to: "/habit", icon: AddHabit },
   { name: "Track Streak", to: "/track-streak", icon: TrackHabit },
   { name: "Archive", to: "/archive", icon: Archive },
@@ -31,9 +32,9 @@ const navigation = [
 
 const userNavigation = [
   // { name: 'Your profile', href: '#' },
-  { name: 'Sign out' },
   { name: 'Setting', href: '/setting' },
   { name: 'Sign In', href: 'auth' },
+  { name: 'Sign out' },
 ]
 
 function classNames(...classes) {
@@ -82,22 +83,27 @@ export default function MainLayout() {
             >
               <TransitionChild>
                 <div className="absolute top-0 left-full flex w-16 justify-center pt-5 duration-300 ease-in-out data-closed:opacity-0">
-                  <button type="button" onClick={() => setSidebarOpen(false)} className="-m-2.5 p-2.5">
+                  <button type="button" onClick={() => setSidebarOpen(false)} className="-m-2.5 p-2.5 text-gray-950 dark:text-amber-600">
                     <span className="sr-only">Close sidebar</span>
-                    {/* <XMarkIcon aria-hidden="true" className="size-6 text-white" /> */}
+                    X
                   </button>
                 </div>
               </TransitionChild>
 
               {/* Sidebar component, swap this element with another sidebar if you like */}
               <div className="relative flex grow flex-col gap-y-5 overflow-y-auto bg-gray-50 dark:bg-gray-900 px-6 pb-4 ring-1 ring-white/10 dark:before:pointer-events-none dark:before:absolute dark:before:inset-0 ">
-                <div className="relative flex h-16 shrink-0 items-center">
-                  <img
-                    alt="Your Company"
-                    src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
-                    className="h-8 w-auto"
-                  />
-                </div>
+                <Link to={'/home'}>
+                  <div className="flex h-16 shrink-0 items-center gap-x-2">
+                    {/* <img
+                  alt="Your Company"
+                  src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
+                  className="h-8 w-auto"
+                /> */}
+                    <span className="text-lg text-rose-500 font-bold">
+                      HabitQuest
+                    </span>
+                  </div>
+                </Link>
                 <nav className="relative flex flex-1 flex-col">
                   <ul role="list" className="flex flex-1 flex-col gap-y-7">
                     <li>
@@ -152,13 +158,18 @@ export default function MainLayout() {
         <div className="hidden bg-gray-900 ring-1 ring-gray-300 dark:ring-white/10 lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
           {/* Sidebar component, swap this element with another sidebar if you like */}
           <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-50 dark:bg-black/10 px-6 pb-4">
-            <div className="flex h-16 shrink-0 items-center">
-              <img
-                alt="Your Company"
-                src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
-                className="h-8 w-auto"
-              />
-            </div>
+            <Link to={'/home'}>
+              <div className="flex h-16 shrink-0 items-center gap-x-2">
+                {/* <img
+                  alt="Your Company"
+                  src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
+                  className="h-8 w-auto"
+                /> */}
+                <span className="text-lg text-rose-500 font-bold">
+                  HabitQuest
+                </span>
+              </div>
+            </Link>
             <nav className="flex flex-1 flex-col">
               <ul role="list" className="flex flex-1 flex-col gap-y-7">
                 <li>
@@ -221,18 +232,10 @@ export default function MainLayout() {
             <div aria-hidden="true" className="h-6 w-px bg-gray-900/10 lg:hidden" />
 
             <div className="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
-              <form action="#" method="GET" className="grid flex-1 grid-cols-1">
-                <input
-                  name="search"
-                  placeholder="Search"
-                  aria-label="Search"
-                  className="col-start-1 row-start-1 block size-full bg-gray-50 pl-8 text-base text-gray-900 outline-hidden placeholder:text-gray-400 sm:text-sm/6 dark:bg-gray-900 dark:text-white dark:placeholder:text-gray-500"
-                />
-                {/* <MagnifyingGlassIcon
-                aria-hidden="true"
-                className="pointer-events-none col-start-1 row-start-1 size-5 self-center text-gray-400"
-              /> */}
-              </form>
+              <div className="grid flex-1 grid-cols-1">
+                <div className="col-start-1 row-start-1 block size-full bg-gray-50 pl-8 text-base text-gray-900 outline-hidden placeholder:text-gray-400 sm:text-sm/6 dark:bg-gray-900 dark:text-white dark:placeholder:text-gray-500">
+                </div>
+              </div>
               <div className="flex items-center gap-x-2 lg:gap-x-6">
                 <button type="button" className=" text-gray-400 hover:text-gray-500"
                   onClick={toggleTheme}>
@@ -248,57 +251,9 @@ export default function MainLayout() {
                 <div aria-hidden="true" className="hidden lg:block lg:h-6 lg:w-px lg:bg-gray-900/10" />
 
                 {/* Profile dropdown */}
-                <Menu as="div" className="relative">
-                  <MenuButton className="relative flex items-center">
-                    <span className="absolute -inset-1.5" />
-                    <span className="sr-only">Open user menu</span>
-                    {
-                      gravatarUrl &&
-                      <img
-                        alt="Profile image"
-                        src={gravatarUrl}
-                        className="size-8 rounded-full bg-gray-50 outline -outline-offset-1 outline-black/5"
-                      />
-                    }
-                    <span className="hidden lg:flex lg:items-center">
-                      <span aria-hidden="true" className="ml-4 text-sm/6 font-semibold text-gray-900 dark:text-amber-500">
-                        {user && user.name}
-                      </span>
-                      <ChevronDownIcon aria-hidden="true" className="ml-2 size-5 text-gray-400" />
-                    </span>
-                  </MenuButton>
-                  <MenuItems
-                    transition
-                    className="absolute right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md bg-gray-50 py-2 shadow-lg outline outline-gray-900/5 transition data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in dark:bg-gray-800 dark:shadow-none dark:-outline-offset-1 dark:outline-white/10"
-                  >
-                    {userNavigation.map((item) => {
-                      if (item.name === 'Sign out') {
-                        return (
-                          <MenuItem key={item.name}>
-                            <button
-                              onClick={() => setIsLogOutPopUpOpen(true)}
-                              className="block px-3 py-1 text-sm/6 text-gray-900 dark:text-amber-500"
-                            >
-                              {item.name}
-                            </button>
-                          </MenuItem>
-                        );
-                      }
-
-                      return (
-                        <MenuItem key={item.name}>
-                          <Link
-                            to={item.href}
-                            className="block px-3 py-1 text-sm/6 text-gray-900 data-focus:bg-amber-50 data-focus:outline-hidden dark:text-amber-500 dark:data-focus:bg-amber-100"
-                          >
-                            {item.name}
-                          </Link>
-                        </MenuItem>
-                      );
-                    })}
-
-                  </MenuItems>
-                </Menu>
+                <ProfileDropDown
+                  setIsLogOutPopUpOpen={setIsLogOutPopUpOpen}
+                />
               </div>
             </div>
           </div>
@@ -312,6 +267,7 @@ export default function MainLayout() {
       {
         isLogOutPopUpOpen &&
         <LogOutPopUp setIsLogOutPopUpOpen={setIsLogOutPopUpOpen} />
-      }    </>
+      }
+    </>
   );
 }

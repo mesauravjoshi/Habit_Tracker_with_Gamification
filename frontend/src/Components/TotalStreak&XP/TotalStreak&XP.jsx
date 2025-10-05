@@ -38,4 +38,3 @@ function TotalStreakAndXP({ heading }) {
 }
 
 export default TotalStreakAndXP
-

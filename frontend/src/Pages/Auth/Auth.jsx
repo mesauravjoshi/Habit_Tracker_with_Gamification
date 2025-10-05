@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { url } from '@/URL/Url';
 import { useNavigate } from "react-router-dom";
@@ -9,12 +9,13 @@ import { Link } from "react-router-dom";
 // Copy this file into your project (e.g. src/components/Auth.jsx).
 // Make sure your project is configured for Tailwind and dark mode (class strategy is recommended).
 import toast, { Toaster } from 'react-hot-toast';
+import { useLocation } from "react-router-dom";
 
 export default function Auth() {
   const { fetchUserData } = useContext(AuthContext);
   const { fetchStreaXPData } = useContext(StreaXPContext);
 
-  const [mode, setMode] = useState("signup"); // 'signup' or 'login'
+  const [mode, setMode] = useState('');
   const [showPassword, setShowPassword] = useState({ pwd: false, confirm: false });
   const [form, setForm] = useState({ name: "", email: "", password: "", confirm: "" });
   const navigate = useNavigate()
@@ -22,6 +23,17 @@ export default function Auth() {
     const { name, value } = e.target;
     setForm((s) => ({ ...s, [name]: value }));
   }
+  const { hash } = useLocation();
+
+  useEffect(() => {
+    if (hash === '#signup') {
+      setMode('signup')
+    } else if (hash === '#login') {
+      setMode('login')
+    } else {
+      setMode('signup')
+    }
+  }, [])
 
   const notify = (type, message) => {
     if (type === 'success') {
