@@ -3,6 +3,7 @@ import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../Context/AuthContext";
 import axios from "axios";
 import { url } from "../../URL/Url";
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function Profile() {
   const { user, token } = useContext(AuthContext);
@@ -10,6 +11,14 @@ export default function Profile() {
     name: "",
     username: ""
   });
+  const notify = (type) => {
+    if (type === 'success') {
+      toast.success('Profile Updated!');
+    }
+    if (type === 'error') {
+      toast.error('Error Updating Profile!');
+    }
+  }
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -45,9 +54,13 @@ export default function Profile() {
         }
       });
 
-      if (res.data) setFormData(res.data)
+      if (res.data) {
+        setFormData(res.data)
+        notify('success')
+      }
       // console.log(res.data);
     } catch (err) {
+      notify('error')
       console.error(err);
     }
   }
@@ -60,7 +73,7 @@ export default function Profile() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="space-y-4 max-w-md text-white"
+      className="space-y-4 max-w-md"
     >
       <div>
         <label className="block mb-1 text-sm">Name</label>
@@ -69,19 +82,19 @@ export default function Profile() {
           name="name"
           value={formData.name}
           onChange={handleChange}
-          className="w-full p-2 rounded-md bg-zinc-800 text-yellow-400 border border-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-600"
+          className="w-full p-2 rounded-md dark:bg-white/5 border border-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-600"
           placeholder="Enter your name"
         />
       </div>
 
       <div>
-        <label className="block mb-1 text-sm">Email</label>
+        <label className="block mb-1 text-sm">Username</label>
         <input
           type="text"
           name="username"
           value={formData.username}
           onChange={handleChange}
-          className="w-full p-2 rounded-md bg-zinc-800 text-yellow-400 border border-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-600"
+          className="w-full p-2 rounded-md dark:bg-white/5 border border-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-600"
           placeholder="Enter your username"
         />
       </div>

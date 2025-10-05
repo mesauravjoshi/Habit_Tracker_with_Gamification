@@ -3,6 +3,7 @@ import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../Context/AuthContext";
 import axios from "axios";
 import { url } from "../../URL/Url";
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function Security() {
   const { token } = useContext(AuthContext);
@@ -20,6 +21,15 @@ export default function Security() {
     }));
   };
 
+  const notify = (type, message) => {
+    if (type === 'success') {
+      toast.success(message);
+    }
+    if (type === 'error') {
+      toast.error(message);
+    }
+  }
+
   const updateProfile = async () => {
     try {
       const res = await axios.patch(`${url}/profile/chnagePassword`, formData, {
@@ -28,9 +38,20 @@ export default function Security() {
         }
       });
 
-      if (res.data) setFormData(res.data)
+      if (res.data) {
+        setFormData({
+          currentPassword: "",
+          newPassword: "",
+          confirmPassword: ""
+        })
+        notify('success', res.data.message);
+      }
       // console.log(res.data);
     } catch (err) {
+      if (err) {
+        console.log(err.response.data.message);
+        notify('error', `${err.response.data.message}`);
+      }
       console.error(err);
     }
   }
@@ -43,7 +64,7 @@ export default function Security() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="space-y-4 max-w-md text-white"
+      className="space-y-4 max-w-md"
     >
       <div>
         <label className="block mb-1 text-sm">Current Pasoword</label>

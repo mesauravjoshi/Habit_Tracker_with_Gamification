@@ -43,6 +43,9 @@ router.patch('/chnagePassword', jwtAuthMiddleware, async (req, res) => {
     try {
         const userId = req.user.id;
         const { currentPassword, newPassword, confirmPassword } = req.body;
+        console.log(currentPassword);
+        console.log(newPassword);
+        console.log(confirmPassword);
 
         if (!currentPassword || !newPassword || !confirmPassword) {
             return res.status(400).json({ message: 'All fields are required' });
@@ -67,7 +70,7 @@ router.patch('/chnagePassword', jwtAuthMiddleware, async (req, res) => {
         user.password = hashedNewPassword;
         await user.save();
 
-        res.json({ message: 'Password updated successfully' });
+        res.json({ message: 'Password chnaged successfully! ' });
     } catch (error) {
         console.error('Update error:', error);
         res.status(500).json({ message: 'Server error' });

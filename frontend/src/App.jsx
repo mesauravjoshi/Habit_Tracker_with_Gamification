@@ -3,7 +3,7 @@ import { AuthContext } from './Components/Context/AuthContext';
 import MainLayout from './Layouts/MainLayout';
 import PlainLayout from './Layouts/PlainLayout';
 import Home from './Components/Pages/Home/Home';
-import Login from './Components/Nav/Login';
+import Auth from './Components/Nav/Auth';
 import Setting from './Components/Setting/Seting';
 import { useContext } from "react";
 
@@ -24,7 +24,7 @@ function App() {
   return (
     <Routes>
       {/* Public Routes (MainLayout) */}
-      <Route path="/auth" element={<Login />} />
+      <Route path="/auth" element={<Auth />} />
       <Route element={<MainLayout />}>
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />

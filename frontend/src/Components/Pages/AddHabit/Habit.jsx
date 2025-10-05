@@ -4,9 +4,7 @@ import { url } from '../../../URL/Url';
 import { AuthContext } from "../../Context/AuthContext";
 import Category from './Category';
 import Frequency from './Frequency';
-import { Transition } from '@headlessui/react'
 import axios from 'axios'
-import toast, { Toaster } from 'react-hot-toast';
 
 function Habit() {
   // const { showToast } = useToast();
@@ -22,10 +20,6 @@ function Habit() {
     Priority: 0,
   });
   const [isOpen, setIsOpen] = useState(false);
-
-  const notify = (message) => {
-    toast.success(`${message}`)
-  }
 
   // Get today's date in YYYY-MM-DD format
   const getTodayDate = () => {
@@ -139,10 +133,6 @@ function Habit() {
 
   return (
     <>
-      <div>
-        <button onClick={() => notify(p)}>Make me a toast</button>
-        {/* <Toaster /> */}
-      </div>
       <div className="bg-gray-50/0 dark:bg-gray-800/50 outline -outline-offset-1 outline-gray-900/5 dark:outline-gray-700/10 sm:rounded-xl md:col-span-2">
         <div className="px-4 py-6 sm:p-8 grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 md:col-span-2 mb-4">
           <div className="sm:col-span-3">

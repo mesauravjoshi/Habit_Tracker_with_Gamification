@@ -26,7 +26,7 @@ router.post('/signup', async (req, res) => {
         // console.log(newUser);
         await newUser.save();
 
-        res.status(201).json({ message: "User registered successfully" });
+        res.status(201).json({ message: "Sign Up successfully" });
     } catch (error) {
         res.status(500).json({ error: error });
     }
@@ -48,7 +48,7 @@ router.post('/login', async (req, res) => {
         // Generate JWT Token
         const token = jwt.sign({ id: user._id, username: user.username }, process.env.JWT_SECRET, { expiresIn: "72h" });
 
-        res.json({ message: "Login successful", token });
+        res.json({ message: "Login successfully", token });
 
     } catch (error) {
         res.status(500).json({ error: error });

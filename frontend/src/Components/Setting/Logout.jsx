@@ -9,7 +9,7 @@ export default function Logout() {
       <h2 className="text-lg font-semibold text-yellow-600">
         Log out of this session?
       </h2>
-      <p className="text-sm text-gray-600">
+      <p className="text-sm">
         Clicking “Logout” will end your current session and you’ll need to sign in again to continue.
       </p>
       <button

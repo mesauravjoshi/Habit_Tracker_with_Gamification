@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Outlet } from "react-router-dom";
 import "../App.css";
 import {
@@ -16,6 +16,10 @@ import { useTheme } from "@/Components/Context/ThemeProvider";
 
 import { Home, AddHabit, TrackHabit, Archive, Completed, Badges, Setting, Bars3Icon, ChevronDownIcon, SunIcon, MoonIcon, MagnifyingGlassIcon } from "@/Components/Slider/SliderIcon";
 import { Toaster } from 'react-hot-toast';
+// import LogOutPopUp from '@/Components/Nav/LogOutPopUp'
+import LogOutPopUp from "../Components/Nav/LogOutPopUp";
+import { AuthContext } from "../Components/Context/AuthContext";
+import axios from "axios";
 
 const navigation = [
   { name: "Home", to: "/", icon: Home },
@@ -28,7 +32,7 @@ const navigation = [
 
 const userNavigation = [
   { name: 'Your profile', href: '#' },
-  { name: 'Sign out', href: '#' },
+  { name: 'Sign out' },
   { name: 'Setting', href: '/setting' },
   { name: 'Sign In', href: 'auth' },
 ]
@@ -37,12 +41,31 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 export default function MainLayout() {
-  const [isSliderOpen, setIsSliderOpen] = useState(false);
-  const [sidebarOpen, setSidebarOpen] = useState(false)
-  const toggleSlider = () => {
-    setIsSliderOpen(!isSliderOpen);
-  };
+  const [isLogOutPopUpOpen, setIsLogOutPopUpOpsen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
+
+  const [gravatarUrl, setGravatarUrl] = useState('');
+  const { user } = useContext(AuthContext);
+
+  useEffect(() => {
+    const generateGravatar = async () => {
+      if (user) {
+        const username = user.username.trim().toLowerCase();
+        try {
+          const response = await axios.get(`https://api.hashify.net/hash/md5/hex?value=${username}`);
+          const hash = response.data?.Digest
+          if (hash) {
+            setGravatarUrl(`https://www.gravatar.com/avatar/${hash}?d=identicon`);
+          }
+        } catch (error) {
+          console.error('Failed to fetch MD5 hash for Gravatar:', error);
+        }
+      }
+    };
+    generateGravatar();
+  }, [user]);
+
   return (
     <>
       <Toaster />
@@ -230,11 +253,14 @@ export default function MainLayout() {
                   <MenuButton className="relative flex items-center">
                     <span className="absolute -inset-1.5" />
                     <span className="sr-only">Open user menu</span>
-                    <img
-                      alt=""
-                      src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                      className="size-8 rounded-full bg-gray-50 outline -outline-offset-1 outline-black/5"
-                    />
+                    {
+                      gravatarUrl &&
+                      <img
+                        alt="Profile image"
+                        src={gravatarUrl}
+                        className="size-8 rounded-full bg-gray-50 outline -outline-offset-1 outline-black/5"
+                      />
+                    }
                     <span className="hidden lg:flex lg:items-center">
                       <span aria-hidden="true" className="ml-4 text-sm/6 font-semibold text-gray-900 dark:text-amber-500">
                         Name
@@ -246,16 +272,32 @@ export default function MainLayout() {
                     transition
                     className="absolute right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md bg-gray-50 py-2 shadow-lg outline outline-gray-900/5 transition data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in dark:bg-gray-800 dark:shadow-none dark:-outline-offset-1 dark:outline-white/10"
                   >
-                    {userNavigation.map((item) => (
-                      <MenuItem key={item.name}>
-                        <Link
-                          to={item.href}
-                          className="block px-3 py-1 text-sm/6 text-gray-900 data-focus:bg-amber-50 data-focus:outline-hidden dark:text-amber-500 dark:data-focus:bg-amber-100"
-                        >
-                          {item.name}
-                        </Link>
-                      </MenuItem>
-                    ))}
+                    {userNavigation.map((item) => {
+                      if (item.name === 'Sign out') {
+                        return (
+                          <MenuItem key={item.name}>
+                            <button
+                              onClick={() => setIsLogOutPopUpOpen(true)}
+                              className="block px-3 py-1 text-sm/6 text-gray-900 dark:text-amber-500"
+                            >
+                              {item.name}
+                            </button>
+                          </MenuItem>
+                        );
+                      }
+
+                      return (
+                        <MenuItem key={item.name}>
+                          <Link
+                            to={item.href}
+                            className="block px-3 py-1 text-sm/6 text-gray-900 data-focus:bg-amber-50 data-focus:outline-hidden dark:text-amber-500 dark:data-focus:bg-amber-100"
+                          >
+                            {item.name}
+                          </Link>
+                        </MenuItem>
+                      );
+                    })}
+
                   </MenuItems>
                 </Menu>
               </div>
@@ -267,6 +309,10 @@ export default function MainLayout() {
           </main>
         </div>
       </div>
-    </>
+
+      {
+        isLogOutPopUpOpen &&
+        <LogOutPopUp setIsLogOutPopUpOpen={setIsLogOutPopUpOpen} />
+      }    </>
   );
 }

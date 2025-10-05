@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Nav from "../Nav/Nav";
 import Profile from "./Profile";
 import Security from "./Security";
 import Logout from "./Logout";
@@ -35,15 +34,15 @@ export default function Setting() {
       <div className="min-h-screen flex items-start justify-center">
         <div className="shadow-md rounded-lg w-full max-w-5xl flex">
           {/* Left Sidebar */}
-          <div className="w-1/4 border-r border-amber-900 px-2">
+          <div className="w-1/4 border-r border-gray-300 dark:border-gray-800 px-2">
             <h2 className="text-xl font-semibold mb-4">Settings</h2>
             <ul className="space-y-2">
               {tabs.map((tab) => (
                 <li
                   key={tab.id}
                   className={`cursor-pointer px-4 py-2 rounded-md transition-all duration-200 ${activeTab === tab.id
-                    ? "bg-zinc-800 text-yellow-600 font-medium"
-                    : "text-yellow-700 hover:bg-zinc-800"
+                    ? "bg-zinc-200 dark:bg-zinc-800 text-gray-800 dark:text-yellow-600 font-medium"
+                    : "hover:bg-zinc-200 dark:hover:bg-zinc-800"
                     }`}
                   onClick={() => setActiveTab(tab.id)}
                 >
@@ -58,7 +57,7 @@ export default function Setting() {
             <h3 className="text-lg font-semibold mb-2">
               {tabs.find((tab) => tab.id === activeTab)?.label}
             </h3>
-            <div className="text-gray-700">{renderContent()}</div>
+            <div className="">{renderContent()}</div>
           </div>
         </div>
       </div>
