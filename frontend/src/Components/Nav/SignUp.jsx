@@ -1,7 +1,7 @@
 import { useEffect, useRef, useReducer } from "react";
 import { ShowPassword, HidePassword } from "../../assets/Icons/Icons";
 import axios from 'axios';
-import { url } from '../../URL/Url';
+import { url } from '@/URL/Url'
 import "./LoginModal.css";
 
 // ✅ Initial State

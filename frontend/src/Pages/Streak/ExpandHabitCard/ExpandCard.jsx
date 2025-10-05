@@ -2,8 +2,8 @@ import React, { useEffect, useRef } from "react";
 import "./ExpandCard.css";
 import StreakUpdate from '../MarkStreakDone/StreakUpdate';
 import CircularProgressBar from "./CircularProgressBar";
-import CalendarDaily from "../../../Calendar/CalendarDaily";
-import CalendarWeek from "../../../Calendar/CalendarWeek";
+import CalendarDaily from "@/Components/Calendar/CalendarDaily";
+import CalendarWeek from "@/Components/Calendar/CalendarWeek";
 
 function ExpandCard({ streak, setHabitData, setIsExpandVisible, calculateTotalDays, calculateTotalWeeks, insideArchive }) {
   const expandRef = useRef(null); // Reference for the menu

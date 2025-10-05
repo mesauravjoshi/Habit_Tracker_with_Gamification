@@ -1,6 +1,6 @@
 import { useContext } from 'react'
-import { AuthContext } from '../../../Context/AuthContext'
-import { StreaXPContext } from '../../../Context/Strea&XPContext'
+import { AuthContext } from "@/Context/AuthContext";
+import { StreaXPContext } from '@/Context/Strea&XPContext'
 import './TotalStreak&XP.css'
 
 function TotalStreakAndXP({ heading }) {

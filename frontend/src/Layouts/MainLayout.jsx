@@ -12,13 +12,12 @@ import {
   TransitionChild,
 } from '@headlessui/react'
 import { Link, NavLink } from "react-router-dom";
-import { useTheme } from "@/Components/Context/ThemeProvider";
+import { useTheme } from "@/Context/ThemeProvider";
 
 import { Home, AddHabit, TrackHabit, Archive, Completed, Badges, Setting, Bars3Icon, ChevronDownIcon, SunIcon, MoonIcon, MagnifyingGlassIcon } from "@/Components/Slider/SliderIcon";
 import { Toaster } from 'react-hot-toast';
-// import LogOutPopUp from '@/Components/Nav/LogOutPopUp'
 import LogOutPopUp from "../Components/Nav/LogOutPopUp";
-import { AuthContext } from "../Context/AuthContext";
+import { AuthContext } from "@/Context/AuthContext";
 import axios from "axios";
 
 const navigation = [
@@ -47,7 +46,6 @@ export default function MainLayout() {
 
   const [gravatarUrl, setGravatarUrl] = useState('');
   const { user } = useContext(AuthContext);
-console.log(user);
 
   useEffect(() => {
     const generateGravatar = async () => {

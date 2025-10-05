@@ -1,17 +1,17 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import { AuthContext } from './Context/AuthContext';
-import MainLayout from './Layouts/MainLayout';
-import PlainLayout from './Layouts/PlainLayout';
-import Home from './Components/Pages/Home/Home';
-import Auth from './Components/Nav/Auth';
-import Setting from './Components/Setting/Seting';
+import { AuthContext } from '@/Context/AuthContext';
+import MainLayout from '@/Layouts/MainLayout';
+import PlainLayout from '@/Layouts/PlainLayout';
+import Home from '@/Pages/Home/Home';
+import Auth from '@/Components//Nav/Auth';
+import Setting from '@/Pages/Setting/Seting';
 import { useContext } from "react";
 
-import Habit from "./Components/Pages/AddHabit/Habit";
-import Streak from "./Components/Pages/Streak/Streak";
-import Archive from "./Components/Pages/Archive/Archive";
-import Completed from "./Components/Pages/Completed/Completed";
-import Badges from "./Components/Pages/Badges/Badges";
+import Habit from "@/Pages/AddHabit/Habit";
+import Streak from "@/Pages/Streak/Streak";
+import Archive from "@/Pages/Archive/Archive";
+import Completed from "@/Pages/Completed/Completed";
+import Badges from "@/Pages/Badges/Badges";
 import { Outlet } from "react-router-dom";
 
 function App() {

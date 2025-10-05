@@ -1,0 +1,10 @@
+// jsconfig.json
+{
+  "compilerOptions": {
+    "baseUrl": "src",       // This makes VS Code treat 'src' as '@'
+    "paths": {
+      "@/*": ["*"]          // Map '@/' to 'src/'
+    }
+  },
+  "include": ["src"]
+}

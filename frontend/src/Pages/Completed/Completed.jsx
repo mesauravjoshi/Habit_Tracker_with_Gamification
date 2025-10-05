@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from 'react';
 import HabitCard from '../HabitCard/HabitCard';
-import { url } from '../../../URL/Url';
-import { AuthContext } from '../../../Context/AuthContext';
+import { url } from '@/URL/Url';
+import { AuthContext } from "@/Context/AuthContext";
 import TotalStreakAndXP from '../TotalStreak&XP/TotalStreak&XP';
 import BlankHabitCard from '../HabitCard/BlankHabitCard';
 // import HabitCardSkeleton from '../HabitCard/HabitCardSkeleton'; // Import skeleton loader

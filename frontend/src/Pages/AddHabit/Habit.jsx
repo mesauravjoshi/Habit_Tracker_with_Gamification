@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { useEffect } from 'react';
-import { url } from '../../../URL/Url';
-import { AuthContext } from "../../../Context/AuthContext";
+import { url } from '@/URL/Url'
+import { AuthContext } from "@/Context/AuthContext";
 import Category from './Category';
 import Frequency from './Frequency';
 import axios from 'axios'

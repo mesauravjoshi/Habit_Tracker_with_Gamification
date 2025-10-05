@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import "./Hero.css";
-import { StreaXPContext } from '../../../Context/Strea&XPContext'
-import { useTheme } from "../../../Context/ThemeProvider";
+import { StreaXPContext } from '@/Context/Strea&XPContext'
+import { useTheme } from "@/Context/ThemeProvider";
 
 const Hero = () => {
   const { totalStreaXP } = useContext(StreaXPContext);

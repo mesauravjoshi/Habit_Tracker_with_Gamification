@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
-import { url } from '../../URL/Url'
+import { url } from '@/URL/Url'
 
 export const StreaXPContext = createContext();
 

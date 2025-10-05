@@ -2,8 +2,8 @@ import React, { useState, useContext } from "react";
 import axios from "axios";
 import { url } from '@/URL/Url';
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from '@/Components/Context/AuthContext';
-import { StreaXPContext } from "@/Components/Context/Strea&XPContext";
+import { AuthContext } from '@/Context/AuthContext';
+import { StreaXPContext } from "@/Context/Strea&XPContext";
 import { Link } from "react-router-dom";
 // Single-file React component using TailwindCSS (mobile-first).
 // Copy this file into your project (e.g. src/components/Auth.jsx).

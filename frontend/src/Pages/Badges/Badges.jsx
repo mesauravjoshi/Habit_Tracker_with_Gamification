@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { url } from '../../../URL/Url';
-import { AuthContext } from '../../../Context/AuthContext';
-import Silver from '../../../assets/Icons/Silver';
-import Gold from '../../../assets/Icons/gold.svg';
+import { url } from '@/URL/Url';
+import { AuthContext } from "@/Context/AuthContext";
+import Silver from '@/assets/Icons/Silver';
+import Gold from '@/assets/Icons/gold.svg';
 import './Badges.css';
 import TotalStreakAndXP from '../TotalStreak&XP/TotalStreak&XP';
 import BlankHabitCard from '../HabitCard/BlankHabitCard';
