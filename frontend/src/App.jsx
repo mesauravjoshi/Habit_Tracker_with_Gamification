@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import { AuthContext } from './Components/Context/AuthContext';
+import { AuthContext } from './Context/AuthContext';
 import MainLayout from './Layouts/MainLayout';
 import PlainLayout from './Layouts/PlainLayout';
 import Home from './Components/Pages/Home/Home';

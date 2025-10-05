@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import { url } from '../../../../URL/Url';
 import "./DeleteConfirmUI.css";
-import { AuthContext } from '../../../Context/AuthContext';
-import { StreaXPContext } from '../../../Context/Strea&XPContext';
+import { AuthContext } from '../../../../Context/AuthContext';
+import { StreaXPContext } from '../../../../Context/Strea&XPContext';
 
 
 function DeleteConfirmUI({ setDisplayDelUI, streakID, habitData, setHabitData }) {

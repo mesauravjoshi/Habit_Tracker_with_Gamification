@@ -5,8 +5,8 @@ import { url } from '../../../URL/Url';
 import StreakUpdate from '../Streak/MarkStreakDone/StreakUpdate';
 import DeleteConfirmUI from '../Streak/DeleteUI/DeleteConfirmUI';
 import ExpandCard from '../Streak/ExpandHabitCard/ExpandCard';
-import { AuthContext } from '../../Context/AuthContext';
-import { ArchiveContext } from '../../Context/ArchiveContext';
+import { AuthContext } from '../../../Context/AuthContext';
+import { ArchiveContext } from '../../../Context/ArchiveContext';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 
 // ✅ Initial State

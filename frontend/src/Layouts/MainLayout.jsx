@@ -18,7 +18,7 @@ import { Home, AddHabit, TrackHabit, Archive, Completed, Badges, Setting, Bars3I
 import { Toaster } from 'react-hot-toast';
 // import LogOutPopUp from '@/Components/Nav/LogOutPopUp'
 import LogOutPopUp from "../Components/Nav/LogOutPopUp";
-import { AuthContext } from "../Components/Context/AuthContext";
+import { AuthContext } from "../Context/AuthContext";
 import axios from "axios";
 
 const navigation = [
@@ -31,7 +31,7 @@ const navigation = [
 ];
 
 const userNavigation = [
-  { name: 'Your profile', href: '#' },
+  // { name: 'Your profile', href: '#' },
   { name: 'Sign out' },
   { name: 'Setting', href: '/setting' },
   { name: 'Sign In', href: 'auth' },
@@ -41,12 +41,13 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 export default function MainLayout() {
-  const [isLogOutPopUpOpen, setIsLogOutPopUpOpsen] = useState(false);
+  const [isLogOutPopUpOpen, setIsLogOutPopUpOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
 
   const [gravatarUrl, setGravatarUrl] = useState('');
   const { user } = useContext(AuthContext);
+console.log(user);
 
   useEffect(() => {
     const generateGravatar = async () => {
@@ -263,7 +264,7 @@ export default function MainLayout() {
                     }
                     <span className="hidden lg:flex lg:items-center">
                       <span aria-hidden="true" className="ml-4 text-sm/6 font-semibold text-gray-900 dark:text-amber-500">
-                        Name
+                        {user && user.name}
                       </span>
                       <ChevronDownIcon aria-hidden="true" className="ml-2 size-5 text-gray-400" />
                     </span>

@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { AuthContext } from "../Context/AuthContext";
+import { AuthContext } from "../../Context/AuthContext";
 
 function LogOutPopUp({ setIsLogOutPopUpOpen }) {
   const { user, setUser, fetchUserData } = useContext(AuthContext);
@@ -20,7 +20,7 @@ function LogOutPopUp({ setIsLogOutPopUpOpen }) {
             localStorage.removeItem('habit token');
             setUser(null);
             fetchUserData();
-          }}  >LogOut</button>
+          }}  >Log Out</button>
         </div>
       </div>
     </div>

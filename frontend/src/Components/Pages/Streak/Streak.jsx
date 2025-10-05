@@ -3,9 +3,9 @@ import HabitCard from '../HabitCard/HabitCard';
 import BlankHabitCard from '../HabitCard/BlankHabitCard';
 import { url } from '../../../URL/Url';
 import './Streak.css';
-import { AuthContext } from '../../Context/AuthContext';
-import { ArchiveContext } from '../../Context/ArchiveContext';
-import { StreaXPContext } from '../../Context/Strea&XPContext';
+import { AuthContext } from '../../../Context/AuthContext';
+import { ArchiveContext } from '../../../Context/ArchiveContext';
+import { StreaXPContext } from '../../../Context/Strea&XPContext';
 import TotalStreakAndXP from '../TotalStreak&XP/TotalStreak&XP';
 import Filter from './Filter';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'

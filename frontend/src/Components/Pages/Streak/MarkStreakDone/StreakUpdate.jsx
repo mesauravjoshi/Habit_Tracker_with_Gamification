@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { url } from '../../../../URL/Url';
 import { settingColorForCalendar, settingColorForPendingWeek, settingColorForCal_week } from './settingColorForCalendar'; // adjust path as needed
-import { StreaXPContext } from '../../../Context/Strea&XPContext';
+import { StreaXPContext } from '../../../../Context/Strea&XPContext';
 import './StreakUpdate.css'
 
 function StreakUpdate({ setHabitData, LastUpdate, LastDayForWeek, TargetDuration, StartedDate, index, habitData, Frequency }) {

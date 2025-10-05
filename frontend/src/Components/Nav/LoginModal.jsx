@@ -5,11 +5,11 @@ import { ShowPassword, HidePassword } from "../../assets/Icons/Icons";
 import { url } from '../../URL/Url';
 import SignUp from './SignUp'
 import "./LoginModal.css";
-import { AuthContext } from '../Context/AuthContext';
-import { StreaXPContext } from "../Context/Strea&XPContext";
+import { AuthContext } from '../../Context/AuthContext';
+import { StreaXPContext } from "../../Context/Strea&XPContext";
 
 const LoginModal = ({ setLoginOpen, onClose }) => {
-  const { fetchUserData } = useContext(AuthContext); // Access user from context
+  const { fetchUserData } = useContext(AuthContext);
   const { fetchStreaXPData } = useContext(StreaXPContext);
 
   const initialState = {

@@ -2,8 +2,8 @@ import { useEffect, useState, useContext } from 'react';
 import HabitCard from '../HabitCard/HabitCard';
 import BlankHabitCard from '../HabitCard/BlankHabitCard';
 import { url } from '../../../URL/Url';
-import { AuthContext } from '../../Context/AuthContext';
-import { ArchiveContext } from '../../Context/ArchiveContext';
+import { AuthContext } from '../../../Context/AuthContext';
+import { ArchiveContext } from '../../../Context/ArchiveContext';
 import TotalStreakAndXP from '../TotalStreak&XP/TotalStreak&XP';
 
 function Archive() {

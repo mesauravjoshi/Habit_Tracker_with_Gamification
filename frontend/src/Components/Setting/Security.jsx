@@ -1,6 +1,6 @@
 // ./Components/Pages/Setting/Profile.js
 import { useState, useEffect, useContext } from "react";
-import { AuthContext } from "../Context/AuthContext";
+import { AuthContext } from "../../Context/AuthContext";
 import axios from "axios";
 import { url } from "../../URL/Url";
 import toast, { Toaster } from 'react-hot-toast';

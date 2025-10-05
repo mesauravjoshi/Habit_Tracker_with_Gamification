@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { url } from '../../../URL/Url';
-import { AuthContext } from '../../Context/AuthContext';
+import { AuthContext } from '../../../Context/AuthContext';
 import Silver from '../../../assets/Icons/Silver';
 import Gold from '../../../assets/Icons/gold.svg';
 import './Badges.css';
