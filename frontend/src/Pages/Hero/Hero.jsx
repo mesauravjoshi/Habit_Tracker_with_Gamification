@@ -2,39 +2,25 @@ import React, { useState, useContext } from "react";
 import { NavLink } from "react-router-dom";
 import "./Hero.css";
 import { StreaXPContext } from '@/Context/Strea&XPContext'
-import {
-  Dialog,
-  DialogBackdrop,
-  DialogPanel,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuItems,
-  TransitionChild,
-} from '@headlessui/react'
-import { Home, AddHabit, TrackHabit, Archive, Completed, Badges, Setting, Bars3Icon, ChevronDownIcon, SunIcon, MoonIcon, MagnifyingGlassIcon } from "@/Components/Slider/SliderIcon";
+import { SunIcon, MoonIcon } from "@/Components/Slider/SliderIcon";
 import { useTheme } from "@/Context/ThemeProvider";
 import { Link } from "react-router-dom";
 import ProfileDropDown from "@/Components/ProfileDropDown";
 import LogOutPopUp from "@/Components/Nav/LogOutPopUp";
+import { AuthContext } from "@/Context/AuthContext";
 
 const Hero = () => {
   const [isLogOutPopUpOpen, setIsLogOutPopUpOpen] = useState(false);
   const { totalStreaXP } = useContext(StreaXPContext);
   const sampleBadges = ["🥇 Gold", "🥈 Silver", "🔥 Elite Streaker", "🌟 Master"];
-
   const { theme, toggleTheme } = useTheme();
+  const { user } = useContext(AuthContext);
 
   return (
     <>
       <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-gray-50 px-4 shadow-xs sm:gap-x-6 sm:px-6 lg:px-8 dark:border-white/10 dark:bg-gray-900">
         <Link to={'/home'}>
           <div className="flex h-16 shrink-0 items-center gap-x-2">
-            {/* <img
-                  alt="Your Company"
-                  src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
-                  className="h-8 w-auto"
-                /> */}
             <span className="text-lg text-rose-500 font-bold">
               HabitQuest
             </span>
@@ -46,12 +32,11 @@ const Hero = () => {
 
         <div className="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
           <div className="grid flex-1 grid-cols-1">
-            <div className="col-start-1 row-start-1 block size-full bg-gray-50 pl-8 text-base text-gray-900 outline-hidden placeholder:text-gray-400 sm:text-sm/6 dark:bg-gray-900 dark:text-white dark:placeholder:text-gray-500">
-            </div>
+
           </div>
           <div className="flex items-center gap-x-2 lg:gap-x-6">
 
-            <button type="button" className=" text-gray-400 hover:text-gray-500"
+            <button type="button" className="text-gray-400 hover:text-gray-500"
               onClick={toggleTheme}>
               <span className="sr-only">View notifications</span>
               {theme === "dark" ?
@@ -65,9 +50,17 @@ const Hero = () => {
             <div aria-hidden="true" className="hidden lg:block lg:h-6 lg:w-px lg:bg-gray-900/10" />
 
             {/* Profile dropdown */}
-            <ProfileDropDown
-              setIsLogOutPopUpOpen={setIsLogOutPopUpOpen}
-            />
+            {
+              user ?
+                <ProfileDropDown
+                  setIsLogOutPopUpOpen={setIsLogOutPopUpOpen}
+                /> :
+                <div>
+                  <Link to={'/auth#login'}>
+                    Login
+                  </Link>
+                </div>
+            }
           </div>
         </div>
       </div>

@@ -15,14 +15,13 @@ import axios from "axios";
 const userNavigation = [
   // { name: 'Your profile', href: '#' },
   { name: 'Setting', href: '/setting' },
-  { name: 'Sign In', href: 'auth' },
+  // { name: 'Sign In', href: '/auth' },
   { name: 'Sign out' },
 ]
 
-export default function ProfileDropDown({setIsLogOutPopUpOpen}) {
+export default function ProfileDropDown({ setIsLogOutPopUpOpen }) {
   const [gravatarUrl, setGravatarUrl] = useState('');
   const { user } = useContext(AuthContext);
-
 
   useEffect(() => {
     const generateGravatar = async () => {

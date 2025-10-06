@@ -73,7 +73,7 @@ export default function Security() {
           name="currentPassword"
           value={formData.currentPassword}
           onChange={handleChange}
-          className="w-full p-2 rounded-md bg-zinc-800 text-yellow-400 border border-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-600"
+          className="w-full p-2 rounded-md dark:bg-white/5 text-yellow-400 border border-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-600"
           placeholder="Current Pasoword"
         />
       </div>
@@ -85,7 +85,7 @@ export default function Security() {
           name="newPassword"
           value={formData.newPassword}
           onChange={handleChange}
-          className="w-full p-2 rounded-md bg-zinc-800 text-yellow-400 border border-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-600"
+          className="w-full p-2 rounded-md dark:bg-white/5 text-yellow-400 border border-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-600"
           placeholder="New Passoword"
         />
       </div>
@@ -97,7 +97,7 @@ export default function Security() {
           name="confirmPassword"
           value={formData.confirmPassword}
           onChange={handleChange}
-          className="w-full p-2 rounded-md bg-zinc-800 text-yellow-400 border border-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-600"
+          className="w-full p-2 rounded-md dark:bg-white/5 text-yellow-400 border border-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-600"
           placeholder="Confirm Passoword"
         />
       </div>
