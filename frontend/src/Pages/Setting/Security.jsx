@@ -1,9 +1,8 @@
 // ./Components/Pages/Setting/Profile.js
 import { useState, useEffect, useContext } from "react";
-import { AuthContext } from "../../Context/AuthContext";
-import axios from "axios";
-import { url } from "../../URL/Url";
-import toast, { Toaster } from 'react-hot-toast';
+import { AuthContext } from "@/Context/AuthContext";
+import toast from 'react-hot-toast';
+import axiosInstance from "@/api/axiosInstance";
 
 export default function Security() {
   const { token } = useContext(AuthContext);
@@ -32,12 +31,7 @@ export default function Security() {
 
   const updateProfile = async () => {
     try {
-      const res = await axios.patch(`${url}/profile/chnagePassword`, formData, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-
+      const res = await axiosInstance.patch("/profile/changePassword", formData);
       if (res.data) {
         setFormData({
           currentPassword: "",

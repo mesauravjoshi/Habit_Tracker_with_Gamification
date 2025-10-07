@@ -4,9 +4,9 @@ import { AuthContext } from "@/Context/AuthContext";
 import Silver from '@/assets/Icons/Silver';
 import Gold from '@/assets/Icons/gold.svg';
 import './Badges.css';
-import TotalStreakAndXP from '@/Components/TotalStreak&XP/TotalStreak&XP';
-import BlankHabitCard from '../../Components/HabitCard/BlankHabitCard';
+import TotalStreakAndXP from '@/Components/TotalStreak&XP/TotalStreak&XP'
 import BlankBaadge from './BlankBaadge';
+import axiosInstance from "@/api/axiosInstance";
 
 function Badge() {
   const { user, token } = useContext(AuthContext);
@@ -53,14 +53,8 @@ function Badge() {
         return;
       }
       try {
-        const response = await fetch(`${url}/habit/habits`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        const data = await response.json();
+        const response = await axiosInstance.get("/habit/habits");
+        const data = response.data
         setAllBadges(data.filter((item) => item.BadgeRecord.Badge !== '')
           .map(habit => {
             delete habit.Priority;

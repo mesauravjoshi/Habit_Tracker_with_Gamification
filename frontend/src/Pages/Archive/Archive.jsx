@@ -1,10 +1,10 @@
 import { useEffect, useState, useContext } from 'react';
 import HabitCard from '@/Components/HabitCard/HabitCard';
 import BlankHabitCard from '@/Components/HabitCard/BlankHabitCard';
-import { url } from '@/URL/Url'
 import { AuthContext } from '@/Context/AuthContext';
 import { ArchiveContext } from '@/Context/ArchiveContext';
 import TotalStreakAndXP from '@/Components/TotalStreak&XP/TotalStreak&XP';
+import axiosInstance from "@/api/axiosInstance";
 
 function Archive() {
   const { user, token } = useContext(AuthContext);
@@ -20,14 +20,8 @@ function Archive() {
         return;
       }
       try {
-        const response = await fetch(`${url}/habit/habits`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
-          }
-        });
-        const data = await response.json();
+        const response = await axiosInstance.get("/habit/habits");
+        const data = response.data
         const edit = data.filter(habit => archiveHabits.includes(habit._id));
         setArchivedHabit(edit.reverse());
       } catch (error) {

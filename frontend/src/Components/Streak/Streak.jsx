@@ -8,6 +8,7 @@ import { ArchiveContext } from '@/Context/ArchiveContext';
 import { StreaXPContext } from '@/Context/Strea&XPContext';
 import TotalStreakAndXP from '@/Components/TotalStreak&XP/TotalStreak&XP';
 import Filter from './Filter';
+import axiosInstance from "@/api/axiosInstance";
 
 function Streak() {
   const authContext = useContext(AuthContext);
@@ -42,38 +43,10 @@ function Streak() {
         return;
       }
       try {
-        const response = await fetch(`${url}/habit/habits`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
-          }
-        });
-
-        const data = await response.json();
-
-        if (data.error) {
-          if (data.error.name === 'TokenExpiredError') {
-            console.log("Token has expired. Logging out...");
-            localStorage.removeItem("habit token");
-            setUser(null);
-            setToken("");
-            setLoading(false);
-            return;
-          }
-          console.log("Error from API:", data.error);
-          setLoading(false);
-          return;
-        }
-
-        if (!Array.isArray(data)) {
-          console.log("Unexpected response format", data);
-          setLoading(false);
-          return;
-        }
-
+        const response = await axiosInstance.get("/habit/habits");
+        // console.log(response.data);
+        const data = response.data
         const edit = data.filter(habit => !archiveHabits.includes(habit._id));
-
         setHabitData(edit.reverse());
         setUpdatedStreakData(edit);
         setLoading(false);

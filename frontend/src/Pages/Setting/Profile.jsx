@@ -4,6 +4,7 @@ import { AuthContext } from "../../Context/AuthContext";
 import axios from "axios";
 import { url } from "../../URL/Url";
 import toast, { Toaster } from 'react-hot-toast';
+import axiosInstance from "@/api/axiosInstance";
 
 export default function Profile() {
   const { user, token } = useContext(AuthContext);
@@ -23,12 +24,12 @@ export default function Profile() {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        // const token = localStorage.getItem('token'); // or use context if stored there
-        const res = await axios.get(`${url}/profile/profile`, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
+        const res = await axiosInstance.get("/profile/profile", formData);
+        // const res = await axios.get(`${url}/profile/profile`, {
+        //   headers: {
+        //     Authorization: `Bearer ${token}`
+        //   }
+        // });
         if (res.data) setFormData(res.data)
         // console.log(res.data);
       } catch (err) {

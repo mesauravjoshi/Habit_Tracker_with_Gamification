@@ -1,10 +1,9 @@
 import { useEffect, useState, useContext } from 'react';
 import HabitCard from '../../Components/HabitCard/HabitCard';
-import { url } from '@/URL/Url';
 import { AuthContext } from "@/Context/AuthContext";
 import TotalStreakAndXP from '@/Components/TotalStreak&XP/TotalStreak&XP';
 import BlankHabitCard from '../../Components/HabitCard/BlankHabitCard';
-// import HabitCardSkeleton from '../HabitCard/HabitCardSkeleton'; // Import skeleton loader
+import axiosInstance from "@/api/axiosInstance";
 
 function Completed() {
   const { user, token } = useContext(AuthContext); // Access user from context
@@ -19,16 +18,9 @@ function Completed() {
         return;
       }
       try {
-        const response = await fetch(`${url}/habit/habits`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}` // Include JWT token
-          }
-        });
-
-        const data = await response.json();
-        setCompletedHabit(data.filter(item => item.IsCompleted === true)); // Update state with fetched data
+        const response = await axiosInstance.get("/habit/habits");
+        const data = response.data
+        setCompletedHabit(data.filter(item => item.IsCompleted === true));
       } catch (error) {
         console.error('Error fetching habits:', error);
       } finally {
@@ -44,10 +36,10 @@ function Completed() {
       {/* <div className='Habit-list'>
         <h1>Completed Habits</h1>
       </div> */}
-        <TotalStreakAndXP heading={'Completed Habits'}/>
+      <TotalStreakAndXP heading={'Completed Habits'} />
       {user ? (
         loading ? (
-          <BlankHabitCard/>
+          <BlankHabitCard />
         ) : (completedHabit.length > 0 ? (
           <HabitCard habitData={completedHabit} setHabitData={setCompletedHabit} />
         ) : (
