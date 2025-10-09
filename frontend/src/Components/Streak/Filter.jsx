@@ -8,10 +8,8 @@ function Filter({ setHabitData, updatedStreakData, showFilter, setShowFilter, se
     const copy_inside = [...updatedStreakData];
 
     if (selectedFrequencies.length === 0 && selectedBadges.length === 0 && selectedCategory.length === 0) {
-      // console.log('empty');
       return
     } else {
-
       if (selectedFrequencies.length > 0 && selectedBadges.length > 0 && selectedCategory.length > 0) {
         console.log('both');
         setHabitData(copy_inside.filter(habit =>
@@ -91,7 +89,7 @@ function Filter({ setHabitData, updatedStreakData, showFilter, setShowFilter, se
       const searchResults = categories.filter(cat => cat.toLowerCase().includes(query));
       setFilteredCategories(searchResults);
     } else {
-      setFilteredCategories(categories); // Reset if input is empty
+      setFilteredCategories(categories);
     }
   };
 
@@ -192,7 +190,6 @@ function Filter({ setHabitData, updatedStreakData, showFilter, setShowFilter, se
 
         <div className="filter-button-box">
           <button onClick={() => { handleFilterHabit(); }}
-          // disabled={selectedFrequencies.length === 0 && selectedBadges.length === 0 && selectedCategory.length === 0}
           > Apply </button>
           <button onClick={() => handleFilterReset()} >Reset</button>
         </div>

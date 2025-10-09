@@ -1,4 +1,3 @@
-/* Filter Container: Slide Down & Fade In */
 .filter-container {
     margin: 0px 11px 8px 11px;
     display: grid;
@@ -80,8 +79,6 @@
 }
 
 .custom-select-category:hover {
-    /* color: #292931c9; */
-    /* background: linear-gradient(135deg, #f1a234, #d98714); */
 }
 
 .arrow {
@@ -139,12 +136,6 @@
     scrollbar-color: rgba(241, 156, 32, 0.5) transparent;
 }
 
-/* Dynamically adjust height based on filteredCategories */
-/* .dropdown-category:has(.dropdown-item-category:nth-child(-n+3)) {
-    max-height: unset;
-} */
-
-/* Webkit-based browsers (Chrome, Edge, Safari) */
 .dropdown-category::-webkit-scrollbar {
     width: 5px;
     height: 5px;
@@ -212,39 +203,6 @@
     gap: 0.5rem;
     cursor: pointer;
 }
-/* 
-input[type="checkbox"] {
-    appearance: none;
-    width: 20px;
-    height: 20px;
-    border: 2px solid #d03665;
-    border-radius: 5px;
-    background-color: transparent;
-    display: inline-block;
-    position: relative;
-    cursor: pointer;
-    transition: all 0.1s ease-in-out;
-}
-
-input[type="checkbox"]::before {
-    content: "✔";
-    font-size: 16px;
-    color: white;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%) scale(0);
-    transition: all 0.1s ease-in-out;
-}
-
-input[type="checkbox"]:checked {
-    background-color: #d03665;
-    border-color: #d03665;
-}
-
-input[type="checkbox"]:checked::before {
-    transform: translate(-50%, -50%) scale(1);
-} */
 
 .filter-button-box {
     display: flex;

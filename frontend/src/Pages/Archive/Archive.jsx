@@ -5,12 +5,14 @@ import { AuthContext } from '@/Context/AuthContext';
 import { ArchiveContext } from '@/Context/ArchiveContext';
 import TotalStreakAndXP from '@/Components/TotalStreak&XP/TotalStreak&XP';
 import axiosInstance from "@/api/axiosInstance";
+import Filter from '@/Components/Streak/Filter';
 
 function Archive() {
   const { user, token } = useContext(AuthContext);
   const { archiveHabits } = useContext(ArchiveContext);
   const [archivedHabit, setArchivedHabit] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showFilter, setShowFilter] = useState(false);
 
   useEffect(() => {
     const fetchHabits = async () => {
@@ -38,7 +40,23 @@ function Archive() {
       {/* <div className='Habit-list'> */}
       {/* <h1> Archived Habits </h1> */}
       {/* </div> */}
-      <TotalStreakAndXP heading={'Archived Habits'} />
+      <TotalStreakAndXP
+        heading={'Archived Habits'}
+        setShowFilter={setShowFilter}
+      />
+
+      {/* <Filter
+        showFilter={showFilter}
+        setShowFilter={setShowFilter}
+        setHabitData={setArchivedHabit}
+        updatedStreakData={updatedStreakData}
+        selectedFrequencies={selectedFrequencies}
+        setSelectedFrequencies={setSelectedFrequencies}
+        selectedBadges={selectedBadges}
+        setSelectedBadges={setSelectedBadges}
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+      /> */}
 
       {
         user ? (

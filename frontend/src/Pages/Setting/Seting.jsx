@@ -1,11 +1,13 @@
 import { useState } from "react";
-import Profile from "./Profile";
-import Security from "./Security";
-import Logout from "./Logout";
+import Profile from "@/Pages/Setting/Profile";
+import Security from "@/Pages/Setting/Security";
+import Logout from "@/Pages/Setting/Logout";
+import Appearance from "@/Pages/Setting/Appearance";
 
 const tabs = [
   { id: "profile", label: "Profile Settings" },
   { id: "security", label: "Security" },
+  { id: "appearance", label: "Appearance" },
   { id: "logout", label: "Logout" },
   { id: "deleteAccount", label: "Delete Account" },
 ];
@@ -19,8 +21,10 @@ export default function Setting() {
         return <Profile />
       case "security":
         return <Security />
+      case "appearance":
+        return <Appearance />
       case "logout":
-        return <Logout/>;
+        return <Logout />;
       case "deleteAccount":
         return <div>View and update billing details.</div>;
       default:

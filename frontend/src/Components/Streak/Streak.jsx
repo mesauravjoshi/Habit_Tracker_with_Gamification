@@ -1,13 +1,12 @@
 import { useEffect, useState, useRef, useContext } from 'react';
 import HabitCard from '../../Components/HabitCard/HabitCard';
 import BlankHabitCard from '../../Components/HabitCard/BlankHabitCard';
-import { url } from '@/URL/Url';
 import './Streak.css';
 import { AuthContext } from "@/Context/AuthContext";
 import { ArchiveContext } from '@/Context/ArchiveContext';
 import { StreaXPContext } from '@/Context/Strea&XPContext';
 import TotalStreakAndXP from '@/Components/TotalStreak&XP/TotalStreak&XP';
-import Filter from './Filter';
+import Filter from '@/Components/Streak/Filter';
 import axiosInstance from "@/api/axiosInstance";
 
 function Streak() {
@@ -76,30 +75,19 @@ function Streak() {
     <>
       <div className='strek-container'>
         <div className='Habit-list'>
-          <button
-            onClick={() => setShowFilter(prev => !prev)}
-            className="flex items-center gap-2 px-3 py-2 font-semibold rounded-full cursor-pointer border-1 
-            border-gray-900 dark:border-amber-400">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              height="24px"
-              viewBox="0 -960 960 960"
-              width="24px"
-              fill="currentColor"
-              className="transition-transform duration-300 group-hover:rotate-180"
-            >
-              <path d="M400-240v-80h160v80H400ZM240-440v-80h480v80H240ZM120-640v-80h720v80H120Z" />
-            </svg>
-            Filters
-          </button>
-
-
-          <TotalStreakAndXP heading={'Habit list'} />
+          <TotalStreakAndXP
+            heading={'Habit list'}
+            setShowFilter={setShowFilter}
+          />
         </div>
 
         {
           showFilter &&
-          <Filter showFilter={showFilter} setShowFilter={setShowFilter} setHabitData={setHabitData} updatedStreakData={updatedStreakData}
+          <Filter
+            showFilter={showFilter}
+            setShowFilter={setShowFilter}
+            setHabitData={setHabitData}
+            updatedStreakData={updatedStreakData}
             selectedFrequencies={selectedFrequencies}
             setSelectedFrequencies={setSelectedFrequencies}
             selectedBadges={selectedBadges}
