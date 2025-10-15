@@ -1,7 +1,13 @@
 import { useState } from 'react';
 import './Filter.css';
 
-function Filter({ setHabitData, updatedStreakData, showFilter, setShowFilter, selectedFrequencies, setSelectedFrequencies, selectedBadges, setSelectedBadges, selectedCategory, setSelectedCategory }) {
+function Filter({
+  setHabitData,
+  updatedStreakData,
+}) {
+  const [selectedCategory, setSelectedCategory] = useState([]);
+  const [selectedBadges, setSelectedBadges] = useState([]);
+  const [selectedFrequencies, setSelectedFrequencies] = useState([]);
 
   const handleFilterHabit = () => {
 
@@ -27,7 +33,6 @@ function Filter({ setHabitData, updatedStreakData, showFilter, setShowFilter, se
         setHabitData(copy_inside.filter(habit => selectedCategory.includes(habit.Category)));
       }
     }
-    setShowFilter(false)
   };
 
   const handleFilterReset = () => {
@@ -53,7 +58,6 @@ function Filter({ setHabitData, updatedStreakData, showFilter, setShowFilter, se
     );
   };
 
-  const [isOpen, setIsOpen] = useState(false);
   const categories = [
     "Health & Fitness 🏋️‍♂️",
     "Productivity & Work 📑",
@@ -79,7 +83,7 @@ function Filter({ setHabitData, updatedStreakData, showFilter, setShowFilter, se
   };
 
   const [searchQuery, setSearchQuery] = useState("");
-  const [filteredCategories, setFilteredCategories] = useState(categories); // Store filtered results
+  const [filteredCategories, setFilteredCategories] = useState(categories);
 
   const filterCategorySearch = (e) => {
     const query = e.target.value.toLowerCase();
@@ -95,47 +99,10 @@ function Filter({ setHabitData, updatedStreakData, showFilter, setShowFilter, se
 
   return (
     <>
-      <div className="filter-container" data-visible={showFilter}>
-
-        <div className="custom-select-container">
-          <h2>Category</h2>
-          <div className={`custom-select-category ${isOpen ? "open" : ""}`} onClick={() => setIsOpen(!isOpen)}>
-            <span>{selectedCategory.length > 0 ? <>
-              {selectedCategory.map((category, index) => {
-                return <div key={index} className='selected-category'>
-                  {category.split(" ")[0]}
-                  <span onClick={(event) => {
-                    event.stopPropagation();
-                    handleRemoveSelctedCat(index)
-                  }} >X</span>
-                </div>
-              })}
-            </> : "Select a category"}</span>
-            <div className="arrow"></div>
-          </div>
-          {isOpen && (
-            <>
-              <div className='filter-category-search'>
-                <input type="text" placeholder="Search ....." onChange={filterCategorySearch} value={searchQuery} />
-                <div className="dropdown-category">
-                  {filteredCategories.map((category, index) => (
-                    <div key={index} className={`dropdown-item-category ${selectedCategory.includes(category) ? "selected" : ""}`} >
-                      <label>
-                        <input type="checkbox" value={category}
-                          checked={selectedCategory.includes(category)}
-                          onChange={handleCategoryChange}
-                        />
-                        {category}
-                      </label>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </>
-          )}
-        </div>
+      <div className="flex gap-3 justify-between my-4 p-3 rounded-md border-1 border-amber-500">
+     
         {/* Frequency */}
-        <div className="filter-Frequency-habit">
+        <div className="flex flex-col">
           <h4>Frequency</h4>
           <label>
             <input type="checkbox" value="Daily"
@@ -155,9 +122,9 @@ function Filter({ setHabitData, updatedStreakData, showFilter, setShowFilter, se
 
 
         {/* Badge */}
-        <div className="filter-Badge-habit">
+        <div className="flex flex-col">
           <h4>Badge</h4>
-          <div>
+          <div className='flex flex-col'>
             <label>
               <input
                 type="checkbox"
@@ -188,10 +155,15 @@ function Filter({ setHabitData, updatedStreakData, showFilter, setShowFilter, se
           </div>
         </div>
 
-        <div className="filter-button-box">
-          <button onClick={() => { handleFilterHabit(); }}
+        <div className="flex flex-col gap-2">
+          <button
+            className='rounded-md px-2 py-2 text-sm font-semibold text-amber-100 dark:text-grey-900 shadow-xs bg-amber-600'
+            onClick={() => { handleFilterHabit(); }}
           > Apply </button>
-          <button onClick={() => handleFilterReset()} >Reset</button>
+          <button
+            className='rounded-md px-2 py-2 text-sm border-1 border-amber-600 font-semibold text-amber-900  dark:text-amber-600 shadow-xs'
+            onClick={() => handleFilterReset()}
+          >Reset</button>
         </div>
 
       </div >

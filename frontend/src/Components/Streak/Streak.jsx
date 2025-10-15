@@ -16,10 +16,10 @@ function Streak() {
   const { archiveHabits } = useContext(ArchiveContext);
   const [habitData, setHabitData] = useState([]);
   const [updatedStreakData, setUpdatedStreakData] = useState([]);
-  const [selectedFrequencies, setSelectedFrequencies] = useState([]);
-  const [selectedBadges, setSelectedBadges] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState([]);
-
+  // const [selectedFrequencies, setSelectedFrequencies] = useState([]);
+  // const [selectedBadges, setSelectedBadges] = useState([]);
+  // const [selectedCategory, setSelectedCategory] = useState([]);
+  
   const [loading, setLoading] = useState(true);
 
   const [handleViewOption, setHandleViewOption] = useState(false);
@@ -88,12 +88,13 @@ function Streak() {
             setShowFilter={setShowFilter}
             setHabitData={setHabitData}
             updatedStreakData={updatedStreakData}
-            selectedFrequencies={selectedFrequencies}
-            setSelectedFrequencies={setSelectedFrequencies}
-            selectedBadges={selectedBadges}
-            setSelectedBadges={setSelectedBadges}
-            selectedCategory={selectedCategory}
-            setSelectedCategory={setSelectedCategory} />
+          // selectedFrequencies={selectedFrequencies}
+          // setSelectedFrequencies={setSelectedFrequencies}
+          // selectedBadges={selectedBadges}
+          // setSelectedBadges={setSelectedBadges}
+          // selectedCategory={selectedCategory}
+          // setSelectedCategory={setSelectedCategory}
+          />
         }
 
         {

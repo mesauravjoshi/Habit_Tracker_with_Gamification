@@ -1,4 +1,4 @@
-.filter-container {
+/* .filter-container {
     margin: 0px 11px 8px 11px;
     display: grid;
     color: #d03665;
@@ -15,23 +15,19 @@
     transition: opacity 0.3s ease-out, transform 0.3s ease-out;
 }
 
-/* Filter Appears */
 .filter-container[data-visible="true"] {
     opacity: 1;
     transform: translateY(0);
 }
 
-/* Streak Container: Slight Downward Shift */
 .Streak {
     transition: margin-top 0.3s ease-out;
 }
 
-/* Move Streak Container Down When Filter is Visible */
 .filter-container[data-visible="true"]+.Streak {
     margin-top: 10px;
 }
 
-/* Dropdown styling */
 .filter-container select {
     width: 100%;
     padding: 0.6rem;
@@ -46,8 +42,6 @@
     outline: none;
 }
 
-/* -------------------------------------------------------- */
-/* Category  */
 .custom-select-container {
     width: 89%;
 }
@@ -124,8 +118,8 @@
 }
 
 .dropdown-category {
-    max-height: 11em; /* Allow scrolling if needed */
-    min-height: auto; /* Let it shrink if few items */
+    max-height: 11em; 
+    min-height: auto;
     overflow-y: auto;
     background: #292931;
     border: 1px solid #f19c2042;
@@ -178,10 +172,6 @@
     gap: 9px;
 }
 
-/* -------------------------------------------------------- */
-
-
-/* Checkbox styles */
 .filter-Frequency-habit,
 .filter-Badge-habit {
     display: flex;
@@ -231,7 +221,6 @@
     color: #dc3545;
 }
 
-/* Reset button */
 .filter-button-box button:last-child {
     background: #dc3545;
     color: white;
@@ -241,14 +230,12 @@
     background: #a71d2a;
 }
 
-/* Disabled button */
 .filter-button-box button:disabled {
     background: #ccc;
     color: #666;
     cursor: not-allowed;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
     .filter-container {
         grid-template-columns: 1fr 1fr;
@@ -269,4 +256,4 @@
     .filter-button-box {
         flex-direction: column;
     }
-}
+} */

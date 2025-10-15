@@ -2,7 +2,6 @@
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../Context/AuthContext";
 import axios from "axios";
-import { url } from "../../URL/Url";
 import toast, { Toaster } from 'react-hot-toast';
 import axiosInstance from "@/api/axiosInstance";
 
@@ -49,11 +48,7 @@ export default function Profile() {
 
   const updateProfile = async () => {
     try {
-      const res = await axios.patch(`${url}/profile/profile`, formData, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
+      const res = await axiosInstance.patch(`/profile/profile`, formData,);
 
       if (res.data) {
         setFormData(res.data)

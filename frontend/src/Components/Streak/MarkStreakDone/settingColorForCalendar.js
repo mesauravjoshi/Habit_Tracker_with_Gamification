@@ -1,4 +1,3 @@
-// 1. for days 
 export const settingColorForCalendar = (CalendarData, StartedDate, today) => {
   // console.log((today + 1));
 

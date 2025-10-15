@@ -1,11 +1,19 @@
 import React, { useState, useContext } from 'react'
 import { useEffect } from 'react';
-import { url } from '@/URL/Url'
 import { AuthContext } from "@/Context/AuthContext";
 import Category from './Category';
 import Frequency from './Frequency';
-import axios from 'axios'
+import axiosInstance from '@/api/axiosInstance';
+import toast from 'react-hot-toast';
 
+const notify = (type, message) => {
+  if (type === 'success') {
+    toast.success(message);
+  }
+  if (type === 'error') {
+    toast.error(message);
+  }
+}
 function Habit() {
   // const { showToast } = useToast();
   const { user, token } = useContext(AuthContext);
@@ -93,26 +101,23 @@ function Habit() {
     } else {
       return;
     }
-    console.log(udpatedHabit);
+    // console.log(udpatedHabit);
     // return;
     try {
-      const response = await axios.post(`${url}/habit/add_habit`, udpatedHabit, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-      if (response) {
-        notify(response.data.message)
-      }
+      const response = await axiosInstance.post(`/habit/add_habit`, udpatedHabit);
       console.log(response);
+      if (response) {
+        notify('success', response.data.message);
+      }
     } catch (error) {
+      notify('error', 'Error Saving habit');
       console.error('Error:', error);
     } finally {
       console.log('finally');
       // Reset input fields
-      // setFormObject((prev) => {
-      //   return { ...prev, HabitName: '', Priority: 0, TargetDuration: '', Category: '', Frequency: '' }
-      // });
+      setFormObject((prev) => {
+        return { ...prev, HabitName: '', Priority: 0, TargetDuration: '', Category: '', Frequency: '' }
+      });
     }
   };
 

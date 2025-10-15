@@ -233,7 +233,6 @@ function Streak({ habitData, setHabitData, insideArchive, archivedHabit, setArch
               <div className="flex w-full flex-row justify-center" key={streak.HabitName}>
                 <div
                   onClick={() => handleSelectHabitCard(streak, daysLeft, Total_Target_Time)}
-                  // className="grid grid-cols-[6fr_3fr_0.6fr] gap-y-3 w-full rounded-lg border border-red-500/80 text-pink-600 px-4 py-2"
                   className='grid grid-cols-[6fr_3fr_0.6fr] gap-y-3 w-full rounded-lg border-1 border-pink-500/80 text-pink-600 px-4 py-2 mb-3'
                 >
                   {/* 1. Habit Name */}
@@ -340,11 +339,7 @@ function Streak({ habitData, setHabitData, insideArchive, archivedHabit, setArch
                   {/* 6. Progress Bar */}
                   <div className="progress-outer flex items-center gap-2 mr-2">
                     <div
-                      className="
-                  progress-container relative w-[85%] rounded-lg bg-[#222] p-1
-                  shadow-[0px_4px_10px_rgba(255,65,108,0.3)]
-                  overflow-hidden
-                "
+                      className="progress-container relative w-[85%] rounded-lg bg-[#222] p-1shadow-[0px_4px_10px_rgba(255,65,108,0.3)]overflow-hidden"
                       style={{ '--progress': `${progress}%` }}
                     >
                       <div

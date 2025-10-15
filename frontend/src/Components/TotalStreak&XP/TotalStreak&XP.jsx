@@ -19,7 +19,7 @@ function TotalStreakAndXP({ heading, setShowFilter }) {
 
         <button
           onClick={() => setShowFilter(prev => !prev)}
-          className="flex items-center gap-2 px-3 py-2 font-semibold rounded-full cursor-pointer border-1 border-gray-900 dark:border-amber-400">
+          className="flex items-center gap-2 px-2.5 py-1.5 font-semibold rounded-full cursor-pointer border-1 border-gray-900 dark:border-amber-400">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             height="24px"

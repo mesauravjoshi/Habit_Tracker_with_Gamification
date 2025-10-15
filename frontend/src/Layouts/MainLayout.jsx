@@ -258,7 +258,7 @@ export default function MainLayout() {
             </div>
           </div>
 
-          <main className="py-10">
+          <main className="py-3">
             <div className="px-4 sm:px-6 lg:px-8">  <Outlet /> </div>
           </main>
         </div>

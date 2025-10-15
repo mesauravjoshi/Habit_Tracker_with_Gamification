@@ -1,13 +1,22 @@
 import React, { useContext } from "react";
-import { url } from '@/URL/Url';
 import "./DeleteConfirmUI.css";
 import { AuthContext } from "@/Context/AuthContext";
 import { StreaXPContext } from '@/Context/Strea&XPContext';
+import axiosInstance from "@/api/axiosInstance";
+import toast from 'react-hot-toast';
 
+const notify = (type, message) => {
+  if (type === 'success') {
+    toast.success(message);
+  }
+  if (type === 'error') {
+    toast.error(message);
+  }
+}
 
 function DeleteConfirmUI({ setDisplayDelUI, streakID, habitData, setHabitData }) {
   const { fetchStreaXPData } = useContext(StreaXPContext);
-  const {token } = useContext(AuthContext); // Access user from context
+  const { token } = useContext(AuthContext); // Access user from context
 
   const handleCanelDelete = () => {
     setDisplayDelUI(false);
@@ -18,22 +27,20 @@ function DeleteConfirmUI({ setDisplayDelUI, streakID, habitData, setHabitData })
     //     const token = localStorage.getItem('habit token');
 
     try {
-      const response = await fetch(`${url}/habit/habitDelete/${streakID}`, {
-        method: 'DELETE',
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}` // Include JWT token
-        }
-      });
+      console.log(streakID);
+      // return
+      const response = await axiosInstance.delete(`/habit/habitDelete/${streakID}`);
+      // console.log(response);
       // if (!response.ok) {
       //   throw new Error(error);
       // }
-      const data = await response.json();
       fetchStreaXPData();
       setHabitData(habitData.filter((habit) => habit._id !== streakID));
       setDisplayDelUI(false); // Close the confirmation UI
+      notify('success', response.data.message)
       // console.log('Habit deleted successfully:', data);
     } catch (error) {
+      notify('error','Error deleing habit')
       console.error('Error deleting habits:', error);
     }
   }

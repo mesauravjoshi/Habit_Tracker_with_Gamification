@@ -1,10 +1,19 @@
 import { useContext } from 'react';
-import { url } from '@/URL/Url';
-import { settingColorForCalendar, settingColorForPendingWeek, settingColorForCal_week } from './settingColorForCalendar'; // adjust path as needed
+import { settingColorForCalendar, settingColorForPendingWeek, settingColorForCal_week } from '@/Components/Streak/MarkStreakDone/settingColorForCalendar';
 import { StreaXPContext } from '@/Context/Strea&XPContext';
 import './StreakUpdate.css'
+import axiosInstance from '@/api/axiosInstance';
 
-function StreakUpdate({ setHabitData, LastUpdate, LastDayForWeek, TargetDuration, StartedDate, index, habitData, Frequency }) {
+function StreakUpdate({
+  setHabitData,
+  LastUpdate,
+  LastDayForWeek,
+  TargetDuration,
+  StartedDate,
+  index,
+  habitData,
+  Frequency
+}) {
   const { fetchStreaXPData } = useContext(StreaXPContext);
 
   const markAsDone = async (habit) => {
@@ -30,25 +39,11 @@ function StreakUpdate({ setHabitData, LastUpdate, LastDayForWeek, TargetDuration
       updatedData.TotalWeeksCompleted = habit.TotalWeeksCompleted;
     }
     try {
-      const token = localStorage.getItem('habit token');
-      const response = await fetch(`${url}/habit/markAsDone/${habit._id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          "Authorization": `Bearer ${token}` // Include JWT token
-        },
-        body: JSON.stringify(updatedData),
-      });
-      // console.log(updatedData);
+      // const token = localStorage.getItem('habit token');
+      const response = await axiosInstance.put(`/habit/markAsDone/${habit._id}`, updatedData);
+      console.log(response);
 
-      if (response.ok) {
-        const result = await response.json();
-        fetchStreaXPData();
-        // console.log("Habit updated successfully:", result);
-      } else {
-        const errorResponse = await response.json();
-        console.error('Error:', errorResponse.messge);
-      }
+      fetchStreaXPData();
     } catch (error) {
       console.error('Error:', error);
     }
@@ -210,7 +205,7 @@ function StreakUpdate({ setHabitData, LastUpdate, LastDayForWeek, TargetDuration
         const { previousDay, upcomingDay } = calculateUpcommingDay(today, dayFrom);
 
         if (today >= dayFrom && today <= endDate || LastUpdate == '') {
-          console.log('between Start - end date', LastUpdate);
+          // console.log('between Start - end date', LastUpdate);
           habit.StreakRecord.TotalStreak += 1;
           if (habit.StreakRecord.TotalStreak === 4) {
             habit.StreakRecord.XPPoints += 40;
@@ -247,9 +242,7 @@ function StreakUpdate({ setHabitData, LastUpdate, LastDayForWeek, TargetDuration
           }
         }
         else if (today > endDate) {
-          console.log('2nd condition');
-          console.log(StartedDate);
-          console.log(previousDay);
+          // console.log('2nd condition');
           habit.CalendarData = settingColorForPendingWeek(habit.CalendarData, StartedDate, previousDay)
           habit.CalendarData = settingColorForCal_week(habit.CalendarData, previousDay);
           // console.log(habit.CalendarData);
@@ -273,7 +266,7 @@ function StreakUpdate({ setHabitData, LastUpdate, LastDayForWeek, TargetDuration
       else {
         console.log('Frequency is neither daily nor weekly ')
       }
-      setHabitData([updatedStreakData]);
+      setHabitData(updatedStreakData);
       markAsDone(habit);
     }
   };

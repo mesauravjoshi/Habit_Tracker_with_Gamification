@@ -1,5 +1,4 @@
 import React, { createContext, useState, useEffect } from "react";
-import { url } from '@/URL/Url'
 import axiosInstance from "@/api/axiosInstance";
 
 export const StreaXPContext = createContext();

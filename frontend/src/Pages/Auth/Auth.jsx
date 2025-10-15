@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import { url } from '@/URL/Url';
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from '@/Context/AuthContext';
 import { StreaXPContext } from "@/Context/Strea&XPContext";
@@ -10,6 +9,7 @@ import { Link } from "react-router-dom";
 // Make sure your project is configured for Tailwind and dark mode (class strategy is recommended).
 import toast, { Toaster } from 'react-hot-toast';
 import { useLocation } from "react-router-dom";
+import axiosInstance from "@/api/axiosInstance";
 
 export default function Auth() {
   const { fetchUserData } = useContext(AuthContext);
@@ -61,7 +61,7 @@ export default function Auth() {
         }
         delete updatedForm.confirm
         // console.log(form);
-        const response = await axios.post(`${url}/auth/signup`, updatedForm);
+        const response = await axiosInstance.post(`auth/signup`, updatedForm);
         // console.log('Success:', response.data);
         if (response) {
           notify('success', response.data.message);
@@ -87,7 +87,7 @@ export default function Auth() {
         }
         // console.log(updatedForm);
 
-        const response = await axios.post(`${url}/auth/login`, updatedForm);
+        const response = await axiosInstance.post(`/auth/login`, updatedForm);
         // console.log('Success:', response);
         if (response) {
           notify('success', response.data.message);

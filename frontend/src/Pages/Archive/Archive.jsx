@@ -13,6 +13,7 @@ function Archive() {
   const [archivedHabit, setArchivedHabit] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showFilter, setShowFilter] = useState(false);
+  const [updatedStreakData, setUpdatedStreakData] = useState([]);
 
   useEffect(() => {
     const fetchHabits = async () => {
@@ -26,6 +27,7 @@ function Archive() {
         const data = response.data
         const edit = data.filter(habit => archiveHabits.includes(habit._id));
         setArchivedHabit(edit.reverse());
+        setUpdatedStreakData(edit);
       } catch (error) {
         console.error('Error fetching habits:', error);
       } finally {
@@ -45,18 +47,22 @@ function Archive() {
         setShowFilter={setShowFilter}
       />
 
-      {/* <Filter
-        showFilter={showFilter}
-        setShowFilter={setShowFilter}
-        setHabitData={setArchivedHabit}
-        updatedStreakData={updatedStreakData}
-        selectedFrequencies={selectedFrequencies}
-        setSelectedFrequencies={setSelectedFrequencies}
-        selectedBadges={selectedBadges}
-        setSelectedBadges={setSelectedBadges}
-        selectedCategory={selectedCategory}
-        setSelectedCategory={setSelectedCategory}
-      /> */}
+      {
+        showFilter &&
+        <Filter
+          showFilter={showFilter}
+          setShowFilter={setShowFilter}
+          setHabitData={setArchivedHabit}
+          updatedStreakData={updatedStreakData}
+        // selectedFrequencies={selectedFrequencies}
+        // setSelectedFrequencies={setSelectedFrequencies}
+        // selectedBadges={selectedBadges}
+        // setSelectedBadges={setSelectedBadges}
+        // selectedCategory={selectedCategory}
+        // setSelectedCategory={setSelectedCategory}
+        />
+      }
+
 
       {
         user ? (
