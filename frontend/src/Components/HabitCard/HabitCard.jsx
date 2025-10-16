@@ -1,5 +1,4 @@
 import { useEffect, useRef, useContext, useReducer } from 'react';
-import './HabitCard.css'
 import { DotsIcon, ShareIcon, Archive, Unarchive, Delete, ViewCard } from "@/assets/Icons/Icons";
 import { url } from '@/URL/Url';
 import StreakUpdate from '@/Components//Streak/MarkStreakDone/StreakUpdate';

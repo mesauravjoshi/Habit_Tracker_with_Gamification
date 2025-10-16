@@ -7,8 +7,8 @@ import Auth from '@/Pages/Auth/Auth';
 import Setting from '@/Pages/Setting/Seting';
 import { useContext } from "react";
 
-import Habit from "@/Pages/AddHabit/Habit";
-import Streak from "@/Components/Streak/Streak";
+import Habit from "@/Pages/AddHabit";
+import Streak from "@/Pages/Streak";
 import Archive from "@/Pages/Archive/Archive";
 import Completed from "@/Pages/Completed/Completed";
 import Badges from "@/Pages/Badges/Badges";

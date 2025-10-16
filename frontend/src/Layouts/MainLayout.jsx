@@ -16,7 +16,7 @@ import { useTheme } from "@/Context/ThemeProvider";
 
 import { Home, AddHabit, TrackHabit, Archive, Completed, Badges, Setting, Bars3Icon, SunIcon, MoonIcon } from '@/icons/SliderIcon';
 import { Toaster } from 'react-hot-toast';
-import LogOutPopUp from "@/Components/Nav/LogOutPopUp";
+import LogOutPopUp from "@/Components/Modal/LogOutModal";
 import { AuthContext } from "@/Context/AuthContext";
 import axios from "axios";
 import ProfileDropDown from "@/Components/ProfileDropDown";

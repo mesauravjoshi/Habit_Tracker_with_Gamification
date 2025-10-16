@@ -1,7 +1,6 @@
 import { useEffect, useState, useRef, useContext } from 'react';
-import HabitCard from '../../Components/HabitCard/HabitCard';
-import BlankHabitCard from '../../Components/HabitCard/BlankHabitCard';
-import './Streak.css';
+import HabitCard from '../Components/HabitCard/HabitCard';
+import BlankHabitCard from '../Components/HabitCard/BlankHabitCard';
 import { AuthContext } from "@/Context/AuthContext";
 import { ArchiveContext } from '@/Context/ArchiveContext';
 import { StreaXPContext } from '@/Context/Strea&XPContext';
@@ -16,9 +15,6 @@ function Streak() {
   const { archiveHabits } = useContext(ArchiveContext);
   const [habitData, setHabitData] = useState([]);
   const [updatedStreakData, setUpdatedStreakData] = useState([]);
-  // const [selectedFrequencies, setSelectedFrequencies] = useState([]);
-  // const [selectedBadges, setSelectedBadges] = useState([]);
-  // const [selectedCategory, setSelectedCategory] = useState([]);
   
   const [loading, setLoading] = useState(true);
 
@@ -88,12 +84,6 @@ function Streak() {
             setShowFilter={setShowFilter}
             setHabitData={setHabitData}
             updatedStreakData={updatedStreakData}
-          // selectedFrequencies={selectedFrequencies}
-          // setSelectedFrequencies={setSelectedFrequencies}
-          // selectedBadges={selectedBadges}
-          // setSelectedBadges={setSelectedBadges}
-          // selectedCategory={selectedCategory}
-          // setSelectedCategory={setSelectedCategory}
           />
         }
 

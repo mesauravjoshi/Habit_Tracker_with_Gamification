@@ -1,8 +1,8 @@
 import React, { useState, useContext } from 'react'
 import { useEffect } from 'react';
 import { AuthContext } from "@/Context/AuthContext";
-import Category from './Category';
-import Frequency from './Frequency';
+import Category from '@/Components/AddHabit/Category';
+import Frequency from '@/Components/AddHabit/Frequency';
 import axiosInstance from '@/api/axiosInstance';
 import toast from 'react-hot-toast';
 
@@ -14,7 +14,7 @@ const notify = (type, message) => {
     toast.error(message);
   }
 }
-function Habit() {
+function AddHabit() {
   // const { showToast } = useToast();
   const { user, token } = useContext(AuthContext);
   const priorityLabels = ["Low", "Medium", "High", "Critical"];
@@ -246,4 +246,4 @@ function Habit() {
   )
 }
 
-export default Habit
+export default AddHabit

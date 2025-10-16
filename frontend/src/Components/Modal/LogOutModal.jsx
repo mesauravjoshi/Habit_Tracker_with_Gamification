@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { AuthContext } from "@/Context/AuthContext";
 
-function LogOutPopUp({ setIsLogOutPopUpOpen }) {
+function LogOutModal({ setIsLogOutPopUpOpen }) {
   const { user, setUser, fetchUserData } = useContext(AuthContext);
 
   return (
@@ -14,9 +14,7 @@ function LogOutPopUp({ setIsLogOutPopUpOpen }) {
         <div className="deleteConfrim-footer">
           <button onClick={() => setIsLogOutPopUpOpen(false)}  >Cancel</button>
           <button onClick={() => {
-            // console.log('removed');
             setIsLogOutPopUpOpen(false);
-            // setProfileDropDown(prev => !prev)
             localStorage.removeItem('habit token');
             setUser(null);
             fetchUserData();
@@ -27,4 +25,4 @@ function LogOutPopUp({ setIsLogOutPopUpOpen }) {
   );
 }
 
-export default LogOutPopUp;
+export default LogOutModal;

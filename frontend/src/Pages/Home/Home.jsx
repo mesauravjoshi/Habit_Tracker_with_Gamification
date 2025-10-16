@@ -1,5 +1,5 @@
 import React from 'react'
-import Hero from '../Hero/Hero';
+import Hero from '@/Components/Hero/Hero';
 function App() {
 
   return (

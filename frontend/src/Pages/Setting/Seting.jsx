@@ -1,8 +1,8 @@
 import { useState } from "react";
-import Profile from "@/Pages/Setting/Profile";
-import Security from "@/Pages/Setting/Security";
-import Logout from "@/Pages/Setting/Logout";
-import Appearance from "@/Pages/Setting/Appearance";
+import Profile from "@/Components/Setting/Profile";
+import Security from "@/Components/Setting/Security";
+import Logout from "@/Components/Setting/Logout";
+import Appearance from "@/Components/Setting/Appearance";
 
 const tabs = [
   { id: "profile", label: "Profile Settings" },
