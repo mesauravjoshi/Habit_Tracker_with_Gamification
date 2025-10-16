@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import "./ExpandCard.css";
 import StreakUpdate from '../MarkStreakDone/StreakUpdate';
-import CircularProgressBar from "./CircularProgressBar";
+import CircularProgressBar from "../CircularProgressBar";
 import CalendarDaily from "@/Components/Calendar/CalendarDaily";
 import CalendarWeek from "@/Components/Calendar/CalendarWeek";
 

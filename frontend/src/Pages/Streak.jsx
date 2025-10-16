@@ -5,7 +5,7 @@ import { AuthContext } from "@/Context/AuthContext";
 import { ArchiveContext } from '@/Context/ArchiveContext';
 import { StreaXPContext } from '@/Context/Strea&XPContext';
 import TotalStreakAndXP from '@/Components/TotalStreak&XP';
-import Filter from '@/Components/Streak/Filter';
+import Filter from '@/Components/FIlter/Filter';
 import axiosInstance from "@/api/axiosInstance";
 
 function Streak() {

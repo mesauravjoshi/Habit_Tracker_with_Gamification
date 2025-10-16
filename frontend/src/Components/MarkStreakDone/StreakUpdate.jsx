@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { settingColorForCalendar, settingColorForPendingWeek, settingColorForCal_week } from '@/Components/Streak/MarkStreakDone/settingColorForCalendar';
+import { settingColorForCalendar, settingColorForPendingWeek, settingColorForCal_week } from '@/libs/settingColorForCalendar';
 import { StreaXPContext } from '@/Context/Strea&XPContext';
 import './StreakUpdate.css'
 import axiosInstance from '@/api/axiosInstance';

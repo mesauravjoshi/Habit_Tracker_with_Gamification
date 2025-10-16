@@ -5,7 +5,7 @@ import { AuthContext } from '@/Context/AuthContext';
 import { ArchiveContext } from '@/Context/ArchiveContext';
 import TotalStreakAndXP from '@/Components/TotalStreak&XP';
 import axiosInstance from "@/api/axiosInstance";
-import Filter from '@/Components/Streak/Filter';
+import Filter from '@/Components/FIlter/Filter';
 
 function Archive() {
   const { user, token } = useContext(AuthContext);

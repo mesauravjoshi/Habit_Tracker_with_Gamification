@@ -6,7 +6,7 @@ import { SunIcon, MoonIcon } from "@/icons/SliderIcon";
 import { useTheme } from "@/Context/ThemeProvider";
 import { Link } from "react-router-dom";
 import ProfileDropDown from "@/Components/ProfileDropDown";
-import LogOutPopUp from "@/Components/Modal/LogOutModal";
+import LogOutPopUp from "@/Components/Modals/LogOutModal";
 import { AuthContext } from "@/Context/AuthContext";
 
 const Hero = () => {
