@@ -9,7 +9,7 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("habit token"); // or use Zustand/Context
+    const token = localStorage.getItem("habit token");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }

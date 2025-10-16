@@ -3,8 +3,8 @@ import { AuthContext } from "@/Context/AuthContext";
 import Silver from '@/assets/Icons/Silver';
 import Gold from '@/assets/Icons/gold.svg';
 import './Badges.css';
-import TotalStreakAndXP from '@/Components/TotalStreak&XP/TotalStreak&XP'
-import BlankBaadge from './BlankBaadge';
+import TotalStreakAndXP from '@/Components/TotalStreak&XP'
+import BlankBaadge from '@/Components/BlankBaadge';
 import axiosInstance from "@/api/axiosInstance";
 
 function Badge() {

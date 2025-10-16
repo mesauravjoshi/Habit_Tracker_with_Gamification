@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from 'react';
 import HabitCard from '../../Components/HabitCard/HabitCard';
 import { AuthContext } from "@/Context/AuthContext";
-import TotalStreakAndXP from '@/Components/TotalStreak&XP/TotalStreak&XP';
+import TotalStreakAndXP from '@/Components/TotalStreak&XP';
 import BlankHabitCard from '../../Components/HabitCard/BlankHabitCard';
 import axiosInstance from "@/api/axiosInstance";
 

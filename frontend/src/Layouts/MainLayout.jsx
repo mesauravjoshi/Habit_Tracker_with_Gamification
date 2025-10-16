@@ -14,7 +14,7 @@ import {
 import { Link, NavLink } from "react-router-dom";
 import { useTheme } from "@/Context/ThemeProvider";
 
-import { Home, AddHabit, TrackHabit, Archive, Completed, Badges, Setting, Bars3Icon, SunIcon, MoonIcon } from "@/Components/Slider/SliderIcon";
+import { Home, AddHabit, TrackHabit, Archive, Completed, Badges, Setting, Bars3Icon, SunIcon, MoonIcon } from '@/icons/SliderIcon';
 import { Toaster } from 'react-hot-toast';
 import LogOutPopUp from "@/Components/Nav/LogOutPopUp";
 import { AuthContext } from "@/Context/AuthContext";
