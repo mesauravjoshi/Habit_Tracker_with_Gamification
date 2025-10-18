@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react'
 import { useEffect } from 'react';
 import { AuthContext } from "@/Context/AuthContext";
-import Category from '@/Components/AddHabit/Category';
 import Frequency from '@/Components/AddHabit/Frequency';
 import axiosInstance from '@/api/axiosInstance';
 import toast from 'react-hot-toast';

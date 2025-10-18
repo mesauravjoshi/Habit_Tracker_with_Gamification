@@ -8,7 +8,7 @@ import {
 } from '@headlessui/react'
 import { Link } from "react-router-dom";
 
-import { ChevronDownIcon } from "@/icons/SliderIcon";
+import { ChevronDownIcon } from "@/assets/Icons/SliderIcon";
 import { AuthContext } from "@/Context/AuthContext";
 import axios from "axios";
 

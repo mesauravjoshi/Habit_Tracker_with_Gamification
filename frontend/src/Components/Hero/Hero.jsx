@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { NavLink } from "react-router-dom";
 import "./Hero.css";
 import { StreaXPContext } from '@/Context/Strea&XPContext'
-import { SunIcon, MoonIcon } from "@/icons/SliderIcon";
+import { SunIcon, MoonIcon } from "@/assets/Icons/SliderIcon";
 import { useTheme } from "@/Context/ThemeProvider";
 import { Link } from "react-router-dom";
 import ProfileDropDown from "@/Components/ProfileDropDown";

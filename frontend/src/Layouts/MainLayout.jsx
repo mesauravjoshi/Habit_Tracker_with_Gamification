@@ -14,7 +14,7 @@ import {
 import { Link, NavLink } from "react-router-dom";
 import { useTheme } from "@/Context/ThemeProvider";
 
-import { Home, AddHabit, TrackHabit, Archive, Completed, Badges, Setting, Bars3Icon, SunIcon, MoonIcon } from '@/icons/SliderIcon';
+import { Home, AddHabit, TrackHabit, Archive, Completed, Badges, Setting, Bars3Icon, SunIcon, MoonIcon } from '@/assets/Icons/SliderIcon';
 import { Toaster } from 'react-hot-toast';
 import LogOutPopUp from "@/Components/Modals/LogOutModal";
 import { AuthContext } from "@/Context/AuthContext";
@@ -82,8 +82,8 @@ export default function MainLayout() {
               className="relative mr-16 flex w-full max-w-xs flex-1 transform transition duration-300 ease-in-out data-closed:-translate-x-full"
             >
               <TransitionChild>
-                <div className="absolute top-0 left-full flex w-16 justify-center pt-5 duration-300 ease-in-out data-closed:opacity-0">
-                  <button type="button" onClick={() => setSidebarOpen(false)} className="-m-2.5 p-2.5 text-gray-950 dark:text-amber-600">
+                <div className="absolute top-2 left-full flex w-10 justify-center duration-300 ease-in-out data-closed:opacity-0 text-lg">
+                  <button type="button" onClick={() => setSidebarOpen(false)} className="-m-2.5 p-2.5 text-gray-50 dark:text-amber-600">
                     <span className="sr-only">Close sidebar</span>
                     X
                   </button>
