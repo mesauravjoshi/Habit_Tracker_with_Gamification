@@ -1,0 +1,29 @@
+/* ✅ Custom Amber Checkbox Styling */
+.custom-checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #9CA3AF;
+  border-radius: 4px;
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.custom-checkbox:checked {
+  background-color: #f59e0b;
+  border-color: #f59e0b;
+}
+
+.custom-checkbox:checked::after {
+  content: "✓";
+  color: white;
+  font-size: 12px;
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -57%);
+  font-weight: bold;
+}

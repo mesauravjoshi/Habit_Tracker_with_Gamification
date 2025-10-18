@@ -1,4 +1,12 @@
 import { useState } from 'react';
+import './filte.css'
+
+const frequencies = ["Daily", "Weekly"];
+const badges = [
+  '🥈 Silver Badge',
+  '🏆 Gold Badge',
+  '⚜️ Elite Badge',
+];
 
 function Filter({
   setHabitData,
@@ -47,7 +55,6 @@ function Filter({
       checked ? [...prev, value] : prev.filter(f => f !== value)
     );
   };
-
 
   const handleBadgeChange = (event) => {
     const { value, checked } = event.target;
@@ -99,58 +106,42 @@ function Filter({
   return (
     <>
       <div className="flex gap-3 justify-between my-4 p-3 rounded-md border-1 border-amber-500">
-     
+
         {/* Frequency */}
         <div className="flex flex-col">
           <h4>Frequency</h4>
-          <label>
-            <input type="checkbox" value="Daily"
-              checked={selectedFrequencies.includes('Daily')}
-              onChange={handleFrequencyChange}
-            />
-            Daily
-          </label>
-          <label>
-            <input type="checkbox" value="Weekly"
-              checked={selectedFrequencies.includes('Weekly')}
-              onChange={handleFrequencyChange}
-            />
-            Weekly
-          </label>
+          {frequencies.map((frequency) => (
+            <label key={frequency} className="flex items-center gap-2 cursor-pointer">
+              <input
+                type="checkbox"
+                value={frequency}
+                checked={selectedFrequencies.includes(frequency)}
+                onChange={handleFrequencyChange}
+                className="custom-checkbox"
+              />
+              <span className="text-sm">{frequency}</span>
+            </label>
+          ))}
         </div>
-
 
         {/* Badge */}
         <div className="flex flex-col">
           <h4>Badge</h4>
           <div className='flex flex-col'>
-            <label>
-              <input
-                type="checkbox"
-                value="🥈 Silver Badge"
-                checked={selectedBadges.includes("🥈 Silver Badge")}
-                onChange={handleBadgeChange}
-              />
-              Silver Badge
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                value="🏆 Gold Badge"
-                checked={selectedBadges.includes("🏆 Gold Badge")}
-                onChange={handleBadgeChange}
-              />
-              Gold Badge
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                value="⚜️ Elite Badge"
-                checked={selectedBadges.includes("⚜️ Elite Badge")}
-                onChange={handleBadgeChange}
-              />
-              Elite Badge
-            </label>
+
+            {badges.map((badge) => (
+              <label key={badge} className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  value={badge}
+                  checked={selectedBadges.includes(badge)}
+                  onChange={handleBadgeChange}
+                  className="custom-checkbox"
+                />
+                <span className="text-sm">{badge}</span>
+              </label>
+            ))}
+            
           </div>
         </div>
 
