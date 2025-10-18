@@ -108,7 +108,7 @@ function Filter({
       <div className="flex gap-3 justify-between my-4 p-3 rounded-md border-1 border-amber-500">
 
         {/* Frequency */}
-        <div className="flex flex-col">
+        <div className="flex flex-col gap-2">
           <h4>Frequency</h4>
           {frequencies.map((frequency) => (
             <label key={frequency} className="flex items-center gap-2 cursor-pointer">
@@ -125,9 +125,9 @@ function Filter({
         </div>
 
         {/* Badge */}
-        <div className="flex flex-col">
+        <div className="flex flex-col  gap-2">
           <h4>Badge</h4>
-          <div className='flex flex-col'>
+          <div className='flex flex-col gap-2'>
 
             {badges.map((badge) => (
               <label key={badge} className="flex items-center gap-2 cursor-pointer">
