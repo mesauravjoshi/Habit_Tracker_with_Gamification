@@ -11,7 +11,7 @@
 
 /* --- Month Name --- */
 .react-datepicker__current-month {
-  @apply text-sm/4 text-gray-900 dark:text-amber-500;
+  @apply text-sm/4 font-thin text-gray-900 dark:text-amber-500;
 }
 
 /* --- Day Names Row (Mon, Tue, etc.) --- */
@@ -28,7 +28,7 @@
 /* --- Selected Day --- */
 .react-datepicker__day--selected,
 .react-datepicker__day--in-range {
-  @apply bg-gray-500/30 text-gray-900 dark:bg-amber-500/20 dark:text-amber-500 font-thin;
+  @apply !bg-gray-500/30 !text-gray-900 dark:!bg-amber-500/20 dark:!text-amber-500 font-thin;
 }
 
 /* --- Range Start/End --- */

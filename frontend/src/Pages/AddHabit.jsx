@@ -1,5 +1,4 @@
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";;
 import React, { useState, useContext } from 'react'
 import { useEffect } from 'react';
 import { AuthContext } from "@/Context/AuthContext";
@@ -7,6 +6,10 @@ import Frequency from '@/Components/AddHabit/Frequency';
 import axiosInstance from '@/api/axiosInstance';
 import toast from 'react-hot-toast';
 import './AddHabit.css'
+import "react-datepicker/dist/react-datepicker.css";;
+import { useForm } from "react-hook-form"
+
+const priorityLabels = ["Low", "Medium", "High", "Critical"];
 
 function formatDate(dateStr) {
   if (dateStr) {
@@ -16,7 +19,7 @@ function formatDate(dateStr) {
     const day = String(date.getUTCDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
   }
-  return null; // Return null if the date is null
+  return null;
 }
 
 const notify = (type, message) => {
@@ -29,65 +32,77 @@ const notify = (type, message) => {
 }
 
 function AddHabit() {
+  const {
+    register,
+    handleSubmit,
+    control,
+    reset,
+    watch,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      HabitName: "",
+      Priority: 0,
+      // TargetDuration: [new Date(), null],
+    },
+  });
+
+  const { user } = useContext(AuthContext);
+  const [minDate, setMinDate] = useState(new Date());
+
+  const [monthsToShow, setMonthsToShow] = useState(3);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(null);
-  // console.log(startDate);
+  const [targetDuration, setTargetDuration] = useState('');
+  const [errorTargetDuration, setErrorTargetDuration] = useState(false);
+
   const onChange = (dates) => {
     const [start, end] = dates;
     setStartDate(start);
     setEndDate(end);
-    setFormObject((prev) => ({
-      ...prev,
-      TargetDuration: formatDate(end)
-    }))
+    // setTargetDuration(formatDate(end)); // set date to this formate if throw any error 
+    setTargetDuration(end.toISOString().split("T")[0]); 
   };
 
-  const { user } = useContext(AuthContext);
-  const priorityLabels = ["Low", "Medium", "High", "Critical"];
-  const [habits, setHabits] = useState([]);
-  const [minDate, setMinDate] = useState("");
-  const [formObject, setFormObject] = useState({
-    HabitName: '',
-    Category: '',
-    Frequency: 'Daily',
-    TargetDuration: '',
-    Priority: 0,
-  });
-  const [isOpen, setIsOpen] = useState(false);
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 640) {
+        setMonthsToShow(1);
+      } else if (window.innerWidth < 1100) {
+        setMonthsToShow(2);
+      } else {
+        setMonthsToShow(3);
+      }
+    };
 
-  const handleFormChange = (e) => {
-    const { name, value } = e.target;
-    // console.log(name, value);
-    setFormObject((prev) => {
-      if (e.target.name === 'priority') return { ...prev, [name]: Number(value) }
-      else return { ...prev, [name]: value }
-    })
-  }
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
-  const handleSelect = (category) => {
-    setFormObject((prev) => { return { ...prev, 'Category': category } });
-    // setFormObject(category);
-    // console.log(category);
-    setIsOpen(false);
-  };
-
-  const handleAddHabit = async () => {
+  const onSubmit = async (data) => {
     const lastDay = new Date();
     lastDay.setDate(lastDay.getDate() + 6);
     lastDay.setHours(0, 0, 0, 0);
 
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    console.log(formObject);
-
-    if (formObject.HabitName.trim() === '' || !formObject.TargetDuration || !formObject.Frequency === '') {
-      alert("All field required !");
+    if (!targetDuration) {
+      setErrorTargetDuration(true);
       return
     }
-
+    setErrorTargetDuration(false);
+    
+    console.log('joshi', {
+      ...data,
+      Priority: priorityLabels[data.Priority],
+      TargetDuration: targetDuration
+    });
+    // return
     const udpatedHabit = {
-      ...formObject,
-      Priority: priorityLabels[formObject.Priority],
+      ...data,
+      Priority: priorityLabels[data.Priority],
+      TargetDuration: targetDuration,
       userId: user.id,
       StartedDate: today.toString(),
       StreakRecord: {
@@ -104,10 +119,10 @@ function AddHabit() {
     };
     // console.log(udpatedHabit);
     // return
-    if (formObject.Frequency === 'Daily') {
+    if (data.Frequency === 'Daily') {
       udpatedHabit.TotalDaysCompleted = 0;
       udpatedHabit.CalendarData = {}
-    } else if (formObject.Frequency === 'Weekly') {
+    } else if (data.Frequency === 'Weekly') {
       udpatedHabit.CalendarData = [
         {
           start: "",
@@ -136,142 +151,96 @@ function AddHabit() {
       // Reset input fields
       setStartDate(new Date())
       setEndDate(null);
-      setFormObject((prev) => {
-        return { ...prev, HabitName: '', Priority: 0, TargetDuration: '', Category: '', Frequency: 'Daily' }
-      });
     }
   };
-
-  useEffect(() => {
-    if (habits.length > 0) {
-      localStorage.setItem('Habit Track', JSON.stringify(habits));
-    }
-  }, [habits]);
-
-  useEffect(() => {
-    const today = new Date();
-    setMinDate(today.toISOString().split("T")[0]);
-    const savedHabitData = localStorage.getItem('Habit Track');
-    if (savedHabitData) {
-      setHabits(JSON.parse(savedHabitData)); // Parse the data and set it as initial state
-    }
-  }, []);
 
   return (
     <>
       <div className="bg-gray-50/0 dark:bg-gray-800/50 outline -outline-offset-1 outline-gray-900/5 dark:outline-gray-700/10 sm:rounded-xl md:col-span-2">
-        <div className="px-4 py-4 sm:p-8 grid max-w-4xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 md:col-span-2">
-          <div className="sm:col-span-3">
-            <label htmlFor="My-Habit" className="block text-sm/6 font-medium">
-              My Habit
-            </label>
-            <div className="mt-2">
-              <input
-                id="My-Habit"
-                name="HabitName"
-                type="text"
-                value={formObject.HabitName}
-                onChange={(e) => handleFormChange(e)}
-                placeholder='Your Habit'
-                className="block w-full rounded-md bg-gray-900/5 px-3 py-1.5 text-base outline-1 -outline-offset-1 outline-amber-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-gray-600 sm:text-sm/6 dark:bg-white/5  dark:outline-white/10 dark:placeholder:text-[#925e0a] dark:focus:outline-amber-500"
-              />
-            </div>
-          </div>
-
-          <Frequency
-            setMinDate={setMinDate}
-            setFormObject={setFormObject}
-            formObject={formObject}
-            setStartDate={setStartDate}
-          />
-
-          <div className="sm:col-span-6">
-            <label htmlFor="target-duration" className="block text-sm/6 font-medium mb-2">
-              Target Duration
-            </label>
-            <div className="">
-              <DatePicker
-                id="target-duration"
-                selected={startDate}
-                onChange={onChange}
-                startDate={startDate}
-                endDate={endDate}
-                selectsRange
-                inline
-                monthsShown={2}                // ✅ Show 2 months side by side
-                minDate={minDate}           // ✅ Disable all dates before today
-                dateFormat="dd MMM yyyy"       // (optional) Clean date display format
-                className="react-datepicker-custom bg-transparent"
-              />
-            </div>
-            {/* <div className="mt-2">
-              <input
-                id="target-duration"
-                type="date"
-                name='TargetDuration'
-                value={formObject.TargetDuration}
-                onChange={(e) => handleFormChange(e)}
-                min={minDate}
-              />
-            </div> */}
-          </div>
-
-          {/* <div className="sm:col-span-3">
-            <label htmlFor="Category" className="block text-sm/6 font-medium ">
-              Category
-            </label>
-            <div className={`custom-select ${isOpen ? "open" : ""}`} onClick={() => setIsOpen(!isOpen)}>
-              <span>{formObject.Category || "Select a category"}</span>
-              <div className="arrow"></div>
-            </div>
-            {isOpen && (
-              <div className="dropdown">
-                {categories.map((category, index) => (
-                  <div
-                    key={index}
-                    className={`dropdown-item ${formObject.Category === category ? "selected" : ""}`}
-                    onClick={() => handleSelect(category)}
-                  >
-                    {category}
-                  </div>
-                ))}
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="px-4 py-4 sm:p-8 grid max-w-4xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 md:col-span-2">
+            <div className="sm:col-span-3">
+              <label htmlFor="My-Habit" className="block text-sm/6 font-medium">
+                My Habit
+              </label>
+              <div className="mt-2">
+                <input
+                  id="My-Habit"
+                  name="HabitName"
+                  type="text"
+                  {...register("HabitName", { required: "Habit name is required" })}
+                  placeholder='Your Habit'
+                  className="block w-full rounded-md bg-gray-900/5 px-3 py-1.5 text-base outline-1 -outline-offset-1 outline-amber-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-gray-600 sm:text-sm/6 dark:bg-white/5  dark:outline-white/10 dark:placeholder:text-[#925e0a] dark:focus:outline-amber-500"
+                />
+                {errors.HabitName && (
+                  <p className="text-sm text-red-500 mt-1">{errors.HabitName.message}</p>
+                )}
               </div>
-            )}
-          </div> */}
-          <div className="sm:col-span-3">
-            <label htmlFor="Priority-Level" className="block text-sm font-medium mb-1">
-              Priority Level
-            </label>
+            </div>
 
-            <input
-              type="range"
-              name="Priority"
-              min="0"
-              max="3"
-              step="1"
-              value={formObject.Priority}
-              onChange={(e) => handleFormChange(e)}
-              className="w-full h-2 rounded-lg appearance-none cursor-pointer bg-gray-300 dark:bg-gray-700 
-               accent-black dark:accent-amber-400"
+            <Frequency
+              control={control}
+              setStartDate={setStartDate}
+              setMinDate={setMinDate}
             />
 
-            <p className="priority-text mt-2 text-sm font-medium">
-              {priorityLabels[formObject.Priority]}
-            </p>
-          </div>
+            <div className="sm:col-span-6">
+              <label htmlFor="target-duration" className="block text-sm/6 font-medium mb-2">
+                Target Duration
+              </label>
+              <div className="">
+                <DatePicker
+                  id="target-duration"
+                  selected={startDate}
+                  onChange={onChange}
+                  startDate={startDate}
+                  endDate={endDate}
+                  selectsRange
+                  inline
+                  monthsShown={monthsToShow}
+                  minDate={minDate}           // ✅ Disable all dates before today
+                  dateFormat="dd MMM yyyy"       // (optional) Clean date display format
+                  className="react-datepicker-custom bg-transparent"
+                />
+              </div>
+              {errorTargetDuration && (
+                <p className="text-sm text-red-500 mt-1">{'Select a date'}</p>
+              )}
+            </div>
 
-        </div>
-        <div className="flex items-center justify-end gap-x-6 border-t border-gray-900/10 dark:border-white/10 px-4 py-4 sm:px-8">
-          <button type="button" className="text-sm/6 font-semibold">
-            Reset
-          </button>
-          <button
-            type="submit"
-            onClick={handleAddHabit}
-            className="rounded-md text-gray-100 dark:text-amber-600 bg-amber-700/95 dark:bg-amber-500/20  px-3.5 py-2.5 text-sm font-semibold  hover:bg-amber-700/95  dark:hover:bg-amber-500/30">
-            Add
-          </button>
-        </div>
+            <div className="sm:col-span-3">
+              <label htmlFor="Priority-Level" className="block text-sm font-medium mb-1">
+                Priority Level
+              </label>
+
+              <input
+                type="range"
+                name="Priority"
+                min="0"
+                max="3"
+                step="1"
+                {...register("Priority")}
+                className="w-full h-2 rounded-lg appearance-none cursor-pointer bg-gray-300 dark:bg-gray-700 
+               accent-black dark:accent-amber-400"
+              />
+              <p className="priority-text mt-2 text-sm font-medium">
+                {["Low", "Medium", "High", "Critical"][watch("Priority")]}
+              </p>
+            </div>
+
+          </div>
+          <div className="flex items-center justify-end gap-x-6 border-t border-gray-900/10 dark:border-white/10 px-4 py-4 sm:px-8">
+            <button type="button" className="text-sm/6 font-semibold">
+              Reset
+            </button>
+            <button
+              type="submit"
+              // onClick={handleAddHabit}
+              className="rounded-md text-gray-100 dark:text-amber-600 bg-amber-700/95 dark:bg-amber-500/20  px-3.5 py-2.5 text-sm font-semibold  hover:bg-amber-700/95  dark:hover:bg-amber-500/30">
+              Add
+            </button>
+          </div>
+        </form>
       </div>
     </>
   )
