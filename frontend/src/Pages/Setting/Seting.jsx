@@ -40,7 +40,7 @@ export default function Setting() {
           {/* Left Sidebar */}
           <div className="w-1/4 border-r border-gray-300 dark:border-gray-800 px-2">
             <h2 className="text-xl font-semibold mb-4">Settings</h2>
-            <ul className="space-y-2">
+            <ul className="space-y-2 text-sm/6 ">
               {tabs.map((tab) => (
                 <li
                   key={tab.id}

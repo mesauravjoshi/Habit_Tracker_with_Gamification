@@ -4,6 +4,7 @@ import { AuthContext } from "@/Context/AuthContext";
 import TotalStreakAndXP from '@/Components/TotalStreak&XP';
 import BlankHabitCard from '../../Components/HabitCard/BlankHabitCard';
 import axiosInstance from "@/api/axiosInstance";
+import NoHabit from '@/Components/NoHabit';
 
 function Completed() {
   const { user, token } = useContext(AuthContext); // Access user from context
@@ -43,7 +44,7 @@ function Completed() {
         ) : (completedHabit.length > 0 ? (
           <HabitCard habitData={completedHabit} setHabitData={setCompletedHabit} />
         ) : (
-          <h2>No habit Completed yet...</h2>
+          <NoHabit title={'Nothing Completed!'}/>
         )
         )
       ) : (

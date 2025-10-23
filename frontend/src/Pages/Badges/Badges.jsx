@@ -6,6 +6,7 @@ import './Badges.css';
 import TotalStreakAndXP from '@/Components/TotalStreak&XP'
 import BlankBaadge from '@/Components/BlankBaadge';
 import axiosInstance from "@/api/axiosInstance";
+import NoHabit from '@/Components/NoHabit';
 
 function Badge() {
   const { user, token } = useContext(AuthContext);
@@ -121,7 +122,8 @@ function Badge() {
                 );
               })
             ) : (
-              <p>No Badge earned yet...</p>
+              // <p>No Badge earned yet...</p>
+              <NoHabit title={'No Badge earned yet!'} />
             )}
           </div>
         )

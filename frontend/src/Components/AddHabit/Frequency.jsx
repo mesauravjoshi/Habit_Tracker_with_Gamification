@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Frequency({ setMinDate, setFormObject, formObject }) {
+function Frequency({ setMinDate, setFormObject, formObject, setStartDate }) {
   const memoryOptions = [
     { name: 'Daily' },
     { name: 'Weekly' },
@@ -14,8 +14,10 @@ function Frequency({ setMinDate, setFormObject, formObject }) {
       if (value === "Weekly") {
         today.setDate(today.getDate() + 7);
         setMinDate((today).toISOString().split("T")[0]);
+        setStartDate(today);
       } else if (value === "Daily") {
         setMinDate((today).toISOString().split("T")[0]);
+        setStartDate(today);
       }
       // setSelectedFrequency(event.target.value);
       setFormObject((prev) => {

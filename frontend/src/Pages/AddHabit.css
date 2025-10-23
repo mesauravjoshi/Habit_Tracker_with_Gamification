@@ -1,0 +1,68 @@
+/* --- Base Calendar Container --- */
+.react-datepicker {
+  @apply rounded-lg border border-gray-300 dark:border-gray-700 
+         bg-white dark:bg-gray-800 shadow-lg text-gray-800 dark:text-amber-500;
+}
+
+/* --- Header (Month/Year) --- */
+.react-datepicker__header {
+  @apply bg-gray-100 dark:bg-gray-700 border-b border-gray-300 dark:border-gray-600 rounded-t-lg;
+}
+
+/* --- Month Name --- */
+.react-datepicker__current-month {
+  @apply text-sm/4 text-gray-900 dark:text-amber-500;
+}
+
+/* --- Day Names Row (Mon, Tue, etc.) --- */
+.react-datepicker__day-name {
+  @apply mt-2 text-sm/3 font-medium text-gray-600 dark:text-amber-500;
+}
+
+/* --- Individual Day Cells --- */
+.react-datepicker__day {
+  @apply text-gray-800 dark:text-amber-600 hover:bg-amber-200/60 dark:hover:bg-amber-400/30 
+         rounded-xl transition-all duration-150 cursor-pointer;
+}
+
+/* --- Selected Day --- */
+.react-datepicker__day--selected,
+.react-datepicker__day--in-range {
+  @apply bg-gray-500/30 text-gray-900 dark:bg-amber-500/20 dark:text-amber-500 font-thin;
+}
+
+/* --- Range Start/End --- */
+.react-datepicker__day--range-start,
+.react-datepicker__day--range-end {
+  @apply bg-gray-500/90 text-gray-100 dark:bg-amber-400 dark:text-gray-900;
+}
+
+/* --- Disabled Days (past dates) --- */
+.react-datepicker__day--disabled {
+  @apply text-gray-400 dark:text-[#925e0a95] cursor-not-allowed;
+}
+
+/* --- Month Dropdowns (if you enable them) --- */
+.react-datepicker__month-select,
+.react-datepicker__year-select {
+  @apply bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 border dark:border-gray-600 rounded-md;
+}
+
+/* --- Navigation arrows --- */
+.react-datepicker__navigation-icon::before {
+  @apply border-gray-700 dark:border-amber-500;
+}
+
+.react-datepicker__day--in-selecting-range {
+  @apply !bg-gray-500/30 dark:!bg-amber-500/20;
+}
+
+
+/* Fix: Remove blue background on month navigation */
+/* .react-datepicker__day--keyboard-selected {
+  @apply bg-transparent text-inherit;
+}
+
+.react-datepicker__day--keyboard-selected:hover {
+  @apply bg-amber-200/50 dark:bg-amber-400/20;
+} */

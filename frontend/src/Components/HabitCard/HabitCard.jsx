@@ -1,4 +1,7 @@
-import { useEffect, useRef, useContext, useReducer } from 'react';
+
+// import { EllipsisVerticalIcon } from '@heroicons/react/20/solid'
+
+import { useContext, useReducer } from 'react';
 import { DotsIcon, ShareIcon, Archive, Unarchive, Delete, ViewCard } from "@/assets/Icons/Icons";
 import { url } from '@/URL/Url';
 import StreakUpdate from '@/Components/MarkStreakDone/StreakUpdate';
@@ -263,13 +266,13 @@ function Streak({ habitData, setHabitData, insideArchive, archivedHabit, setArch
 
                       <MenuItems
                         transition
-                        className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-gray-200 dark:bg-gray-800 outline-1 -outline-offset-1 outline-white/10 transition data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
+                        className="absolute right-0 z-10 mt-2 w-55 origin-top-right rounded-md bg-gray-50 dark:bg-gray-800  shadow-lg outline-1 -outline-offset-1 outline-white/10 transition data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
                       >
                         <div className="py-1">
                           <div className="">
                             <div
                               onClick={(event) => handleDelete(event, streak._id)}
-                              className="flex items-center gap-4 px-3 py-1 hover:bg-[#464650] transition duration-300"
+                              className="flex items-center gap-3 px-3 py-1 hover:bg-gray-200 dark:hover:bg-[#464650] transition duration-300 cursor-pointer"
                             >
                               <Delete />
                               <p>Delete</p>
@@ -279,7 +282,7 @@ function Streak({ habitData, setHabitData, insideArchive, archivedHabit, setArch
                                 event.stopPropagation();
                                 insideArchive ? handleUnarchive(streak._id) : handleArchiveHabit(streak._id);
                               }}
-                              className="flex items-center gap-4 px-3 py-1 hover:bg-[#464650] transition duration-300"
+                              className="flex items-center gap-3 px-3 py-1 hover:bg-gray-200 dark:hover:bg-[#464650] transition duration-300 cursor-pointer"
                             >
                               {insideArchive ? (
                                 <>
@@ -295,7 +298,7 @@ function Streak({ habitData, setHabitData, insideArchive, archivedHabit, setArch
                             </div>
                             <div
                               onClick={() => dispatch({ type: 'TOGGLE_EXPAND', payload: true })}
-                              className="flex items-center gap-4 px-3 py-1 hover:bg-[#464650] transition duration-300"
+                              className="flex items-center gap-3 px-3 py-1 hover:bg-gray-200 dark:hover:bg-[#464650] transition duration-300 cursor-pointer"
                             >
                               <ViewCard />
                               <p>View</p>

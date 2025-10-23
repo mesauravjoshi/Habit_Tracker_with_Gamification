@@ -8,7 +8,7 @@ import Setting from '@/Pages/Setting/Seting';
 import { useContext } from "react";
 
 import Habit from "@/Pages/AddHabit";
-import Streak from "@/Pages/Streak";
+import TrackHabit from "@/Pages/TrackHabit";
 import Archive from "@/Pages/Archive/Archive";
 import Completed from "@/Pages/Completed/Completed";
 import Badges from "@/Pages/Badges/Badges";
@@ -32,7 +32,7 @@ function App() {
         {/* Protected Routes (MainLayout) */}
         <Route element={<PrivateRoutes />}>
           <Route path="/habit" element={<Habit />} />
-          <Route path="/track-streak" element={<Streak />} />
+          <Route path="/track-streak" element={<TrackHabit />} />
           <Route path="/archive" element={<Archive />} />
           <Route path="/completed" element={<Completed />} />
           <Route path="/badges" element={<Badges />} />

@@ -1,9 +1,23 @@
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";;
 import React, { useState, useContext } from 'react'
 import { useEffect } from 'react';
 import { AuthContext } from "@/Context/AuthContext";
 import Frequency from '@/Components/AddHabit/Frequency';
 import axiosInstance from '@/api/axiosInstance';
 import toast from 'react-hot-toast';
+import './AddHabit.css'
+
+function formatDate(dateStr) {
+  if (dateStr) {
+    const date = new Date(dateStr);
+    const year = date.getUTCFullYear();
+    const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+    const day = String(date.getUTCDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+  return null; // Return null if the date is null
+}
 
 const notify = (type, message) => {
   if (type === 'success') {
@@ -15,6 +29,19 @@ const notify = (type, message) => {
 }
 
 function AddHabit() {
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(null);
+  // console.log(startDate);
+  const onChange = (dates) => {
+    const [start, end] = dates;
+    setStartDate(start);
+    setEndDate(end);
+    setFormObject((prev) => ({
+      ...prev,
+      TargetDuration: formatDate(end)
+    }))
+  };
+
   const { user } = useContext(AuthContext);
   const priorityLabels = ["Low", "Medium", "High", "Critical"];
   const [habits, setHabits] = useState([]);
@@ -28,16 +55,9 @@ function AddHabit() {
   });
   const [isOpen, setIsOpen] = useState(false);
 
-  // Get today's date in YYYY-MM-DD format
-  const getTodayDate = () => {
-    const today = new Date();
-    setMinDate(today.toISOString().split("T")[0]);
-    console.log(typeof today.toISOString().split("T")[0]);
-    // return today.toISOString().split("T")[0]; // Extract YYYY-MM-DD
-  };
-
   const handleFormChange = (e) => {
     const { name, value } = e.target;
+    // console.log(name, value);
     setFormObject((prev) => {
       if (e.target.name === 'priority') return { ...prev, [name]: Number(value) }
       else return { ...prev, [name]: value }
@@ -104,7 +124,7 @@ function AddHabit() {
     // return;
     try {
       const response = await axiosInstance.post(`/habit/add_habit`, udpatedHabit);
-      console.log(response);
+      // console.log(response);
       if (response) {
         notify('success', response.data.message);
       }
@@ -112,10 +132,12 @@ function AddHabit() {
       notify('error', 'Error Saving habit');
       console.error('Error:', error);
     } finally {
-      console.log('finally');
+      // console.log('finally');
       // Reset input fields
+      setStartDate(new Date())
+      setEndDate(null);
       setFormObject((prev) => {
-        return { ...prev, HabitName: '', Priority: 0, TargetDuration: '', Category: '', Frequency: '' }
+        return { ...prev, HabitName: '', Priority: 0, TargetDuration: '', Category: '', Frequency: 'Daily' }
       });
     }
   };
@@ -138,7 +160,7 @@ function AddHabit() {
   return (
     <>
       <div className="bg-gray-50/0 dark:bg-gray-800/50 outline -outline-offset-1 outline-gray-900/5 dark:outline-gray-700/10 sm:rounded-xl md:col-span-2">
-        <div className="px-4 py-6 sm:p-8 grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 md:col-span-2 mb-4">
+        <div className="px-4 py-4 sm:p-8 grid max-w-4xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 md:col-span-2">
           <div className="sm:col-span-3">
             <label htmlFor="My-Habit" className="block text-sm/6 font-medium">
               My Habit
@@ -151,7 +173,7 @@ function AddHabit() {
                 value={formObject.HabitName}
                 onChange={(e) => handleFormChange(e)}
                 placeholder='Your Habit'
-                className="block w-full rounded-md bg-gray-900/5 px-3 py-1.5 text-base outline-1 -outline-offset-1 outline-amber-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-gray-600 sm:text-sm/6 dark:bg-white/5  dark:outline-white/10 dark:placeholder:text-amber-500 dark:focus:outline-amber-500"
+                className="block w-full rounded-md bg-gray-900/5 px-3 py-1.5 text-base outline-1 -outline-offset-1 outline-amber-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-gray-600 sm:text-sm/6 dark:bg-white/5  dark:outline-white/10 dark:placeholder:text-[#925e0a] dark:focus:outline-amber-500"
               />
             </div>
           </div>
@@ -160,21 +182,38 @@ function AddHabit() {
             setMinDate={setMinDate}
             setFormObject={setFormObject}
             formObject={formObject}
+            setStartDate={setStartDate}
           />
 
-          <div className="sm:col-span-4">
-            <label htmlFor="target-duration" className="block text-sm/6 font-medium ">
+          <div className="sm:col-span-6">
+            <label htmlFor="target-duration" className="block text-sm/6 font-medium mb-2">
               Target Duration
             </label>
-            <div className="mt-2">
+            <div className="">
+              <DatePicker
+                id="target-duration"
+                selected={startDate}
+                onChange={onChange}
+                startDate={startDate}
+                endDate={endDate}
+                selectsRange
+                inline
+                monthsShown={2}                // ✅ Show 2 months side by side
+                minDate={minDate}           // ✅ Disable all dates before today
+                dateFormat="dd MMM yyyy"       // (optional) Clean date display format
+                className="react-datepicker-custom bg-transparent"
+              />
+            </div>
+            {/* <div className="mt-2">
               <input
                 id="target-duration"
-                type="date" name='TargetDuration'
+                type="date"
+                name='TargetDuration'
                 value={formObject.TargetDuration}
                 onChange={(e) => handleFormChange(e)}
                 min={minDate}
               />
-            </div>
+            </div> */}
           </div>
 
           {/* <div className="sm:col-span-3">
@@ -200,19 +239,25 @@ function AddHabit() {
             )}
           </div> */}
           <div className="sm:col-span-3">
-            <label htmlFor="Priority-Level" className="block text-sm/6 font-medium ">
+            <label htmlFor="Priority-Level" className="block text-sm font-medium mb-1">
               Priority Level
             </label>
+
             <input
-              type="range" name='Priority'
+              type="range"
+              name="Priority"
               min="0"
               max="3"
               step="1"
               value={formObject.Priority}
               onChange={(e) => handleFormChange(e)}
-              className="slider"
+              className="w-full h-2 rounded-lg appearance-none cursor-pointer bg-gray-300 dark:bg-gray-700 
+               accent-black dark:accent-amber-400"
             />
-            <p className="priority-text">{priorityLabels[formObject.Priority]}</p>
+
+            <p className="priority-text mt-2 text-sm font-medium">
+              {priorityLabels[formObject.Priority]}
+            </p>
           </div>
 
         </div>

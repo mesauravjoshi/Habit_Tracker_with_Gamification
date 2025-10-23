@@ -45,27 +45,6 @@ export default function MainLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
 
-  const [gravatarUrl, setGravatarUrl] = useState('');
-  const { user } = useContext(AuthContext);
-
-  useEffect(() => {
-    const generateGravatar = async () => {
-      if (user) {
-        const username = user.username.trim().toLowerCase();
-        try {
-          const response = await axios.get(`https://api.hashify.net/hash/md5/hex?value=${username}`);
-          const hash = response.data?.Digest
-          if (hash) {
-            setGravatarUrl(`https://www.gravatar.com/avatar/${hash}?d=identicon`);
-          }
-        } catch (error) {
-          console.error('Failed to fetch MD5 hash for Gravatar:', error);
-        }
-      }
-    };
-    generateGravatar();
-  }, [user]);
-
   return (
     <>
       <Toaster />

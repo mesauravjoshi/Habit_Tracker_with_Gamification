@@ -7,15 +7,16 @@ import { StreaXPContext } from '@/Context/Strea&XPContext';
 import TotalStreakAndXP from '@/Components/TotalStreak&XP';
 import Filter from '@/Components/FIlter/Filter';
 import axiosInstance from "@/api/axiosInstance";
+import NoHabit from '@/Components/NoHabit';
 
-function Streak() {
+function TrackHabit() {
   const authContext = useContext(AuthContext);
   const { totalStreaXP } = useContext(StreaXPContext);
   const { user, setUser, token, setToken } = useContext(AuthContext);
   const { archiveHabits } = useContext(ArchiveContext);
   const [habitData, setHabitData] = useState([]);
   const [updatedStreakData, setUpdatedStreakData] = useState([]);
-  
+
   const [loading, setLoading] = useState(true);
 
   const [handleViewOption, setHandleViewOption] = useState(false);
@@ -97,7 +98,7 @@ function Streak() {
                     < HabitCard
                       habitData={habitData}
                       setHabitData={setHabitData}
-                    /> : <h2>No habit added yet ...</h2>
+                    /> : <NoHabit title={'No habit added yet...'}/>
                 }
               </div>
               : <p> Please login .........</p>
@@ -107,4 +108,4 @@ function Streak() {
   );
 }
 
-export default Streak;
+export default TrackHabit;

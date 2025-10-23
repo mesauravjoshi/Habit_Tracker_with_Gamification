@@ -1,12 +1,9 @@
 // ./Components/Pages/Setting/Profile.js
 import { useState, useEffect, useContext } from "react";
-import { AuthContext } from "../../Context/AuthContext";
-import axios from "axios";
 import toast, { Toaster } from 'react-hot-toast';
 import axiosInstance from "@/api/axiosInstance";
 
 export default function Profile() {
-  const { user, token } = useContext(AuthContext);
   const [formData, setFormData] = useState({
     name: "",
     username: ""
@@ -78,7 +75,7 @@ export default function Profile() {
           name="name"
           value={formData.name}
           onChange={handleChange}
-          className="w-full p-2 rounded-md dark:bg-white/5 border border-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-600"
+          className="block w-full rounded-md bg-gray-900/5 px-3 py-1.5 text-base outline-1 -outline-offset-1 outline-amber-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-gray-600 sm:text-sm/6 dark:bg-white/5  dark:outline-white/10 dark:placeholder:text-[#925e0a] dark:focus:outline-amber-500"
           placeholder="Enter your name"
         />
       </div>
@@ -90,7 +87,8 @@ export default function Profile() {
           name="username"
           value={formData.username}
           onChange={handleChange}
-          className="w-full p-2 rounded-md dark:bg-white/5 border border-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-600"
+          // className="w-full p-2 rounded-md dark:bg-white/5 border border-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-600"
+          className="block w-full rounded-md bg-gray-900/5 px-3 py-1.5 text-base outline-1 -outline-offset-1 outline-amber-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-gray-600 sm:text-sm/6 dark:bg-white/5  dark:outline-white/10 dark:placeholder:text-[#925e0a] dark:focus:outline-amber-500"
           placeholder="Enter your username"
         />
       </div>
