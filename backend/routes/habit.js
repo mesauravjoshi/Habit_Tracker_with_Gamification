@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const jwt = require('jsonwebtoken');
 const Habit = require('../models/habits');
 const Archive = require('../models/archive');
 const { jwtAuthMiddleware } = require('../jwt');
@@ -91,7 +90,7 @@ router.put('/markAsDone/:id', jwtAuthMiddleware, async (req, res) => {
 });
 
 router.delete('/habitDelete/:id', jwtAuthMiddleware, async (req, res) => {
-    const { id } = req.params; // Extract habit ID from URL
+    const { id } = req.params;
 
     try {
         const deletedHabit = await Habit.findByIdAndDelete(id);
