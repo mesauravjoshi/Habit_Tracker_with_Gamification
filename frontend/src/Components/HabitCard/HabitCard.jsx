@@ -341,14 +341,11 @@ function Streak({ habitData, setHabitData, insideArchive, archivedHabit, setArch
                   {/* 6. Progress Bar */}
                   <div className="progress-outer flex items-center gap-2 mr-2">
                     <div
-                      className="progress-container relative w-[85%] rounded-lg bg-[#222] p-1shadow-[0px_4px_10px_rgba(255,65,108,0.3)]overflow-hidden"
+                      className="progress-container relative w-[85%] rounded-lg bg-gray-200 dark:bg-[#222] p-1shadow-[0px_4px_10px_rgba(255,65,108,0.3)]overflow-hidden"
                       style={{ '--progress': `${progress}%` }}
                     >
                       <div
-                        className="
-                    progress-bar h-5 w-0 rounded-lg bg-gradient-to-r from-[#ff416c] to-[#ff4b2b]
-                    text-white font-bold flex items-center justify-center
-                  "
+                        className="progress-bar h-5 w-0 rounded-lg bg-gradient-to-r from-[#ff416c] to-[#ff4b2b] text-white font-bold flex items-center justify-center"
                         style={{
                           width: `${progress}%`,
                           transition: 'width 2s ease-in-out',

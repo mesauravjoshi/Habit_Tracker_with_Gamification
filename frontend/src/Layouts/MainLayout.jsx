@@ -71,18 +71,18 @@ export default function MainLayout() {
 
               {/* Sidebar component, swap this element with another sidebar if you like */}
               <div className="relative flex grow flex-col gap-y-5 overflow-y-auto bg-gray-50 dark:bg-gray-900 px-6 pb-4 ring-1 ring-white/10 dark:before:pointer-events-none dark:before:absolute dark:before:inset-0 ">
-                <Link to={'/home'}>
-                  <div className="flex h-16 shrink-0 items-center gap-x-2">
-                    {/* <img
+                <div className="flex h-16 shrink-0 items-center gap-x-2">
+                  {/* <img
                   alt="Your Company"
                   src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
                   className="h-8 w-auto"
                 /> */}
-                    <span className="text-lg text-rose-500 font-bold">
+                  <Link to={'/home'} className="text-lg font-bold tracking-tight">
+                    <span className="bg-gradient-to-r from-rose-500 to-amber-500 bg-clip-text text-transparent">
                       HabitQuest
                     </span>
-                  </div>
-                </Link>
+                  </Link>
+                </div>
                 <nav className="relative flex flex-1 flex-col">
                   <ul role="list" className="flex flex-1 flex-col gap-y-7">
                     <li>
@@ -137,18 +137,18 @@ export default function MainLayout() {
         <div className="hidden bg-gray-900 ring-1 ring-gray-300 dark:ring-white/10 lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
           {/* Sidebar component, swap this element with another sidebar if you like */}
           <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-50 dark:bg-black/10 px-6 pb-4">
-            <Link to={'/home'}>
-              <div className="flex h-16 shrink-0 items-center gap-x-2">
-                {/* <img
+            <div className="flex h-16 shrink-0 items-center gap-x-2">
+              {/* <img
                   alt="Your Company"
                   src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
                   className="h-8 w-auto"
                 /> */}
-                <span className="text-lg text-rose-500 font-bold">
+              <Link to={'/home'} className="text-lg font-bold tracking-tight">
+                <span className="bg-gradient-to-r from-rose-500 to-amber-500 bg-clip-text text-transparent">
                   HabitQuest
                 </span>
-              </div>
-            </Link>
+              </Link>
+            </div>
             <nav className="flex flex-1 flex-col">
               <ul role="list" className="flex flex-1 flex-col gap-y-7">
                 <li>

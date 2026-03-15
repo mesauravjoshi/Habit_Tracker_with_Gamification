@@ -126,7 +126,7 @@ function ExpandCard({ streak, setHabitData, setIsExpandVisible, calculateTotalDa
           <div className="color-identiy flex gap-1 justify-evenly">
             <div id="Categorical-Color" className="flex items-center">
               <div className="color-box1 mr-[9px] w-[15px] h-[15px] rounded bg-[#86612b7d]"></div>
-              <p>Selected Habit</p>
+              <p>Selected Habit days</p>
             </div>
             <div id="Categorical-Color" className="flex items-center">
               <div className="color-box2 mr-[9px] w-[15px] h-[15px] rounded bg-[seagreen]"></div>
